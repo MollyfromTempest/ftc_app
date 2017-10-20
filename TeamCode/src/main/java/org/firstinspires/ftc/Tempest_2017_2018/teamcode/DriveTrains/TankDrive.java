@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.ftc_app.TeamCode.src.main.java.org.firstinspires.ftc.Tempest_2017_2018.teamcode.DriveTrains;
+package org.firstinspires.ftc.Tempest_2017_2018.teamcode.DriveTrains;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.ftc_app.TeamCode.src.main.java.org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors.GyroScope;
+import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors.GyroScope;
 
 /**
  * Created by Aaron on 5/20/2017.
@@ -37,25 +37,25 @@ public class TankDrive {
         backLeft = this.HWMap.dcMotor.get("backLeft");
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setMode(encMode);
-        //backLeft.setMaxSpeed(speed);
+        backLeft.setMaxSpeed(speed);
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         frontLeft = this.HWMap.dcMotor.get("frontLeft");
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         frontLeft.setMode(encMode);
-        //frontLeft.setMaxSpeed(speed);
+        frontLeft.setMaxSpeed(speed);
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         backRight = this.HWMap.dcMotor.get("backRight");
         backRight.setDirection(DcMotorSimple.Direction.FORWARD);
         backRight.setMode(encMode);
-        //backRight.setMaxSpeed(speed);
+        backRight.setMaxSpeed(speed);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         frontRight = this.HWMap.dcMotor.get("frontRight");
         frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
         frontRight.setMode(encMode);
-        //frontRight.setMaxSpeed(speed);
+        frontRight.setMaxSpeed(speed);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         gyro = new GyroScope();

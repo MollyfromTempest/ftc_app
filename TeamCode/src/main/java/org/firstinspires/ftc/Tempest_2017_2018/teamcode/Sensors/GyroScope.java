@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.ftc_app.TeamCode.src.main.java.org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors;
+package org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors;
 
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;

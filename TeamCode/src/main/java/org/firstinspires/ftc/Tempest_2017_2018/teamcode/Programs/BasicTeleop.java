@@ -1,9 +1,9 @@
-package org.firstinspires.ftc.ftc_app.TeamCode.src.main.java.org.firstinspires.ftc.Tempest_2017_2018.teamcode.Programs;
+package org.firstinspires.ftc.Tempest_2017_2018.teamcode.Programs;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.ftc_app.TeamCode.src.main.java.org.firstinspires.ftc.Tempest_2017_2018.teamcode.DriveTrains.SuperBasicHolonomicDrive;
+import org.firstinspires.ftc.Tempest_2017_2018.teamcode.DriveTrains.SuperBasicHolonomicDrive;
 
 /**
  * Created by Molly on 5/27/2017.

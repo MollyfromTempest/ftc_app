@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.Tempest_2017_2018.teamcode.Manipulators;
+package org.firstinspires.ftc.ftc_app.TeamCode.src.main.java.org.firstinspires.ftc.Tempest_2017_2018.teamcode.Manipulators;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;

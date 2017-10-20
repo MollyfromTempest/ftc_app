@@ -30,12 +30,12 @@ public class Glyph_Arm
         liftArm = HWMap.dcMotor.get("liftArm");
         liftArm.setMode(encMode);
         liftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        liftArm.setMaxSpeed(speed);
+        //liftArm.setMaxSpeed(speed);
 
         grabArm = HWMap.dcMotor.get("grabArm");
         grabArm.setMode(encMode);
         grabArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        grabArm.setMaxSpeed(speed);
+        //grabArm.setMaxSpeed(speed);
     }
 
     public void lift()

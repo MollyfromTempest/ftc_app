@@ -1,24 +1,19 @@
 package org.firstinspires.ftc.ftc_app.TeamCode.src.main.java.org.firstinspires.ftc.Tempest_2017_2018.teamcode.DriveTrains;
-
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.ftc_app.TeamCode.src.main.java.org.firstinspires.ftc.Tempest_2017_2018.teamcode.Manipulators.Glyph_Arm;
+import org.firstinspires.ftc.ftc_app.TeamCode.src.main.java.org.firstinspires.ftc.Tempest_2017_2018.teamcode.Manipulators.Jewel_Arm;
+import org.firstinspires.ftc.ftc_app.TeamCode.src.main.java.org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors.ColorSensorClass;
+import org.firstinspires.ftc.ftc_app.TeamCode.src.main.java.org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors.GyroScope;
+
 /**
- * Created by Molly on 9/30/2017.
+ * Created by Molly on 10/20/2017.
  */
 
-public class SuperBasicHolonomicDrive {
-    /*
-    This is a class that I created to help the build team test their robot.
-    It allows the robot to pan, and nothing else.
-    Use if you have no sensors attached and you have no desire for more complicated functionality.
-    This class forms the basis for BasicTeleop.
-     */
-    int speed = 140*4;
-
-    HardwareMap HWMap;
-
-    public SuperBasicHolonomicDrive(){}
+public class HolonomicDriveForJewelAutonomous {
     DcMotor.RunMode encMode = DcMotor.RunMode.RUN_USING_ENCODER;
 
     public DcMotor NW;
@@ -26,33 +21,50 @@ public class SuperBasicHolonomicDrive {
     public DcMotor SW;
     public DcMotor SE;
 
-    public void init(HardwareMap newHWMap) {
+    public ColorSensorClass color;
+    public Jewel_Arm jewelArm;
+
+
+    int speed = 140*4;
+
+    HardwareMap HWMap;
+
+    public HolonomicDriveForJewelAutonomous(){}
+
+    public void init(HardwareMap newHWMap){
         HWMap = newHWMap;
 
         NW = HWMap.dcMotor.get("NW");
         NW.setMode(encMode);
         NW.setDirection(DcMotor.Direction.REVERSE);
         NW.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //NW.setMaxSpeed(speed);
+        NW.setMaxSpeed(speed);
 
         NE = HWMap.dcMotor.get("NE");
         NE.setMode(encMode);
         NE.setDirection(DcMotor.Direction.FORWARD);
         NE.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //NE.setMaxSpeed(speed);
+        NE.setMaxSpeed(speed);
 
         SW = HWMap.dcMotor.get("SW");
         SW.setMode(encMode);
         SW.setDirection(DcMotor.Direction.REVERSE);
         SW.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //SW.setMaxSpeed(speed);
+        SW.setMaxSpeed(speed);
 
         SE = HWMap.dcMotor.get("SE");
         SE.setMode(encMode);
         SE.setDirection(DcMotor.Direction.FORWARD);
         SE.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //SE.setMaxSpeed(speed);
+        SE.setMaxSpeed(speed);
+
+        color = new ColorSensorClass();
+        color.init(HWMap);
+
+        jewelArm = new Jewel_Arm();
+        jewelArm.init(HWMap);
     }
+
     public void pan(double theta, double power){
         if (power <= 1 && power >= -1){
             NW.setPower(power*Math.sin(theta));
@@ -79,4 +91,17 @@ public class SuperBasicHolonomicDrive {
         SW.setPower(0);
     }
 
+    public void turnleftunlim(double turnspeedleft, LinearOpMode master) throws InterruptedException {
+        NE.setPower(turnspeedleft);
+        SE.setPower(turnspeedleft);
+        NW.setPower(-turnspeedleft);
+        SW.setPower(-turnspeedleft);
+    }
+
+    public void turnrightunlim(double turnspeedright, LinearOpMode master) throws InterruptedException {
+        NE.setPower(-turnspeedright);
+        SE.setPower(-turnspeedright);
+        NW.setPower(turnspeedright);
+        SW.setPower(turnspeedright);
+    }
 }

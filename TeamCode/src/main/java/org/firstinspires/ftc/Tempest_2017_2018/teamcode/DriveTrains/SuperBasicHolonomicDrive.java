@@ -33,25 +33,25 @@ public class SuperBasicHolonomicDrive {
         NW.setMode(encMode);
         NW.setDirection(DcMotor.Direction.REVERSE);
         NW.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        NW.setMaxSpeed(speed);
+        //NW.setMaxSpeed(speed);
 
         NE = HWMap.dcMotor.get("NE");
         NE.setMode(encMode);
         NE.setDirection(DcMotor.Direction.FORWARD);
         NE.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        NE.setMaxSpeed(speed);
+        //NE.setMaxSpeed(speed);
 
         SW = HWMap.dcMotor.get("SW");
         SW.setMode(encMode);
         SW.setDirection(DcMotor.Direction.REVERSE);
         SW.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        SW.setMaxSpeed(speed);
+        //SW.setMaxSpeed(speed);
 
         SE = HWMap.dcMotor.get("SE");
         SE.setMode(encMode);
         SE.setDirection(DcMotor.Direction.FORWARD);
         SE.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        SE.setMaxSpeed(speed);
+        //SE.setMaxSpeed(speed);
     }
     public void pan(double theta, double power){
         if (power <= 1 && power >= -1){

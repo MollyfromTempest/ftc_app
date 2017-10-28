@@ -46,6 +46,7 @@ public class Jewel_Autonomous extends LinearOpMode{
             telemetry.addData("Left blue", leftBlue);
             telemetry.addData("Left red", leftRed);
 
+            
             if (leftBlue && rightBlue){
                 //Both blue -- something is wrong!
                 telemetry.addData ("Color sensor", "Both blue");

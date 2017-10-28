@@ -15,6 +15,7 @@ import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors.GyroScope;
  */
 public class    HolonomicDrive {
     DcMotor.RunMode encMode = DcMotor.RunMode.RUN_USING_ENCODER;
+    DcMotor.RunMode dumbMode = DcMotor.RunMode.RUN_WITHOUT_ENCODER;
 
     public DcMotor NW;
     public DcMotor NE;
@@ -38,31 +39,31 @@ public class    HolonomicDrive {
         HWMap = newHWMap;
 
         NW = HWMap.dcMotor.get("NW");
-        NW.setMode(encMode);
+        NW.setMode(dumbMode);
         NW.setDirection(DcMotor.Direction.REVERSE);
         NW.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //NW.setMaxSpeed(speed);
 
         NE = HWMap.dcMotor.get("NE");
-        NE.setMode(encMode);
+        NE.setMode(dumbMode);
         NE.setDirection(DcMotor.Direction.FORWARD);
         NE.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //NE.setMaxSpeed(speed);
 
         SW = HWMap.dcMotor.get("SW");
-        SW.setMode(encMode);
+        SW.setMode(dumbMode);
         SW.setDirection(DcMotor.Direction.REVERSE);
         SW.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //SW.setMaxSpeed(speed);
 
         SE = HWMap.dcMotor.get("SE");
-        SE.setMode(encMode);
+        SE.setMode(dumbMode);
         SE.setDirection(DcMotor.Direction.FORWARD);
         SE.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //SE.setMaxSpeed(speed);
 
         gyro = new GyroScope();
-        gyro.init(HWMap);
+        //gyro.init(HWMap);
 
         color = new ColorSensorClass();
         color.init(HWMap);
@@ -71,9 +72,9 @@ public class    HolonomicDrive {
         jewelArm.init(HWMap);
 
         glyphArm = new Glyph_Arm();
-        glyphArm.init(HWMap);
+        //glyphArm.init(HWMap);
 
-        BlueSwitch = HWMap.digitalChannel.get("LEDBlueSwitch");
+        //BlueSwitch = HWMap.digitalChannel.get("LEDBlueSwitch");
     }
 
     public void pan(double theta, double power){
@@ -125,14 +126,14 @@ public class    HolonomicDrive {
         while(gyro.robotHeading() < turnangle || gyro.robotHeading() > 300) master.idle();
         stopmotors();
     }
-    public void turnleftunlim(double turnspeedleft, LinearOpMode master) throws InterruptedException {
+    public void turnleftunlim(double turnspeedleft) {
         NE.setPower(turnspeedleft);
         SE.setPower(turnspeedleft);
         NW.setPower(-turnspeedleft);
         SW.setPower(-turnspeedleft);
     }
 
-    public void turnrightunlim(double turnspeedright, LinearOpMode master) throws InterruptedException {
+    public void turnrightunlim(double turnspeedright) {
         NE.setPower(-turnspeedright);
         SE.setPower(-turnspeedright);
         NW.setPower(turnspeedright);

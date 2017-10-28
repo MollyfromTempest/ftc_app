@@ -36,10 +36,10 @@ import org.firstinspires.ftc.Tempest_2017_2018.teamcode.DriveTrains.HolonomicDri
         Sleep(2000);
         Holodrive.stopmotors();
         Sleep(1000);
-        Holodrive.turnleftunlim(0.5, this);
+        Holodrive.turnleftunlim(0.5);
         Sleep(2000);
         Holodrive.stopmotors();
-        Holodrive.turnrightunlim(0.5, this);
+        Holodrive.turnrightunlim(0.5);
         Holodrive.stopmotors();
 
     }

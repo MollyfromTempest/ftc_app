@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Jewel_Arm {
     Servo jewelArm;
-    double up = 0.7;
-    double down = 0.3;
+    double up = 0.3;
+    double down = 0.62;
     //These values can be changed later but they seem plausible
 
     HardwareMap HWMap;

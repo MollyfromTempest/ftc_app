@@ -23,13 +23,14 @@ public class ColorSensorClass {
         leftColor = this.HWMap.colorSensor.get("leftColor");
         rightColor = this.HWMap.colorSensor.get("rightColor");
 
-        leftColor.setI2cAddress(new I2cAddr(0x3c/2));
-        rightColor.setI2cAddress(new I2cAddr(0x3a/2));//Divide by 2 because expecting 7 bit version of address
+        leftColor.setI2cAddress(new I2cAddr(0x3a/2));
+        rightColor.setI2cAddress(new I2cAddr(0x3c/2));//Divide by 2 because expecting 7 bit version of address
 
     }
     public boolean isRed(ColorSensor sensor) {
         return (sensor.red() > sensor.blue());
     }
+
     public boolean isBlue(ColorSensor sensor) {
         return (sensor.red() < sensor.blue());
     }

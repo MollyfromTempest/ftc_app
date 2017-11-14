@@ -8,15 +8,15 @@ import org.firstinspires.ftc.Tempest_2017_2018.teamcode.DriveTrains.HolonomicDri
 /**
  * Created by Molly on 5/27/2017.
  */
-    @Autonomous
-    public class HolonomicDriveTest extends LinearOpMode {
+@Autonomous
+public class HolonomicDriveTest extends LinearOpMode {
 
-        HolonomicDrive Holodrive;
-        public void Sleep(long ticks) throws InterruptedException {
-            long timer = System.currentTimeMillis();
-            while (System.currentTimeMillis() - timer < ticks) {
-                idle();
-            }
+    HolonomicDrive Holodrive;
+    public void Sleep(long ticks) throws InterruptedException {
+        long timer = System.currentTimeMillis();
+        while (System.currentTimeMillis() - timer < ticks) {
+            idle();
+        }
     }
     @Override
     public void runOpMode ()throws InterruptedException {

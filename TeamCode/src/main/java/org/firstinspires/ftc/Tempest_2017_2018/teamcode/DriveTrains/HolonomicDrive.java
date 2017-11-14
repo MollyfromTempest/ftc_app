@@ -62,7 +62,7 @@ public class    HolonomicDrive {
         SE.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //SE.setMaxSpeed(speed);
 
-        gyro = new GyroScope();
+        //gyro = new GyroScope();
         //gyro.init(HWMap);
 
         color = new ColorSensorClass();
@@ -72,7 +72,7 @@ public class    HolonomicDrive {
         jewelArm.init(HWMap);
 
         glyphArm = new Glyph_Arm();
-        //glyphArm.init(HWMap);
+        glyphArm.init(HWMap);
 
         //BlueSwitch = HWMap.digitalChannel.get("LEDBlueSwitch");
     }
@@ -103,12 +103,12 @@ public class    HolonomicDrive {
         SW.setPower(0);
     }
 
-    public void turnleft(int turnangle, double turnspeedleft, LinearOpMode master) throws InterruptedException {
+    /*public void turnleft(int turnangle, double turnspeedleft, LinearOpMode master) throws InterruptedException {
         gyro.resetRobotHeading();
-        NE.setPower(turnspeedleft);
-        SE.setPower(turnspeedleft);
-        NW.setPower(-turnspeedleft);
-        SW.setPower(-turnspeedleft);
+        NE.setPower(-turnspeedleft);
+        SE.setPower(-turnspeedleft);
+        NW.setPower(turnspeedleft);
+        SW.setPower(turnspeedleft);
         while(gyro.robotHeading() > 360 - turnangle || gyro.robotHeading() < 100){
             master.telemetry.addData("Robot Heading:", gyro.robotHeading());
             master.telemetry.update();
@@ -116,27 +116,27 @@ public class    HolonomicDrive {
         }
         stopmotors();
     }
-
     public void turnright(int turnangle, double turnspeedright, LinearOpMode master) throws InterruptedException {
         gyro.resetRobotHeading();
-        NE.setPower(-turnspeedright);
-        SE.setPower(-turnspeedright);
-        NW.setPower(turnspeedright);
-        SW.setPower(turnspeedright);
+        NE.setPower(turnspeedright);
+        SE.setPower(turnspeedright);
+        NW.setPower(-turnspeedright);
+        SW.setPower(-turnspeedright);
         while(gyro.robotHeading() < turnangle || gyro.robotHeading() > 300) master.idle();
         stopmotors();
-    }
+    }*/
+
     public void turnleftunlim(double turnspeedleft) {
-        NE.setPower(turnspeedleft);
-        SE.setPower(turnspeedleft);
-        NW.setPower(-turnspeedleft);
-        SW.setPower(-turnspeedleft);
+        NE.setPower(-turnspeedleft);
+        SE.setPower(-turnspeedleft);
+        NW.setPower(turnspeedleft);
+        SW.setPower(turnspeedleft);
     }
 
     public void turnrightunlim(double turnspeedright) {
-        NE.setPower(-turnspeedright);
-        SE.setPower(-turnspeedright);
-        NW.setPower(turnspeedright);
-        SW.setPower(turnspeedright);
+        NE.setPower(turnspeedright);
+        SE.setPower(turnspeedright);
+        NW.setPower(-turnspeedright);
+        SW.setPower(-turnspeedright);
     }
 }

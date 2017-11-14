@@ -39,14 +39,14 @@ public class Jewel_Autonomous extends LinearOpMode{
         boolean leftRed = Holodrive.color.isRed(Holodrive.color.leftColor);
 
         if (true){
-        //if (Holodrive.BlueSwitch.getState()){
+            //if (Holodrive.BlueSwitch.getState()){
             //BLUE BLUE BLUE
             telemetry.addData("Right blue", rightBlue);
             telemetry.addData("Right red", rightRed);
             telemetry.addData("Left blue", leftBlue);
             telemetry.addData("Left red", leftRed);
 
-            
+
             if (leftBlue && rightBlue){
                 //Both blue -- something is wrong!
                 telemetry.addData ("Color sensor", "Both blue");
@@ -65,7 +65,7 @@ public class Jewel_Autonomous extends LinearOpMode{
             } else if (leftRed && rightBlue){
                 // Left red and right blue. Since we are blue, we want to turn left.
                 telemetry.addData ("Color sensor", "Left red, right blue");
-                Holodrive.turnrightunlim(0.2);
+                Holodrive.turnleftunlim(0.2);
                 Sleep(500);
                 Holodrive.stopmotors();
             } else {

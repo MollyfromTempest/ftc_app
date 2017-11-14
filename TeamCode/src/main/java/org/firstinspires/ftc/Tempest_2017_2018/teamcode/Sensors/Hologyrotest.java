@@ -11,7 +11,7 @@ import org.firstinspires.ftc.Tempest_2017_2018.teamcode.DriveTrains.HolonomicDri
  */
 @Autonomous
 public class Hologyrotest extends LinearOpMode{
-   HolonomicDrive Holodrive;
+    HolonomicDrive Holodrive;
     public void Sleep(long ticks) throws InterruptedException {
         long timer = System.currentTimeMillis();
         while (System.currentTimeMillis() - timer < ticks) {
@@ -20,6 +20,7 @@ public class Hologyrotest extends LinearOpMode{
     }
     @Override
     public void runOpMode() throws InterruptedException{
+        /*
         Holodrive = new HolonomicDrive();
         Holodrive.init(hardwareMap);
         waitForStart();
@@ -52,6 +53,6 @@ public class Hologyrotest extends LinearOpMode{
         Sleep(2000);
         Holodrive.turnright(360, 0.5, this);
         Holodrive.stopmotors();
-        Sleep(2000);
+        Sleep(2000);*/
     }
 }

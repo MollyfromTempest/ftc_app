@@ -4,19 +4,30 @@ package org.firstinspires.ftc.Tempest_2017_2018.teamcode.Manipulators;
  * Created by Molly on 10/7/2017.
  */
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class Glyph_Arm
+
 {
     DcMotor.RunMode encMode = DcMotor.RunMode.RUN_USING_ENCODER;
     DcMotor liftArm;
-    DcMotor grabArm;
+    Servo grabArmLeft;
+    Servo grabArmRight;
 
     int speed = 140*4;
-    double liftPower = 0.5;
-    double lowerPower = -0.5;
+    double liftPower = 0.4;
+    double lowerPower = -0.4;
     double grabPower = 0.2;
+
+    int LiftZeroPosition;
+    int LiftMidPosition = 850;
+    int LiftTopPosition = 1500;
+    int Increment = 150;
+    long TimeOut = 3000;
 
     HardwareMap HWMap;
 
@@ -30,11 +41,16 @@ public class Glyph_Arm
         liftArm = HWMap.dcMotor.get("liftArm");
         liftArm.setMode(encMode);
         liftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        liftArm.setDirection(DcMotorSimple.Direction.REVERSE);
+        LiftZeroPosition = liftArm.getCurrentPosition();
+        LiftMidPosition = LiftMidPosition + LiftZeroPosition;
+        LiftTopPosition = LiftTopPosition + LiftZeroPosition;
+        //So positive power is up
         //liftArm.setMaxSpeed(speed);
 
-        grabArm = HWMap.dcMotor.get("grabArm");
-        grabArm.setMode(encMode);
-        grabArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        grabArmLeft = HWMap.servo.get("grabArmLeft");
+        grabArmRight = HWMap.servo.get("grabArmRight");
+        release();
         //grabArm.setMaxSpeed(speed);
     }
 
@@ -50,16 +66,96 @@ public class Glyph_Arm
     {
         liftArm.setPower(0);
     }
+
+    public void zeroPosition (LinearOpMode master) {
+        int currentPosition = liftArm.getCurrentPosition();
+
+        liftArm.setTargetPosition(LiftZeroPosition);
+
+        if (currentPosition > liftArm.getTargetPosition()) {
+            lower();
+        } else {
+            lift();
+        }
+
+        long startTime = System.currentTimeMillis();
+
+        while (liftArm.isBusy() && (System.currentTimeMillis()- startTime < TimeOut)) {
+            master.idle();
+        }
+
+        stopLifting();
+    }
+
+    public void midPosition (LinearOpMode master) {
+        int currentPosition = liftArm.getCurrentPosition();
+
+        liftArm.setTargetPosition(LiftMidPosition);
+
+        if (currentPosition > liftArm.getTargetPosition()) {
+            lower();
+        } else {
+            lift();
+        }
+        long startTime = System.currentTimeMillis();
+
+        while (liftArm.isBusy()&& (System.currentTimeMillis()- startTime < TimeOut)) {
+            master.idle();
+        }
+
+        stopLifting();
+    }
+
+    public void topPosition (LinearOpMode master) {
+        int currentPosition = liftArm.getCurrentPosition();
+
+        liftArm.setTargetPosition(LiftTopPosition);
+
+        if (currentPosition > liftArm.getTargetPosition()) {
+            lower();
+        } else {
+            lift();
+        }
+        long startTime = System.currentTimeMillis();
+
+        while (liftArm.isBusy()&& (System.currentTimeMillis()- startTime < TimeOut)) {
+            master.idle();
+        }
+
+        stopLifting();
+    }
+
+    public void incrementPosition (LinearOpMode master) {
+        int currentPosition = liftArm.getCurrentPosition();
+
+        liftArm.setTargetPosition(currentPosition + Increment);
+
+        if (currentPosition > liftArm.getTargetPosition()) {
+            lower();
+        } else {
+            lift();
+        }
+        long startTime = System.currentTimeMillis();
+
+        while (liftArm.isBusy()&& (System.currentTimeMillis()- startTime < TimeOut)) {
+            master.idle();
+        }
+
+        stopLifting();
+    }
     public void grab()
     {
-        grabArm.setPower(grabPower);
+        grabArmLeft.setPosition(0.45);
+        grabArmRight.setPosition(0.55);
     }
     public void release()
     {
-        grabArm.setPower(-grabPower);
+        grabArmLeft.setPosition(1);
+        grabArmRight.setPosition(0);
     }
     public void holdGrabPosition()
     {
-        grabArm.setPower(0);
+        if (grabArmLeft.getPosition()>0 && grabArmLeft.getPosition()<1){grabArmLeft.setPosition(grabArmLeft.getPosition());}
+        if (grabArmRight.getPosition()>0 && grabArmRight.getPosition()<1){grabArmRight.setPosition(grabArmRight.getPosition());}
     }
 }

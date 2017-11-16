@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.Tempest_2017_2018.teamcode.DriveTrains;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -40,25 +41,25 @@ public class    HolonomicDrive {
 
         NW = HWMap.dcMotor.get("NW");
         NW.setMode(dumbMode);
-        NW.setDirection(DcMotor.Direction.REVERSE);
+        NW.setDirection(DcMotor.Direction.FORWARD);
         NW.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //NW.setMaxSpeed(speed);
 
         NE = HWMap.dcMotor.get("NE");
         NE.setMode(dumbMode);
-        NE.setDirection(DcMotor.Direction.FORWARD);
+        NE.setDirection(DcMotor.Direction.REVERSE);
         NE.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //NE.setMaxSpeed(speed);
 
         SW = HWMap.dcMotor.get("SW");
         SW.setMode(dumbMode);
-        SW.setDirection(DcMotor.Direction.REVERSE);
+        SW.setDirection(DcMotor.Direction.FORWARD);
         SW.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //SW.setMaxSpeed(speed);
 
         SE = HWMap.dcMotor.get("SE");
         SE.setMode(dumbMode);
-        SE.setDirection(DcMotor.Direction.FORWARD);
+        SE.setDirection(DcMotor.Direction.REVERSE);
         SE.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //SE.setMaxSpeed(speed);
 
@@ -74,7 +75,7 @@ public class    HolonomicDrive {
         glyphArm = new Glyph_Arm();
         glyphArm.init(HWMap);
 
-        //BlueSwitch = HWMap.digitalChannel.get("LEDBlueSwitch");
+        BlueSwitch = HWMap.digitalChannel.get("LEDBlueSwitch");
     }
 
     public void pan(double theta, double power){
@@ -103,40 +104,43 @@ public class    HolonomicDrive {
         SW.setPower(0);
     }
 
-    /*public void turnleft(int turnangle, double turnspeedleft, LinearOpMode master) throws InterruptedException {
-        gyro.resetRobotHeading();
-        NE.setPower(-turnspeedleft);
-        SE.setPower(-turnspeedleft);
-        NW.setPower(turnspeedleft);
-        SW.setPower(turnspeedleft);
-        while(gyro.robotHeading() > 360 - turnangle || gyro.robotHeading() < 100){
-            master.telemetry.addData("Robot Heading:", gyro.robotHeading());
-            master.telemetry.update();
-            master.idle();
-        }
-        stopmotors();
-    }
-    public void turnright(int turnangle, double turnspeedright, LinearOpMode master) throws InterruptedException {
-        gyro.resetRobotHeading();
-        NE.setPower(turnspeedright);
-        SE.setPower(turnspeedright);
-        NW.setPower(-turnspeedright);
-        SW.setPower(-turnspeedright);
-        while(gyro.robotHeading() < turnangle || gyro.robotHeading() > 300) master.idle();
-        stopmotors();
-    }*/
+   /*public void turnleft(int turnangle, double turnspeedleft, LinearOpMode master) throws InterruptedException {
+       gyro.resetRobotHeading();
+       NE.setPower(-turnspeedleft);
+       SE.setPower(-turnspeedleft);
+       NW.setPower(turnspeedleft);
+       SW.setPower(turnspeedleft);
+       while(gyro.robotHeading() > 360 - turnangle || gyro.robotHeading() < 100){
+           master.telemetry.addData("Robot Heading:", gyro.robotHeading());
+           master.telemetry.update();
+           master.idle();
+       }
+       stopmotors();
+   }
+
+   public void turnright(int turnangle, double turnspeedright, LinearOpMode master) throws InterruptedException {
+       gyro.resetRobotHeading();
+       NE.setPower(turnspeedright);
+       SE.setPower(turnspeedright);
+       NW.setPower(-turnspeedright);
+       SW.setPower(-turnspeedright);
+       while(gyro.robotHeading() < turnangle || gyro.robotHeading() > 300) master.idle();
+       stopmotors();
+   }*/
 
     public void turnleftunlim(double turnspeedleft) {
-        NE.setPower(-turnspeedleft);
-        SE.setPower(-turnspeedleft);
-        NW.setPower(turnspeedleft);
-        SW.setPower(turnspeedleft);
+        NE.setPower(turnspeedleft);
+        SE.setPower(turnspeedleft);
+        NW.setPower(-turnspeedleft);
+        SW.setPower(-turnspeedleft);
     }
 
     public void turnrightunlim(double turnspeedright) {
-        NE.setPower(turnspeedright);
-        SE.setPower(turnspeedright);
-        NW.setPower(-turnspeedright);
-        SW.setPower(-turnspeedright);
+        NE.setPower(-turnspeedright);
+        SE.setPower(-turnspeedright);
+        NW.setPower(turnspeedright);
+        SW.setPower(turnspeedright);
     }
 }
+
+

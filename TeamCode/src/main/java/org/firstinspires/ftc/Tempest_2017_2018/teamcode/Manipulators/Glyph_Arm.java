@@ -14,19 +14,20 @@ public class Glyph_Arm
 
 {
     DcMotor.RunMode encMode = DcMotor.RunMode.RUN_USING_ENCODER;
-    DcMotor liftArm;
-    Servo grabArmLeft;
-    Servo grabArmRight;
+    public DcMotor liftArm;
+    public Servo grabArmLeft;
+    public Servo grabArmRight;
 
     int speed = 140*4;
     double liftPower = 0.4;
     double lowerPower = -0.4;
     double grabPower = 0.2;
 
-    int LiftZeroPosition;
-    int LiftMidPosition = 850;
-    int LiftTopPosition = 1500;
-    int Increment = 150;
+    public int LiftZeroPosition;
+    public int LiftMidPosition = 850;
+    public int LiftTopPosition = 1500;
+    public int Increment = 150;
+    public int WiggleRoom = 20;
     long TimeOut = 3000;
 
     HardwareMap HWMap;
@@ -145,13 +146,13 @@ public class Glyph_Arm
     }
     public void grab()
     {
-        grabArmLeft.setPosition(0.45);
-        grabArmRight.setPosition(0.55);
+        grabArmLeft.setPosition(0.488);
+        grabArmRight.setPosition(0.371);
     }
     public void release()
     {
-        grabArmLeft.setPosition(1);
-        grabArmRight.setPosition(0);
+        grabArmLeft.setPosition(0.82);
+        grabArmRight.setPosition(0.059);
     }
     public void holdGrabPosition()
     {
@@ -159,3 +160,5 @@ public class Glyph_Arm
         if (grabArmRight.getPosition()>0 && grabArmRight.getPosition()<1){grabArmRight.setPosition(grabArmRight.getPosition());}
     }
 }
+
+

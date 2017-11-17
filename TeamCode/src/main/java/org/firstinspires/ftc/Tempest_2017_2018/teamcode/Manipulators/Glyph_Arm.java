@@ -14,21 +14,20 @@ public class Glyph_Arm
 
 {
     DcMotor.RunMode encMode = DcMotor.RunMode.RUN_USING_ENCODER;
-    public DcMotor liftArm;
-    public Servo grabArmLeft;
-    public Servo grabArmRight;
+    public DcMotor liftArm; //Arm to lift the blocks
+    public Servo grabArmLeft; //Left side of grabbing mechanism
+    public Servo grabArmRight; //Right side of grabbing mechanism
 
-    int speed = 140*4;
-    double liftPower = 0.4;
-    double lowerPower = -0.4;
-    double grabPower = 0.2;
+    int speed = 140*4; //Holdover from the setMaxSpeed era
+    double liftPower = 0.4; //Power used to lift the blocks
+    double lowerPower = -0.4; //Power used to lower the blocks. It has its own variable in case we decide it should be different
 
-    public int LiftZeroPosition;
-    public int LiftMidPosition = 850;
-    public int LiftTopPosition = 1500;
-    public int Increment = 150;
-    public int WiggleRoom = 20;
-    long TimeOut = 3000;
+    public int LiftZeroPosition; //Starting position, on the ground
+    public int LiftMidPosition = 850; //Slightly more than 6 inches (so blocks can be stacked)
+    public int LiftTopPosition = 1500; //Slightly more than 12 inches (so blocks can be stacked)
+    public int Increment = 150; //Approximately 1 inch
+    public int WiggleRoom = 20; //Small number of encoder ticks
+    long TimeOut = 3000; //Value for clock timeout on lifting/lowering
 
     HardwareMap HWMap;
 
@@ -43,7 +42,7 @@ public class Glyph_Arm
         liftArm.setMode(encMode);
         liftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftArm.setDirection(DcMotorSimple.Direction.REVERSE);
-        LiftZeroPosition = liftArm.getCurrentPosition();
+        LiftZeroPosition = liftArm.getCurrentPosition(); //Must start arm in bottom position
         LiftMidPosition = LiftMidPosition + LiftZeroPosition;
         LiftTopPosition = LiftTopPosition + LiftZeroPosition;
         //So positive power is up
@@ -58,17 +57,18 @@ public class Glyph_Arm
     public void lift()
     {
         liftArm.setPower(liftPower);
-    }
+    } //raises the arm
     public void lower()
     {
         liftArm.setPower(lowerPower);
-    }
+    } //lowers the arm
     public void stopLifting()
     {
         liftArm.setPower(0);
-    }
+    } //stops the arm from moving
 
     public void zeroPosition (LinearOpMode master) {
+        //Sends the arm to the bottom position
         int currentPosition = liftArm.getCurrentPosition();
 
         liftArm.setTargetPosition(LiftZeroPosition);
@@ -78,7 +78,7 @@ public class Glyph_Arm
         } else {
             lift();
         }
-
+        //Times out if it runs for more than 3 seconds. The same code exists for the other lifting functions.
         long startTime = System.currentTimeMillis();
 
         while (liftArm.isBusy() && (System.currentTimeMillis()- startTime < TimeOut)) {
@@ -89,6 +89,7 @@ public class Glyph_Arm
     }
 
     public void midPosition (LinearOpMode master) {
+        //Sends the arm to the middle position
         int currentPosition = liftArm.getCurrentPosition();
 
         liftArm.setTargetPosition(LiftMidPosition);
@@ -98,6 +99,7 @@ public class Glyph_Arm
         } else {
             lift();
         }
+        //Times out if it runs for more than 3 seconds. The same code exists for the other lifting functions.
         long startTime = System.currentTimeMillis();
 
         while (liftArm.isBusy()&& (System.currentTimeMillis()- startTime < TimeOut)) {
@@ -108,6 +110,7 @@ public class Glyph_Arm
     }
 
     public void topPosition (LinearOpMode master) {
+        //Sends the arm to the top position
         int currentPosition = liftArm.getCurrentPosition();
 
         liftArm.setTargetPosition(LiftTopPosition);
@@ -117,6 +120,7 @@ public class Glyph_Arm
         } else {
             lift();
         }
+        //Times out if it runs for more than 3 seconds. The same code exists for the other lifting functions.
         long startTime = System.currentTimeMillis();
 
         while (liftArm.isBusy()&& (System.currentTimeMillis()- startTime < TimeOut)) {
@@ -127,6 +131,7 @@ public class Glyph_Arm
     }
 
     public void incrementPosition (LinearOpMode master) {
+        //Moves the arm up by the increment value to allow fine-tuning
         int currentPosition = liftArm.getCurrentPosition();
 
         liftArm.setTargetPosition(currentPosition + Increment);
@@ -136,6 +141,7 @@ public class Glyph_Arm
         } else {
             lift();
         }
+        //Times out if it runs for more than 3 seconds. The same code exists for the other lifting functions.
         long startTime = System.currentTimeMillis();
 
         while (liftArm.isBusy()&& (System.currentTimeMillis()- startTime < TimeOut)) {
@@ -146,19 +152,20 @@ public class Glyph_Arm
     }
     public void grab()
     {
+        //Grabs a block (currently unused)
         grabArmLeft.setPosition(0.488);
         grabArmRight.setPosition(0.371);
     }
     public void release()
     {
+        //Releases the block (currently unused)
         grabArmLeft.setPosition(0.82);
         grabArmRight.setPosition(0.059);
     }
     public void holdGrabPosition()
     {
+        //Preserves the current location of the grabbers (currently unused)
         if (grabArmLeft.getPosition()>0 && grabArmLeft.getPosition()<1){grabArmLeft.setPosition(grabArmLeft.getPosition());}
         if (grabArmRight.getPosition()>0 && grabArmRight.getPosition()<1){grabArmRight.setPosition(grabArmRight.getPosition());}
     }
 }
-
-

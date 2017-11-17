@@ -7,10 +7,10 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 
 public class Jewel_Arm {
+    //This defines the arm for hitting the jewels in autonomous mode
     Servo jewelArm;
-    double up = 0.1;
-    double down = 0.62;
-    //These values can be changed later but they seem plausible
+    double up = 0.1; // Value for when the arm IS NOT in hitting position (starts here in autonomous)
+    double down = 0.62; //Value for when the arm IS in hitting position (moves here when autonomous starts)
 
     HardwareMap HWMap;
 
@@ -22,12 +22,15 @@ public class Jewel_Arm {
     }
 
     public void jewelArmPosition(double pos){
+        //This allows for greater flexibility if we decide we need more positions
         jewelArm.setPosition(pos);
     }
     public void jewelArmUp(){
+        //Moves the arm up
         jewelArmPosition(up);
     }
     public void jewelArmDown(){
+        //Moves the arm down
         jewelArmPosition(down);
     }
 }

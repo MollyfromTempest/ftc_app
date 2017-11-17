@@ -17,19 +17,20 @@ import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors.GyroScope;
 public class    HolonomicDrive {
     DcMotor.RunMode encMode = DcMotor.RunMode.RUN_USING_ENCODER;
     DcMotor.RunMode dumbMode = DcMotor.RunMode.RUN_WITHOUT_ENCODER;
-
+    //Define the four drive motors (labelled on robot)
     public DcMotor NW;
     public DcMotor NE;
     public DcMotor SW;
     public DcMotor SE;
-
+    //Switch for red/blue mode. True means red mode (unlike last year)
     public DigitalChannel BlueSwitch;
-
+    //Gyro sensor does not actually exist
     public GyroScope gyro;
+    //Defining the various classes we ARE using
     public ColorSensorClass color;
     public Jewel_Arm jewelArm;
     public Glyph_Arm glyphArm;
-
+    //Was used to set max speed before that stopped being allowed
     int speed = 140*4;
 
     HardwareMap HWMap;
@@ -79,12 +80,14 @@ public class    HolonomicDrive {
     }
 
     public void pan(double theta, double power){
+        //This is the pan function. If it is given an angle, it will move the robot at that angle.
         if (power <= 1 && power >= -1){
             NW.setPower(power*Math.sin(theta));
             SE.setPower(power*Math.sin(theta));
             NE.setPower(power*Math.cos(theta));
             SW.setPower(power*Math.cos(theta));
         }else if (power>1){
+            //If it is given a power outside of the allowable range, it will adjust to be within an allowable range
             NW.setPower(1*Math.sin(theta));
             SE.setPower(1*Math.sin(theta));
             NE.setPower(1*Math.cos(theta));
@@ -98,12 +101,13 @@ public class    HolonomicDrive {
     }
 
     public void stopmotors(){
+        //Stops the drive motors
         NW.setPower(0);
         SE.setPower(0);
         NE.setPower(0);
         SW.setPower(0);
     }
-
+    //The following code is reserved for future use, if we decide we want the gyro sensor. It works as of last summer.
    /*public void turnleft(int turnangle, double turnspeedleft, LinearOpMode master) throws InterruptedException {
        gyro.resetRobotHeading();
        NE.setPower(-turnspeedleft);
@@ -129,13 +133,15 @@ public class    HolonomicDrive {
    }*/
 
     public void turnleftunlim(double turnspeedleft) {
+        //Turns left (until it is told to stop)
         NE.setPower(turnspeedleft);
         SE.setPower(turnspeedleft);
         NW.setPower(-turnspeedleft);
         SW.setPower(-turnspeedleft);
     }
-
+    //We could technically define turning right as turning left in the negative direction, but this is simpler to remember
     public void turnrightunlim(double turnspeedright) {
+        //Turns right (until it is told to stop)
         NE.setPower(-turnspeedright);
         SE.setPower(-turnspeedright);
         NW.setPower(turnspeedright);

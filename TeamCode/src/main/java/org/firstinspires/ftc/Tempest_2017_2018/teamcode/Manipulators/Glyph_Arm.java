@@ -152,15 +152,20 @@ public class Glyph_Arm
     }
     public void grab()
     {
-        //Grabs a block (currently unused)
+        //Grabs a block
         grabArmLeft.setPosition(0.488);
         grabArmRight.setPosition(0.371);
     }
     public void release()
     {
-        //Releases the block (currently unused)
+        //Releases the block
         grabArmLeft.setPosition(0.82);
         grabArmRight.setPosition(0.059);
+    }
+    public void sortOfRelease()
+    {
+        grabArmLeft.setPosition(0.6);
+        grabArmRight.setPosition(0.25);
     }
     public void holdGrabPosition()
     {

@@ -64,24 +64,28 @@ public class Jewel_Autonomous extends LinearOpMode{
                 Holodrive.turnleftunlim(0.2);
                 Sleep(500);
                 Holodrive.stopmotors();
+                Holodrive.jewelArm.jewelArmUp();
             } else if (leftRed && !rightRed) {
                 // Left red and right not specified (but not also red). Since we are red, we want to turn right.
                 telemetry.addData("Color sensor", "Left red, right blue or unspecified");
                 Holodrive.turnrightunlim(0.2);
                 Sleep(500);
                 Holodrive.stopmotors();
+                Holodrive.jewelArm.jewelArmUp();
             }else if(!leftBlue && rightBlue){
                 //Right blue and left not specified (but not also blue). Since we are red, we want to turn right.
                 telemetry.addData("Color sensor", "Left red or unspecified, right blue");
                 Holodrive.turnrightunlim(0.2);
                 Sleep(500);
                 Holodrive.stopmotors();
+                Holodrive.jewelArm.jewelArmUp();
             }else if (!leftRed && rightRed){
                 //Right red and left not specified (but not also red). Since we are red, we want to turn left.
                 telemetry.addData("Color sensor", "Left blue or unspecified, right red");
                 Holodrive.turnleftunlim(0.2);
                 Sleep(500);
                 Holodrive.stopmotors();
+                Holodrive.jewelArm.jewelArmUp();
             }else {
                 //No reading? Ambiguous reading? Either way, something is wrong and we don't want to risk turning.
                 telemetry.addData("Color sensor", "No reading");
@@ -111,24 +115,28 @@ public class Jewel_Autonomous extends LinearOpMode{
                 Holodrive.turnrightunlim(0.2);
                 Sleep(500);
                 Holodrive.stopmotors();
+                Holodrive.jewelArm.jewelArmUp();
             } else if (leftRed && !rightRed){
                 // Left red and right unspecified (but not also red). Since we are blue, we want to turn left.
                 telemetry.addData ("Color sensor", "Left red, right blue or unspecified");
                 Holodrive.turnleftunlim(0.2);
                 Sleep(500);
                 Holodrive.stopmotors();
+                Holodrive.jewelArm.jewelArmUp();
             } else if (!leftBlue && rightBlue){
                 //Right blue and left unspecified (but not also blue). Since we are blue, we want to turn left.
                 telemetry.addData ("Color sensor", "Left red or unspecified, right blue");
                 Holodrive.turnleftunlim(0.2);
                 Sleep(500);
                 Holodrive.stopmotors();
+                Holodrive.jewelArm.jewelArmUp();
             }else if (!leftRed && rightRed){
                 //Right red and left unspecified (but not also red). Since we are blue, we want to turn right.
                 telemetry.addData ("Color sensor", "Left blue or unspecified, right red");
                 Holodrive.turnrightunlim(0.2);
                 Sleep(500);
                 Holodrive.stopmotors();
+                Holodrive.jewelArm.jewelArmUp();
             }else {
                 //No reading? Ambiguous reading? Either way, something is wrong and we don't want to risk turning.
                 telemetry.addData("Color sensor", "No reading");

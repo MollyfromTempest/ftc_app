@@ -35,6 +35,7 @@ public class Teleop_6699 extends LinearOpMode {
         double turnScale = 1;
 
         boolean JewelArmUp = false; //arm starts down after autonomous
+        boolean open = true; //default is that the grabber moves open
 
         waitForStart();
         while (opModeIsActive()) {
@@ -95,21 +96,26 @@ public class Teleop_6699 extends LinearOpMode {
                     while (gamepad1.dpad_left) idle();
                 }
 
-                /*if (gamepad1.left_trigger > 0.2 && gamepad1.right_trigger < 0.2) {
+                if (gamepad1.left_trigger > 0.2 && gamepad1.right_trigger < 0.2 && !gamepad1.dpad_down) {
                     Holodrive.glyphArm.release();
-                } else if (gamepad1.left_trigger < 0.2 && gamepad1.right_trigger > 0.2) {
+                } else if (gamepad1.left_trigger < 0.2 && gamepad1.right_trigger > 0.2 && !gamepad1.dpad_down) {
                     Holodrive.glyphArm.grab();
-                }*/
+                    open = false;
+                } else if (gamepad1.left_trigger<0.2 && gamepad1.right_trigger <0.2 && gamepad1.dpad_down){
+                    Holodrive.glyphArm.sortOfRelease();
+                }
             if (gamepad1.left_bumper){
                 //Moves the left grabber, only if the button is being held
                 Holodrive.glyphArm.grabArmLeft.setPosition(0.488);
-            }else{
+                open = true;
+            }else if(open){
                 Holodrive.glyphArm.grabArmLeft.setPosition(0.82);
             }
             if (gamepad1.right_bumper){
                 //Moves the right bumper, only if the button is being held
                 Holodrive.glyphArm.grabArmRight.setPosition(0.371);
-            }else{
+                open = true;
+            }else if (open){
                 Holodrive.glyphArm.grabArmRight.setPosition(0.059);
             }
 

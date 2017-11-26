@@ -64,8 +64,8 @@ public class    HolonomicDrive {
         SE.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //SE.setMaxSpeed(speed);
 
-        //gyro = new GyroScope();
-        //gyro.init(HWMap);
+        gyro = new GyroScope();
+        gyro.init(HWMap);
 
         color = new ColorSensorClass();
         color.init(HWMap);
@@ -108,12 +108,11 @@ public class    HolonomicDrive {
         SW.setPower(0);
     }
     //The following code is reserved for future use, if we decide we want the gyro sensor. It works as of last summer.
-   /*public void turnleft(int turnangle, double turnspeedleft, LinearOpMode master) throws InterruptedException {
-       gyro.resetRobotHeading();
-       NE.setPower(-turnspeedleft);
-       SE.setPower(-turnspeedleft);
-       NW.setPower(turnspeedleft);
-       SW.setPower(turnspeedleft);
+   public void turnleft(int turnangle, double turnspeedleft, LinearOpMode master) throws InterruptedException {
+       NE.setPower(turnspeedleft);
+       SE.setPower(turnspeedleft);
+       NW.setPower(-turnspeedleft);
+       SW.setPower(-turnspeedleft);
        while(gyro.robotHeading() > 360 - turnangle || gyro.robotHeading() < 100){
            master.telemetry.addData("Robot Heading:", gyro.robotHeading());
            master.telemetry.update();
@@ -123,14 +122,13 @@ public class    HolonomicDrive {
    }
 
    public void turnright(int turnangle, double turnspeedright, LinearOpMode master) throws InterruptedException {
-       gyro.resetRobotHeading();
-       NE.setPower(turnspeedright);
-       SE.setPower(turnspeedright);
-       NW.setPower(-turnspeedright);
-       SW.setPower(-turnspeedright);
+       NE.setPower(-turnspeedright);
+       SE.setPower(-turnspeedright);
+       NW.setPower(turnspeedright);
+       SW.setPower(turnspeedright);
        while(gyro.robotHeading() < turnangle || gyro.robotHeading() > 300) master.idle();
        stopmotors();
-   }*/
+   }
 
     public void turnleftunlim(double turnspeedleft) {
         //Turns left (until it is told to stop)

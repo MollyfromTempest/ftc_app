@@ -109,17 +109,17 @@ public class Teleop_6699 extends LinearOpMode {
                 }
             if (gamepad1.left_bumper){
                 //Moves the left grabber, only if the button is being held
-                Robot.glyphArm.grabArmLeft.setPosition(0.488);
+                Robot.glyphArm.leftGrab();
                 open = true;
             }else if(open){
-                Robot.glyphArm.grabArmLeft.setPosition(0.82);
+                Robot.glyphArm.leftRelease();
             }
             if (gamepad1.right_bumper){
                 //Moves the right bumper, only if the button is being held
-                Robot.glyphArm.grabArmRight.setPosition(0.371);
+                Robot.glyphArm.rightGrab();
                 open = true;
             }else if (open){
-                Robot.glyphArm.grabArmRight.setPosition(0.059);
+                Robot.glyphArm.rightRelease();
             }
 
 

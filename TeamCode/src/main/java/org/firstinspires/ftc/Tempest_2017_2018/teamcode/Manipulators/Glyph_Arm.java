@@ -29,6 +29,13 @@ public class Glyph_Arm
     public int WiggleRoom = 20; //Small number of encoder ticks
     long TimeOut = 3000; //Value for clock timeout on lifting/lowering
 
+    public double leftOpen = .35;
+    public double leftClosed = 0.64;
+    public double leftSlightlyOpen = 0.57;
+    public double rightOpen = 0.54;
+    public double rightClosed = 0.019;
+    public double rightSlightlyOpen = 0.1;
+
     HardwareMap HWMap;
 
     public Glyph_Arm(){}
@@ -150,22 +157,47 @@ public class Glyph_Arm
 
         stopLifting();
     }
+
+    public void leftGrab()
+    {
+        grabArmLeft.setPosition(leftClosed);
+    }
+    public void leftRelease()
+    {
+        grabArmLeft.setPosition(leftOpen);
+    }
+    public void leftSortOfRelease()
+    {
+        grabArmLeft.setPosition(leftSlightlyOpen);
+    }
+    public void rightGrab()
+    {
+        grabArmRight.setPosition(rightClosed);
+    }
+    public void rightRelease()
+    {
+        grabArmRight.setPosition(rightOpen);
+    }
+    public void rightSortOfRelease()
+    {
+        grabArmRight.setPosition(rightSlightlyOpen);
+    }
     public void grab()
     {
         //Grabs a block
-        grabArmLeft.setPosition(0.488);
-        grabArmRight.setPosition(0.371);
+        rightGrab();
+        leftGrab();
     }
     public void release()
     {
         //Releases the block
-        grabArmLeft.setPosition(0.82);
-        grabArmRight.setPosition(0.059);
+        rightRelease();
+        leftRelease();
     }
     public void sortOfRelease()
     {
-        grabArmLeft.setPosition(0.6);
-        grabArmRight.setPosition(0.25);
+        rightSortOfRelease();
+        leftSortOfRelease();
     }
     public void holdGrabPosition()
     {

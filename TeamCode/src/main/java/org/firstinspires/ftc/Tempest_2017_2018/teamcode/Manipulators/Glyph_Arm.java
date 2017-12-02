@@ -11,7 +11,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Glyph_Arm
-
 {
     DcMotor.RunMode encMode = DcMotor.RunMode.RUN_USING_ENCODER;
     public DcMotor liftArm; //Arm to lift the blocks

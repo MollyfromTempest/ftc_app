@@ -23,13 +23,8 @@ public class    HolonomicDrive {
     public DcMotor SW;
     public DcMotor SE;
     //Switch for red/blue mode. True means red mode (unlike last year)
-    public DigitalChannel BlueSwitch;
     //Gyro sensor does not actually exist
     public GyroScope gyro;
-    //Defining the various classes we ARE using
-    public ColorSensorClass color;
-    public Jewel_Arm jewelArm;
-    public Glyph_Arm glyphArm;
     //Was used to set max speed before that stopped being allowed
     int speed = 140*4;
 
@@ -66,17 +61,6 @@ public class    HolonomicDrive {
 
         gyro = new GyroScope();
         gyro.init(HWMap);
-
-        color = new ColorSensorClass();
-        color.init(HWMap);
-
-        jewelArm = new Jewel_Arm();
-        jewelArm.init(HWMap);
-
-        glyphArm = new Glyph_Arm();
-        glyphArm.init(HWMap);
-
-        BlueSwitch = HWMap.digitalChannel.get("LEDBlueSwitch");
     }
 
     public void pan(double theta, double power){

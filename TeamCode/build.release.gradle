@@ -1,8 +1,8 @@
-repositories {
+/*repositories {
     flatDir {
         dirs '../navx-micro/android/libs'
     }
-}
+}*/
 
 dependencies {
     compile project(':FtcRobotController')

@@ -11,5 +11,6 @@
 // Include common definitions from above.
 apply from: '../build.common.gradle'
 dependencies {
-    compile project(':navx_ftc-release')
+    compile project(':FtcRobotController')
+    compile project(':navx_ftc')
 }

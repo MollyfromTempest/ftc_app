@@ -1,2 +1,2 @@
-include ':FtcRobotController', ':navx_ftc-release'
+include ':FtcRobotController', ':navx_ftc'
 include ':TeamCode'

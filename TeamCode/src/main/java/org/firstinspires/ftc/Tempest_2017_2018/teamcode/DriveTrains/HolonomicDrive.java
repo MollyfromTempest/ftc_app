@@ -24,7 +24,7 @@ public class    HolonomicDrive {
     public DcMotor SE;
     //Switch for red/blue mode. True means red mode (unlike last year)
     //Gyro sensor does not actually exist
-    public GyroScope gyro;
+    //public GyroScope gyro;
     //Was used to set max speed before that stopped being allowed
     int speed = 140*4;
 
@@ -59,28 +59,28 @@ public class    HolonomicDrive {
         SE.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //SE.setMaxSpeed(speed);
 
-        gyro = new GyroScope();
-        gyro.init(HWMap);
+        //gyro = new GyroScope();
+        //gyro.init(HWMap);
     }
 
     public void pan(double theta, double power){
         //This is the pan function. If it is given an angle, it will move the robot at that angle.
         if (power <= 1 && power >= -1){
-            NW.setPower(power*Math.sin(theta));
-            SE.setPower(power*Math.sin(theta));
-            NE.setPower(power*Math.cos(theta));
-            SW.setPower(power*Math.cos(theta));
+            NW.setPower(-power*Math.cos(theta));
+            SE.setPower(-power*Math.cos(theta));
+            NE.setPower(-power*Math.sin(theta));
+            SW.setPower(-power*Math.sin(theta));
         }else if (power>1){
             //If it is given a power outside of the allowable range, it will adjust to be within an allowable range
-            NW.setPower(1*Math.sin(theta));
-            SE.setPower(1*Math.sin(theta));
-            NE.setPower(1*Math.cos(theta));
-            SW.setPower(1*Math.cos(theta));
+            NW.setPower(-1*Math.cos(theta));
+            SE.setPower(-1*Math.cos(theta));
+            NE.setPower(-1*Math.sin(theta));
+            SW.setPower(-1*Math.sin(theta));
         }else{
-            NW.setPower(-1*Math.sin(theta));
-            SE.setPower(-1*Math.sin(theta));
-            NE.setPower(-1*Math.cos(theta));
-            SW.setPower(-1*Math.cos(theta));
+            NW.setPower(1*Math.cos(theta));
+            SE.setPower(1*Math.cos(theta));
+            NE.setPower(1*Math.sin(theta));
+            SW.setPower(1*Math.sin(theta));
         }
     }
 
@@ -97,11 +97,13 @@ public class    HolonomicDrive {
        SE.setPower(turnspeedleft);
        NW.setPower(-turnspeedleft);
        SW.setPower(-turnspeedleft);
+       /*
        while(gyro.robotHeading() > 360 - turnangle || gyro.robotHeading() < 100){
            master.telemetry.addData("Robot Heading:", gyro.robotHeading());
            master.telemetry.update();
            master.idle();
        }
+       */
        stopmotors();
    }
 
@@ -110,8 +112,10 @@ public class    HolonomicDrive {
        SE.setPower(-turnspeedright);
        NW.setPower(turnspeedright);
        SW.setPower(turnspeedright);
+       /*
        while(gyro.robotHeading() < turnangle || gyro.robotHeading() > 300) master.idle();
        stopmotors();
+   */
    }
 
     public void turnleftunlim(double turnspeedleft) {

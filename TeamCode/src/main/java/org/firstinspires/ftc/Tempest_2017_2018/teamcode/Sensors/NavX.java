@@ -6,7 +6,5 @@ package org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors;
  * on 12/2/2017.
  */
 
-import com.kauailabs.navx.ftc.AHRS;
-
 public class NavX {
 }

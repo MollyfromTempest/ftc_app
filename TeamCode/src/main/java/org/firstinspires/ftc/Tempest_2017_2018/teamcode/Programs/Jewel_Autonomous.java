@@ -59,28 +59,32 @@ public class Jewel_Autonomous extends LinearOpMode{
             } else if (leftBlue && !rightBlue) {
                 // Left blue and right not specified (but not also blue). Since we are red, we want to turn left.
                 telemetry.addData("Color sensor", "Left blue, right red or unspecified");
-                Robot.holoDrive.turnleftunlim(0.2);
+                //Robot.holoDrive.turnleftunlim(0.2);
+                Robot.holoDrive.panleft(0.2);
                 Sleep(500);
                 Robot.holoDrive.stopmotors();
                 Robot.jewelArm.jewelArmUp();
             } else if (leftRed && !rightRed) {
                 // Left red and right not specified (but not also red). Since we are red, we want to turn right.
                 telemetry.addData("Color sensor", "Left red, right blue or unspecified");
-                Robot.holoDrive.turnrightunlim(0.2);
+                //Robot.holoDrive.turnrightunlim(0.2);
+                Robot.holoDrive.panright(0.2);
                 Sleep(500);
                 Robot.holoDrive.stopmotors();
                 Robot.jewelArm.jewelArmUp();
             }else if(!leftBlue && rightBlue){
                 //Right blue and left not specified (but not also blue). Since we are red, we want to turn right.
                 telemetry.addData("Color sensor", "Left red or unspecified, right blue");
-                Robot.holoDrive.turnrightunlim(0.2);
+                //Robot.holoDrive.turnrightunlim(0.2);
+                Robot.holoDrive.panleft(0.2);
                 Sleep(500);
                 Robot.holoDrive.stopmotors();
                 Robot.jewelArm.jewelArmUp();
             }else if (!leftRed && rightRed){
                 //Right red and left not specified (but not also red). Since we are red, we want to turn left.
                 telemetry.addData("Color sensor", "Left blue or unspecified, right red");
-                Robot.holoDrive.turnleftunlim(0.2);
+                //Robot.holoDrive.turnleftunlim(0.2);
+                Robot.holoDrive.panleft(0.2);
                 Sleep(500);
                 Robot.holoDrive.stopmotors();
                 Robot.jewelArm.jewelArmUp();
@@ -110,28 +114,32 @@ public class Jewel_Autonomous extends LinearOpMode{
             } else if (leftBlue && !rightBlue){
                 // Left blue and right not specified (but not also blue). Since we are blue, we want to turn right.
                 telemetry.addData ("Color sensor", "Left blue, right red or unspecified");
-                Robot.holoDrive.turnrightunlim(0.2);
+                //Robot.holoDrive.turnrightunlim(0.2);
+                Robot.holoDrive.panright(0.2);
                 Sleep(500);
                 Robot.holoDrive.stopmotors();
                 Robot.jewelArm.jewelArmUp();
             } else if (leftRed && !rightRed){
                 // Left red and right unspecified (but not also red). Since we are blue, we want to turn left.
                 telemetry.addData ("Color sensor", "Left red, right blue or unspecified");
-                Robot.holoDrive.turnleftunlim(0.2);
+                //Robot.holoDrive.turnleftunlim(0.2);
+                Robot.holoDrive.panleft(0.2);
                 Sleep(500);
                 Robot.holoDrive.stopmotors();
                 Robot.jewelArm.jewelArmUp();
             } else if (!leftBlue && rightBlue){
                 //Right blue and left unspecified (but not also blue). Since we are blue, we want to turn left.
                 telemetry.addData ("Color sensor", "Left red or unspecified, right blue");
-                Robot.holoDrive.turnleftunlim(0.2);
+                //Robot.holoDrive.turnleftunlim(0.2);
+                Robot.holoDrive.panleft(0.2);
                 Sleep(500);
                 Robot.holoDrive.stopmotors();
                 Robot.jewelArm.jewelArmUp();
             }else if (!leftRed && rightRed){
                 //Right red and left unspecified (but not also red). Since we are blue, we want to turn right.
                 telemetry.addData ("Color sensor", "Left blue or unspecified, right red");
-                Robot.holoDrive.turnrightunlim(0.2);
+                //Robot.holoDrive.turnrightunlim(0.2);
+                Robot.holoDrive.panright(0.2);
                 Sleep(500);
                 Robot.holoDrive.stopmotors();
                 Robot.jewelArm.jewelArmUp();

@@ -133,6 +133,21 @@ public class    HolonomicDrive {
         NW.setPower(turnspeedright);
         SW.setPower(turnspeedright);
     }
+    // builders wanted to have the robot pan instead of turning
+    public void panright(double turnspeedright) {
+        //Turns right (until it is told to stop)
+        NE.setPower(turnspeedright);
+        SE.setPower(turnspeedright);
+        NW.setPower(turnspeedright);
+        SW.setPower(turnspeedright);
+    }
+    public void panleft(double turnspeedright) {
+        //Turns right (until it is told to stop)
+        NE.setPower(-turnspeedright);
+        SE.setPower(-turnspeedright);
+        NW.setPower(-turnspeedright);
+        SW.setPower(-turnspeedright);
+    }
 }
 
 

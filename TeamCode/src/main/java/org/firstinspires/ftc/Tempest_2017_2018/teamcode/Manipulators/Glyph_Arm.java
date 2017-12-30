@@ -30,10 +30,10 @@ public class Glyph_Arm
 
     public double leftOpen = .35;
     public double leftClosed = 0.64;
-    public double leftSlightlyOpen = 0.57;
+    public double leftSlightlyOpen = 0.425;
     public double rightOpen = 0.54;
     public double rightClosed = 0.019;
-    public double rightSlightlyOpen = 0.1;
+    public double rightSlightlyOpen = 0.496;
 
     HardwareMap HWMap;
 

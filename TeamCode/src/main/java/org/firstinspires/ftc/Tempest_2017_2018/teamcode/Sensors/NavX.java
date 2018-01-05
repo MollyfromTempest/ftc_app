@@ -117,7 +117,6 @@ public class NavX extends LinearOpMode {
                         telemetry.addData("PIDOutput", df.format(0.00));
                     } else {
                         double output = yawPIDResult.getOutput();
- * for the navX-Model sensor should be used.
                         telemetry.addData("PIDOutput", df.format(output) + ", " +
                                 df.format(-output));
                     }

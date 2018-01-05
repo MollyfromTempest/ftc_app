@@ -14,3 +14,14 @@ dependencies {
     compile project(':FtcRobotController')
     compile project(':navx_ftc')
 }
+android {
+    compileSdkVersion 27
+    buildToolsVersion '27.0.1'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
+repositories {
+    flatDir { dirs 'libs' }
+}

@@ -30,25 +30,14 @@ import java.text.DecimalFormat;
 public class NavX {
     public NavX(){}
     public AHRS navx_device;
-    public navXPIDController yawController;
-    public navXPIDController.PIDResult yawPIDResult;
-    public void init(HardwareMap HWMap){
-        navx_device = AHRS.getInstance(HWMap.deviceInterfaceModule.get("Device Interface Module 1"),2,AHRS.DeviceDataType.kProcessedData);
-        yawController = new navXPIDController( navx_device,
-                navXPIDController.navXTimestampedDataSource.YAW);
+    public void init(HardwareMap HWMap) {
+        navx_device = AHRS.getInstance(HWMap.deviceInterfaceModule.get("Device Interface Module 1"), 2, AHRS.DeviceDataType.kProcessedData);
 
-        /* Configure the PID controller */
-        yawController.setSetpoint(90);
-        yawController.setContinuous(true);
-        yawController.setOutputRange(-1.0, 1.0);
-        yawController.setTolerance(navXPIDController.ToleranceType.ABSOLUTE, 2.0);
-        yawController.setPID(0.005, 0.0, 0.0);
-
-        while(navx_device.isCalibrating());
-        navx_device.zeroYaw();
-        yawController.enable(true);
-        yawPIDResult = new navXPIDController.PIDResult();
+        while (navx_device.isCalibrating()) ;
+        resetRotation();
     }
     public void resetRotation(){navx_device.zeroYaw();}
-    public double getRotation() {return yawPIDResult.getOutput();}
+    public double getRotation() {
+        return navx_device.getYaw();
+    }
 }

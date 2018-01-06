@@ -15,7 +15,7 @@ dependencies {
     compile project(':navx_ftc')
 }
 android {
-    compileSdkVersion 27
+    compileSdkVersion 23
     buildToolsVersion '27.0.1'
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7

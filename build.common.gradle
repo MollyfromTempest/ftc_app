@@ -21,7 +21,7 @@ apply plugin: 'com.android.application'
 
 android {
 
-    compileSdkVersion 27
+    compileSdkVersion 23
     buildToolsVersion '27.0.1'
 
     signingConfigs {
@@ -35,8 +35,8 @@ android {
 
     defaultConfig {
         applicationId 'com.qualcomm.ftcrobotcontroller'
-        minSdkVersion 27
-        targetSdkVersion 27
+        minSdkVersion 23
+        targetSdkVersion 23
 
         /**
          * We keep the versionCode and versionName of robot controller applications in sync with

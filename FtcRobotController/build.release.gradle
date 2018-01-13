@@ -6,11 +6,4 @@ dependencies {
     compile (name:'FtcCommon-release', ext: 'aar')
     compile (name:'Analytics-release', ext:'aar')
     compile (name:'WirelessP2p-release', ext:'aar')
-    compile (name:'navx_ftc-release', ext:'aar')
-    private final int NAVX_DIM_I2C_PORT = 0
-    repositories {
-        flatDir {
-            dirs 'libs', 'C:\\Users\\Robot\\navx-micro\\android\\libs'
-        }
-    }
 }

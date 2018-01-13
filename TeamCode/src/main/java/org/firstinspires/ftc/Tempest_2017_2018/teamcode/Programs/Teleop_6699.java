@@ -87,7 +87,7 @@ public class Teleop_6699 extends LinearOpMode {
                 //Otherwise, don't move
                 Robot.holoDrive.stopmotors();
             }
-
+            //Move Jewel Arm
             if (gamepad1.dpad_left) {
                 //Moves the jewel arm up and down with a toggle
                 if (!JewelArmUp) {

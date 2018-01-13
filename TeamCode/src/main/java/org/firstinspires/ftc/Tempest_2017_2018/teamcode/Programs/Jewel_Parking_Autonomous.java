@@ -1,0 +1,236 @@
+package org.firstinspires.ftc.Tempest_2017_2018.teamcode.Programs;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Robot2017_2018;
+
+/**
+ * Created by Chris on 1/13/2018.
+ */
+
+@Autonomous
+public class Jewel_Parking_Autonomous extends LinearOpMode {
+
+        Robot2017_2018 Robot;
+
+        public void Sleep(long ticks) throws InterruptedException {
+            long timer = System.currentTimeMillis();
+            while (System.currentTimeMillis() - timer < ticks) {
+                idle();
+            }
+        }
+
+        @Override
+        public void runOpMode()throws InterruptedException{
+            Robot = new Robot2017_2018();
+            Robot.init(hardwareMap);
+            //Turn on the color sensor LEDS
+            Robot.color.leftColor.enableLed(true);
+            Robot.color.rightColor.enableLed(true);
+            double Speed = 0.1;
+            boolean BlueTeam = !Robot.BlueSwitch.getState();
+            if(BlueTeam){
+                telemetry.addData("Team Color", "Blue");
+            }else{
+                telemetry.addData("Team Color", "Red");
+            }
+            boolean LeftSide = Robot.LeftRightSwitch.getState();
+            if(LeftSide){
+                telemetry.addData("Team Side", "Left");
+            }else{
+                telemetry.addData("Team Side", "Right");
+            }
+
+            waitForStart();
+            //Lower the jewel arm -- necessary regardless of color
+            Robot.jewelArm.jewelArmDown();
+            //Wait for two seconds so that it has time to lower
+            Sleep(2000);
+            boolean rightBlue = Robot.color.isBlue(Robot.color.rightColor); //right color sensor is blue
+            boolean rightRed = Robot.color.isRed(Robot.color.rightColor); //right color sensor is red
+            boolean leftBlue = Robot.color.isBlue(Robot.color.leftColor); //left color sensor is blue
+            boolean leftRed = Robot.color.isRed(Robot.color.leftColor); //left color sensor is red
+
+            // this is backwards
+            Robot.glyphArm.release();
+            Sleep(1000);
+            Robot.glyphArm.midPosition(this);
+            if (!BlueTeam) {
+                //RED RED RED
+                telemetry.addData("Right blue", rightBlue);
+                telemetry.addData("Right red", rightRed);
+                telemetry.addData("Left blue", leftBlue);
+                telemetry.addData("Left red", leftRed);
+
+
+                if (leftBlue && rightBlue) {
+                    //Both blue -- something is wrong!
+                    telemetry.addData("Color sensor", "Both blue");
+
+                    //Sleep(30000);
+                } else if (leftRed && rightRed) {
+                    //Both red -- something is wrong!
+                    telemetry.addData("Color sensor", "Both red");
+                    //Sleep(30000);
+                } else if (leftBlue && !rightBlue) {
+                    // Left blue and right not specified (but not also blue). Since we are red, we want to turn left.
+                    telemetry.addData("Color sensor", "Left blue, right red or unspecified");
+                    //Robot.holoDrive.turnleftunlim(0.2);
+                    Robot.holoDrive.panleft(Speed);
+                    Sleep(450);
+                    Robot.holoDrive.stopmotors();
+                    Robot.jewelArm.jewelArmUp();
+                    Robot.holoDrive.panright(Speed);
+                    Sleep(450);
+                    Robot.holoDrive.stopmotors();
+                } else if (leftRed && !rightRed) {
+                    // Left red and right not specified (but not also red). Since we are red, we want to turn right.
+                    telemetry.addData("Color sensor", "Left red, right blue or unspecified");
+                    //Robot.holoDrive.turnrightunlim(0.2);
+                    Robot.holoDrive.panright(Speed);
+                    Sleep(450);
+                    Robot.holoDrive.stopmotors();
+                    Robot.jewelArm.jewelArmUp();
+                    Robot.holoDrive.panleft(Speed);
+                    Sleep(450);
+                    Robot.holoDrive.stopmotors();
+                }else if(!leftBlue && rightBlue){
+                    //Right blue and left not specified (but not also blue). Since we are red, we want to turn right.
+                    telemetry.addData("Color sensor", "Left red or unspecified, right blue");
+                    //Robot.holoDrive.turnrightunlim(0.2);
+                    Robot.holoDrive.panleft(Speed);
+                    Sleep(450);
+                    Robot.holoDrive.stopmotors();
+                    Robot.jewelArm.jewelArmUp();
+                    Robot.holoDrive.panright(Speed);
+                    sleep(450);
+                    Robot.holoDrive.stopmotors();
+                }else if (!leftRed && rightRed){
+                    //Right red and left not specified (but not also red). Since we are red, we want to turn left.
+                    telemetry.addData("Color sensor", "Left blue or unspecified, right red");
+                    //Robot.holoDrive.turnleftunlim(0.2);
+                    Robot.holoDrive.panleft(Speed);
+                    Sleep(450);
+                    Robot.holoDrive.stopmotors();
+                    Robot.jewelArm.jewelArmUp();
+                    Robot.holoDrive.panright(Speed);
+                    sleep(450);
+                    Robot.holoDrive.stopmotors();
+                }else {
+                    //No reading? Ambiguous reading? Either way, something is wrong and we don't want to risk turning.
+                    telemetry.addData("Color sensor", "No reading");
+                    //Sleep(30000);
+                }
+            }
+            else{
+                //BLUE BLUE BLUE
+                telemetry.addData("Right blue", rightBlue);
+                telemetry.addData("Right red", rightRed);
+                telemetry.addData("Left blue", leftBlue);
+                telemetry.addData("Left red", leftRed);
+
+
+                if (leftBlue && rightBlue){
+                    //Both blue -- something is wrong!
+                    telemetry.addData ("Color sensor", "Both blue");
+
+                    //Sleep(30000);
+                } else if (leftRed && rightRed){
+                    //Both red -- something is wrong!
+                    telemetry.addData ("Color sensor", "Both red");
+                    //Sleep(30000);
+                } else if (leftBlue && !rightBlue){
+                    // Left blue and right not specified (but not also blue). Since we are blue, we want to turn right.
+                    telemetry.addData ("Color sensor", "Left blue, right red or unspecified");
+                    //Robot.holoDrive.turnrightunlim(0.2);
+                    Robot.holoDrive.panright(Speed);
+                    Sleep(450);
+                    Robot.holoDrive.stopmotors();
+                    Robot.jewelArm.jewelArmUp();
+                    Robot.holoDrive.panleft(Speed);
+                    sleep(450);
+                    Robot.holoDrive.stopmotors();
+                } else if (leftRed && !rightRed){
+                    // Left red and right unspecified (but not also red). Since we are blue, we want to turn left.
+                    telemetry.addData ("Color sensor", "Left red, right blue or unspecified");
+                    //Robot.holoDrive.turnleftunlim(0.2);
+                    Robot.holoDrive.panleft(Speed);
+                    Sleep(450);
+                    Robot.holoDrive.stopmotors();
+                    Robot.jewelArm.jewelArmUp();
+                    Robot.holoDrive.panright(Speed);
+                    sleep(450);
+                    Robot.holoDrive.stopmotors();
+                } else if (!leftBlue && rightBlue){
+                    //Right blue and left unspecified (but not also blue). Since we are blue, we want to turn left.
+                    telemetry.addData ("Color sensor", "Left red or unspecified, right blue");
+                    //Robot.holoDrive.turnleftunlim(0.2);
+                    Robot.holoDrive.panleft(Speed);
+                    Sleep(450);
+                    Robot.holoDrive.stopmotors();
+                    Robot.jewelArm.jewelArmUp();
+                    Robot.holoDrive.panright(Speed);
+                    sleep(450);
+                    Robot.holoDrive.stopmotors();
+                }else if (!leftRed && rightRed){
+                    //Right red and left unspecified (but not also red). Since we are blue, we want to turn right.
+                    telemetry.addData ("Color sensor", "Left blue or unspecified, right red");
+                    //Robot.holoDrive.turnrightunlim(0.2);
+                    Robot.holoDrive.panright(Speed);
+                    Sleep(450);
+                    Robot.holoDrive.stopmotors();
+                    Robot.jewelArm.jewelArmUp();
+                    Robot.holoDrive.panleft(Speed);
+                    sleep(450);
+                    Robot.holoDrive.stopmotors();
+                }else {
+                    //No reading? Ambiguous reading? Either way, something is wrong and we don't want to risk turning.
+                    telemetry.addData("Color sensor", "No reading");
+                    //Sleep(30000);
+                }
+            }
+            telemetry.update();
+            //sleep(30000); //Don't do anything else until autonomous period ends
+            //double Start = ((Robot.holoDrive.NW.getCurrentPosition() + Robot.holoDrive.NE.getCurrentPosition() + Robot.holoDrive.SW.getCurrentPosition()+Robot.holoDrive.SE.getCurrentPosition())/4.0);
+            double Start = Robot.holoDrive.NW.getCurrentPosition();
+            double FasterSpeed = 0.2;
+            if (LeftSide && BlueTeam){
+                Robot.holoDrive.pan(9*Math.PI/8, FasterSpeed);
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1250) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
+                Robot.holoDrive.pan(Math.PI/8, -Speed);
+                Sleep(100);
+            }
+            else if (!LeftSide && BlueTeam){
+                Robot.holoDrive.pan(5*Math.PI/4, FasterSpeed);
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1250) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
+                //Robot.holoDrive.pan(Math.PI/8, -Speed);
+                //Sleep(100);
+            }
+            else if (LeftSide && !BlueTeam){
+                Robot.holoDrive.pan(Math.PI/8, FasterSpeed);
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1250) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
+                //Robot.holoDrive.pan(Math.PI/8, -Speed);
+                //Sleep(100);
+            }
+            else if (!LeftSide && !BlueTeam){
+                Robot.holoDrive.pan(Math.PI/8, FasterSpeed);
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1250) {
+                    idle();
+                }
+                Robot.glyphArm.zeroPosition(this);
+                Robot.holoDrive.stopmotors();
+                Robot.holoDrive.pan(Math.PI/8, -Speed);
+                Sleep(100);
+            }
+        }
+    }

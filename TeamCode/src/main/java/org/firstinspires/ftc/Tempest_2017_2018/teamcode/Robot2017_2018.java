@@ -16,6 +16,7 @@ import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors.NavX;
 public class Robot2017_2018 {
     //Switch for red/blue mode. True means red mode (unlike last year)
     public DigitalChannel BlueSwitch;
+    public DigitalChannel LeftRightSwitch;
     public ColorSensorClass color;
     public Jewel_Arm jewelArm;
     public Glyph_Arm glyphArm;
@@ -33,11 +34,12 @@ public class Robot2017_2018 {
         glyphArm.init(HWMap);
 
         BlueSwitch = HWMap.digitalChannel.get("LEDBlueSwitch");
+        LeftRightSwitch = HWMap.digitalChannel.get("LeftRightSwitch");
 
         holoDrive = new HolonomicDrive();
         holoDrive.init (HWMap);
-        navx = new NavX();
-        navx.init(HWMap);
+        //navx = new NavX();
+        //navx.init(HWMap);
 
     }
 }

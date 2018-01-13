@@ -56,7 +56,7 @@ public class Glyph_Arm
 
         grabArmLeft = HWMap.servo.get("grabArmLeft");
         grabArmRight = HWMap.servo.get("grabArmRight");
-        release();
+        grab();
         //grabArm.setMaxSpeed(speed);
     }
 

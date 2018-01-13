@@ -38,7 +38,7 @@ import android.util.Log;
  */
 @TeleOp(name = "Concept: navX Rotate to Angle PID - Linear", group = "Concept")
 // @Disabled Comment this in to remove this from the Driver Station OpMode List
-public class ConceptNavXRotateToAnglePIDLinearOp extends LinearOpMode {
+public class NavX extends LinearOpMode {
     DcMotor leftMotor;
     DcMotor rightMotor;
 

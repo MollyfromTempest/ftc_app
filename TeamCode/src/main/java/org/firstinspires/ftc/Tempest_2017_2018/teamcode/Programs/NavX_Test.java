@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Robot2017_2018;
-import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors.NavX;
+//import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors.NavX;
 
 /**
  * Created by Chris on 1/6/2018.
@@ -30,7 +30,7 @@ public class NavX_Test extends LinearOpMode {
         waitForStart();
 
         while( opModeIsActive() ) {
-            telemetry.addData("Rotation", Robot.navx.getRotation());
+            //telemetry.addData("Rotation", Robot.navx.getRotation());
             telemetry.update();
         }
     }

@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Robot2017_2018;
+import org.firstinspires.ftc.robotcore.internal.usb.exception.RobotUsbTimeoutException;
 
 /**
  * Created by Chris on 1/13/2018.
@@ -200,20 +201,27 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
             if (LeftSide && BlueTeam){
                 // havent tested this yet
                 Robot.holoDrive.pan(9*Math.PI/8, FasterSpeed);
-                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1250) {
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 2000) {
                     idle();
                 }
                 Robot.holoDrive.stopmotors();
                 Robot.glyphArm.grab(); //opposite, this releases
+                Robot.holoDrive.pan(9*Math.PI/8, FasterSpeed);
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
+                    idle();
+                }
                 Robot.holoDrive.pan(Math.PI/8, -Speed);
-                Sleep(100);
+                Sleep(1000);
             }
             else if (!LeftSide && BlueTeam){
                 Robot.holoDrive.pan(5*Math.PI/4, FasterSpeed);
-                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1250) {
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 2300) {
                     idle();
                 }
+                Robot.holoDrive.stopmotors();
                 Robot.glyphArm.zeroPosition(this);
+                //its dropping to fast so this might help
+                Sleep(1000);
                 Robot.holoDrive.turnleftunlim(FasterSpeed);
                 while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1000) {
                     idle();
@@ -226,7 +234,7 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                 Robot.glyphArm.grab(); // releases
                 // drive backwards
                 Robot.holoDrive.pan(Math.PI/4, FasterSpeed);
-                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 100) {
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
                     idle();
                 }
                 Robot.holoDrive.stopmotors();
@@ -234,7 +242,7 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
             else if (LeftSide && !BlueTeam){
                 // this us into the parking zone, this has been tested
                 Robot.holoDrive.pan(Math.PI/8, FasterSpeed);
-                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1250) {
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 2300) {
                     idle();
                 }
                 //Robot.holoDrive.stopmotors();
@@ -244,7 +252,9 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                     idle();
                 }
                 // this drives forward and lowers the arm, hopefully putting the glyph in the box
+                Robot.holoDrive.stopmotors();
                 Robot.glyphArm.zeroPosition(this);
+                Sleep(1000);
                 // not sure if its pi/8 or 5pi/4 because the robot is turning
                 Robot.holoDrive.pan(Math.PI/8, FasterSpeed);
                 while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
@@ -254,7 +264,7 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                 Robot.glyphArm.grab(); // this is the opposite
                 // this backs up after the glyph is put down just in case the gylph arm gets stuck in the box
                 Robot.holoDrive.pan(2*Math.PI/3, FasterSpeed);
-                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 100) {
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
                     idle();
                 }
                 //Robot.holoDrive.pan(Math.PI/8, -Speed);
@@ -262,14 +272,19 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
             }
             else if (!LeftSide && !BlueTeam){
                 Robot.holoDrive.pan(Math.PI/8, FasterSpeed);
-                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1250) {
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 2000) {
                     idle();
                 }
-                Robot.glyphArm.zeroPosition(this);
                 Robot.holoDrive.stopmotors();
+                Robot.glyphArm.zeroPosition(this);
+                Sleep(1000);
                 Robot.glyphArm.grab(); // this releases, its backwards
+                Robot.holoDrive.pan(Math.PI/8, FasterSpeed);
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
+                    idle();
+                }
                 Robot.holoDrive.pan(Math.PI/8, -Speed);
-                Sleep(100);
+                Sleep(1000);
             }
         }
     }

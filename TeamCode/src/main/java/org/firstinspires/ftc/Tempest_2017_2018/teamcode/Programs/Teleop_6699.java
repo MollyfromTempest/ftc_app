@@ -53,8 +53,8 @@ public class Teleop_6699 extends LinearOpMode {
                 //Toggles slow mode.
                 if (turnScale == 1) {
                     //If it's fast, make it slow
-                    driveScale = 0.25;
-                    turnScale = 0.25;
+                    driveScale = 0.4;
+                    turnScale = 0.4;
                 } else {
                     //If it's slow, make it fast
                     driveScale = 1;

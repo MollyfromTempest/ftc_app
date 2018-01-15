@@ -7,7 +7,7 @@ import org.firstinspires.ftc.Tempest_2017_2018.teamcode.DriveTrains.HolonomicDri
 import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Manipulators.Glyph_Arm;
 import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Manipulators.Jewel_Arm;
 import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors.ColorSensorClass;
-import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors.NavX;
+//import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors.NavX;
 
 /**
  * Created by AshQuinn on 12/2/17.
@@ -21,7 +21,7 @@ public class Robot2017_2018 {
     public Jewel_Arm jewelArm;
     public Glyph_Arm glyphArm;
     public HolonomicDrive holoDrive;
-    public NavX navx;
+    //public NavX navx;
 
     public void init (HardwareMap HWMap) {
         color = new ColorSensorClass();

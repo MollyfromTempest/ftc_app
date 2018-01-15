@@ -3,9 +3,8 @@ package org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors;
 
 import android.util.Log;
 
-import com.kauailabs.navx.ftc.AHRS;
-import com.kauailabs.navx.ftc.navXPIDController;
-
+//import com.kauailabs.navx.ftc.AHRS;
+//import com.kauailabs.navx.ftc.navXPIDController
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -27,13 +26,13 @@ import java.text.DecimalFormat;
  * Note that for the best accuracy, a reasonably high update rate
  * for the navX-Model sensor should be used.
  */
-public class NavX {
+/*public class NavX {
     public NavX(){}
     public AHRS navx_device;
     public void init(HardwareMap HWMap) {
-        navx_device = AHRS.getInstance(HWMap.deviceInterfaceModule.get("Device Interface Module 1"), 2, AHRS.DeviceDataType.kProcessedData);
+        //navx_device = AHRS.getInstance(HWMap.deviceInterfaceModule.get("Device Interface Module 1"), 2, AHRS.DeviceDataType.kProcessedData);
 
-        while (navx_device.isCalibrating()) ;
+        //while (navx_device.isCalibrating()) ;
         resetRotation();
     }
     public void resetRotation(){navx_device.zeroYaw();}
@@ -41,3 +40,4 @@ public class NavX {
         return navx_device.getYaw();
     }
 }
+*/

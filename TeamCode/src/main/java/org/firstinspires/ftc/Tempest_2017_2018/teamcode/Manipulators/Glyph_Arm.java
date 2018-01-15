@@ -22,7 +22,7 @@ public class Glyph_Arm
     double lowerPower = -0.4; //Power used to lower the blocks. It has its own variable in case we decide it should be different
 
     public int LiftZeroPosition; //Starting position, on the ground
-    public int LiftMidPosition = 850; //Slightly more than 6 inches (so blocks can be stacked)
+    public int LiftMidPosition = 1200; //WAS AT 850 CHANGE BACK AND DELETE COMMENT Slightly more than 6 inches (so blocks can be stacked)
     public int LiftTopPosition = 1500; //Slightly more than 12 inches (so blocks can be stacked)
     public int Increment = 150; //Approximately 1 inch
     public int WiggleRoom = 20; //Small number of encoder ticks

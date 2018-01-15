@@ -196,7 +196,7 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
             //double Start = ((Robot.holoDrive.NW.getCurrentPosition() + Robot.holoDrive.NE.getCurrentPosition() + Robot.holoDrive.SW.getCurrentPosition()+Robot.holoDrive.SE.getCurrentPosition())/4.0);
             double Start = Robot.holoDrive.NW.getCurrentPosition();
             double FasterSpeed = 0.2;
-            // these are crude estimates for parking and putting the glyph in one of the boxs
+            // these are crude estimates for parking and putting the glyph in one of the boxes
             // all positions NEED to be tested
             if (LeftSide && BlueTeam){
                 // havent tested this yet

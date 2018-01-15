@@ -195,12 +195,16 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
             //double Start = ((Robot.holoDrive.NW.getCurrentPosition() + Robot.holoDrive.NE.getCurrentPosition() + Robot.holoDrive.SW.getCurrentPosition()+Robot.holoDrive.SE.getCurrentPosition())/4.0);
             double Start = Robot.holoDrive.NW.getCurrentPosition();
             double FasterSpeed = 0.2;
+            // these are crude estimates for parking and putting the glyph in one of the boxs
+            // all positions NEED to be tested
             if (LeftSide && BlueTeam){
+                // havent tested this yet
                 Robot.holoDrive.pan(9*Math.PI/8, FasterSpeed);
                 while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1250) {
                     idle();
                 }
                 Robot.holoDrive.stopmotors();
+                Robot.glyphArm.grab(); //opposite, this releases
                 Robot.holoDrive.pan(Math.PI/8, -Speed);
                 Sleep(100);
             }
@@ -209,16 +213,50 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                 while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1250) {
                     idle();
                 }
+                Robot.glyphArm.zeroPosition(this);
+                Robot.holoDrive.turnleftunlim(FasterSpeed);
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1000) {
+                    idle();
+                }
+                Robot.holoDrive.pan(5*Math.PI/4, FasterSpeed);
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
+                    idle();
+                }
                 Robot.holoDrive.stopmotors();
-                //Robot.holoDrive.pan(Math.PI/8, -Speed);
-                //Sleep(100);
+                Robot.glyphArm.grab(); // releases
+                // drive backwards
+                Robot.holoDrive.pan(Math.PI/4, FasterSpeed);
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 100) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
             }
             else if (LeftSide && !BlueTeam){
+                // this us into the parking zone, this has been tested
                 Robot.holoDrive.pan(Math.PI/8, FasterSpeed);
                 while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1250) {
                     idle();
                 }
+                //Robot.holoDrive.stopmotors();
+                // this should turn us to the right 90 degrees, need to test this
+                Robot.holoDrive.turnrightunlim(FasterSpeed);
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1000) {
+                    idle();
+                }
+                // this drives forward and lowers the arm, hopefully putting the glyph in the box
+                Robot.glyphArm.zeroPosition(this);
+                // not sure if its pi/8 or 5pi/4 because the robot is turning
+                Robot.holoDrive.pan(Math.PI/8, FasterSpeed);
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
+                    idle();
+                }
                 Robot.holoDrive.stopmotors();
+                Robot.glyphArm.grab(); // this is the opposite
+                // this backs up after the glyph is put down just in case the gylph arm gets stuck in the box
+                Robot.holoDrive.pan(2*Math.PI/3, FasterSpeed);
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 100) {
+                    idle();
+                }
                 //Robot.holoDrive.pan(Math.PI/8, -Speed);
                 //Sleep(100);
             }
@@ -229,6 +267,7 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                 }
                 Robot.glyphArm.zeroPosition(this);
                 Robot.holoDrive.stopmotors();
+                Robot.glyphArm.grab(); // this releases, its backwards
                 Robot.holoDrive.pan(Math.PI/8, -Speed);
                 Sleep(100);
             }

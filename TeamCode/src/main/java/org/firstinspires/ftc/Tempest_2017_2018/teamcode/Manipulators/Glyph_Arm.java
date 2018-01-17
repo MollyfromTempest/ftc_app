@@ -45,7 +45,7 @@ public class Glyph_Arm
 
         //We can reverse the motor directions if we need to in order to get the motor to run in the correct direction
         liftArm = HWMap.dcMotor.get("liftArm");
-        liftArm.setMode(encMode);
+        liftArm.setMode(encMode); /* Pretty sure you don't want this: http://aaroncook.xyz/ftc_app/doc/javadoc/com/qualcomm/robotcore/hardware/DcMotor.RunMode.html#RUN_TO_POSITION -- Aaron */
         liftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftArm.setDirection(DcMotorSimple.Direction.REVERSE);
         LiftZeroPosition = liftArm.getCurrentPosition(); //Must start arm in bottom position

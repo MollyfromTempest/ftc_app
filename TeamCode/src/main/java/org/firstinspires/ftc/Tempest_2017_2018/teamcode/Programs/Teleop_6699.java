@@ -33,6 +33,12 @@ public class Teleop_6699 extends LinearOpMode {
         double theta;
         double power;
         double pivotpower;
+        double state = 0;
+    /*
+    0: zero position
+    0.5: mid position
+    1: top position
+     */
         //Scaling factors for speed
         double driveScale = 1;
         double turnScale = 1;
@@ -128,18 +134,32 @@ public class Teleop_6699 extends LinearOpMode {
 
             if (gamepad1.a && ((Math.abs(Robot.glyphArm.liftArm.getCurrentPosition() - Robot.glyphArm.LiftZeroPosition)) > Robot.glyphArm.WiggleRoom)) {
                 //Moves to the zero position. Extra math stuff is designed so that it won't move if it's there or almost there.
+                state = 0;
                 Robot.glyphArm.zeroPosition(this);
+
             } else if (gamepad1.b && ((Math.abs(Robot.glyphArm.liftArm.getCurrentPosition() - Robot.glyphArm.LiftMidPosition)) > Robot.glyphArm.WiggleRoom)) {
                 //Moves to the middle position. Extra math stuff is designed so that it won't move if it's there or almost there.
+                state = 0.5;
                 Robot.glyphArm.midPosition(this);
+
             } else if (gamepad1.y && ((Math.abs(Robot.glyphArm.liftArm.getCurrentPosition() - Robot.glyphArm.LiftTopPosition)) > Robot.glyphArm.WiggleRoom)) {
                 //Moves to the zero position. Extra math stuff is designed so that it won't move if it's there or almost there.
+                state = 1;
                 Robot.glyphArm.topPosition(this);
+
             } else if (gamepad1.x) {
                 Robot.glyphArm.incrementPosition(this);
             } else {
                 //Otherwise, maintains position
-                Robot.glyphArm.stopLifting();
+                if (state == 0 && ((Math.abs(Robot.glyphArm.liftArm.getCurrentPosition() - Robot.glyphArm.LiftZeroPosition)) > Robot.glyphArm.WiggleRoom)){
+                    Robot.glyphArm.zeroPosition(this);
+                } else if (state == 0.5 &&((Math.abs(Robot.glyphArm.liftArm.getCurrentPosition() - Robot.glyphArm.LiftMidPosition)) > Robot.glyphArm.WiggleRoom)){
+                    Robot.glyphArm.midPosition(this);
+                } else if (state == 1 && ((Math.abs(Robot.glyphArm.liftArm.getCurrentPosition() - Robot.glyphArm.LiftTopPosition)) > Robot.glyphArm.WiggleRoom)){
+                    Robot.glyphArm.topPosition(this);
+                }else{
+                    Robot.glyphArm.stopLifting();
+                }
             }
         }
     }

@@ -13,8 +13,6 @@ import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Robot2017_2018;
 public class Run_to_Position_Test extends LinearOpMode {
     Robot2017_2018 Robot;
 
-    public Run_to_Position_Test(){}
-
     @Override
     public void runOpMode() throws InterruptedException {
         Robot.init(hardwareMap);

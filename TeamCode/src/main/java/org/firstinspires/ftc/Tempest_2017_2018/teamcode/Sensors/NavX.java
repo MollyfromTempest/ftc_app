@@ -3,7 +3,7 @@ package org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors;
 
 import android.util.Log;
 
-import com.kauailabs.navx.ftc.AHRS;
+/*import com.kauailabs.navx.ftc.AHRS;
 import com.kauailabs.navx.ftc.navXPIDController;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -26,7 +26,7 @@ import java.text.DecimalFormat;
  * Note that for the best accuracy, a reasonably high update rate
  * for the navX-Model sensor should be used.
  */
-public class NavX {
+/*public class NavX {
     public NavX(){}
     public AHRS navx_device;
     public void init(HardwareMap HWMap) {
@@ -40,3 +40,4 @@ public class NavX {
         return navx_device.getYaw();
     }
 }
+*/

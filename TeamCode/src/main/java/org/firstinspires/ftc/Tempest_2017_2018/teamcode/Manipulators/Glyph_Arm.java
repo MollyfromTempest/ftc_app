@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Glyph_Arm
 {
-    DcMotor.RunMode encMode = DcMotor.RunMode.RUN_USING_ENCODER;
+    //DcMotor.RunMode encMode = DcMotor.RunMode.RUN_USING_ENCODER;
     DcMotor.RunMode posMode = DcMotor.RunMode.RUN_TO_POSITION;
     public DcMotor liftArm; //Arm to lift the blocks
     public Servo grabArmLeft; //Left side of grabbing mechanism
@@ -22,7 +22,7 @@ public class Glyph_Arm
     double liftPower = 0.4; //Power used to lift the blocks
     double lowerPower = -0.4; //Power used to lower the blocks. It has its own variable in case we decide it should be different
 
-    public int LiftZeroPosition; //Starting position, on the ground
+    public int LiftZeroPosition; //Starting position, on the ground, could make static final
     public int LiftMidPosition = 850; // Slightly more than 6 inches (so blocks can be stacked)
     public int LiftTopPosition = 1500; //Slightly more than 12 inches (so blocks can be stacked)
     public int Increment = 150; //Approximately 1 inch
@@ -48,7 +48,7 @@ public class Glyph_Arm
 
         //We can reverse the motor directions if we need to in order to get the motor to run in the correct direction
         liftArm = HWMap.dcMotor.get("liftArm");
-        liftArm.setMode(posMode); /* Pretty sure you don't want this: http://aaroncook.xyz/ftc_app/doc/javadoc/com/qualcomm/robotcore/hardware/DcMotor.RunMode.html#RUN_TO_POSITION -- Aaron */
+        liftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION); /* Pretty sure you don't want this: http://aaroncook.xyz/ftc_app/doc/javadoc/com/qualcomm/robotcore/hardware/DcMotor.RunMode.html#RUN_TO_POSITION -- Aaron */
         liftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftArm.setDirection(DcMotorSimple.Direction.REVERSE);
         LiftZeroPosition = liftArm.getCurrentPosition(); //Must start arm in bottom position
@@ -78,11 +78,11 @@ public class Glyph_Arm
 
     public void zeroPosition (LinearOpMode master) {
         //Sends the arm to the bottom position
-        int currentPosition = liftArm.getCurrentPosition();
+        //int currentPosition = liftArm.getCurrentPosition();
 
         liftArm.setTargetPosition(LiftZeroPosition);
 
-        if (currentPosition > liftArm.getTargetPosition()) {
+        /*if (currentPosition > liftArm.getTargetPosition()) {
             lower();
         } else {
             lift();
@@ -94,16 +94,16 @@ public class Glyph_Arm
             master.idle();
         }
 
-        stopLifting();
+        stopLifting();*/
     }
 
     public void midPosition (LinearOpMode master) {
         //Sends the arm to the middle position
-        int currentPosition = liftArm.getCurrentPosition();
+        //int currentPosition = liftArm.getCurrentPosition();
 
         liftArm.setTargetPosition(LiftMidPosition);
 
-        if (currentPosition > liftArm.getTargetPosition()) {
+        /*if (currentPosition > liftArm.getTargetPosition()) {
             lower();
         } else {
             lift();
@@ -115,17 +115,17 @@ public class Glyph_Arm
             master.idle();
         }
 
-        stopLifting();
+        stopLifting();*/
 
     }
 
     public void topPosition (LinearOpMode master) {
         //Sends the arm to the top position
-        int currentPosition = liftArm.getCurrentPosition();
+        //int currentPosition = liftArm.getCurrentPosition();
 
         liftArm.setTargetPosition(LiftTopPosition);
 
-        if (currentPosition > liftArm.getTargetPosition()) {
+        /*if (currentPosition > liftArm.getTargetPosition()) {
             lower();
         } else {
             lift();
@@ -137,7 +137,7 @@ public class Glyph_Arm
             master.idle();
         }
 
-        stopLifting();
+        stopLifting();*/
     }
 
     public void incrementPosition (LinearOpMode master) {
@@ -146,7 +146,7 @@ public class Glyph_Arm
 
         liftArm.setTargetPosition(currentPosition + Increment);
 
-        if (currentPosition > liftArm.getTargetPosition()) {
+        /*if (currentPosition > liftArm.getTargetPosition()) {
             lower();
         } else {
             lift();
@@ -158,7 +158,7 @@ public class Glyph_Arm
             master.idle();
         }
 
-        stopLifting();
+        stopLifting();*/
     }
 
     public void leftGrab()

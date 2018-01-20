@@ -42,6 +42,7 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
             }else{
                 telemetry.addData("Team Side", "Right");
             }
+            telemetry.update();
 
             waitForStart();
             //Lower the jewel arm -- necessary regardless of color
@@ -247,6 +248,7 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                 }
                 //Robot.holoDrive.stopmotors();
                 // this should turn us to the right 90 degrees, need to test this
+                Start = Robot.holoDrive.NW.getCurrentPosition();
                 Robot.holoDrive.turnrightunlim(FasterSpeed);
                 while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1000) {
                     idle();
@@ -255,6 +257,7 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                 Robot.holoDrive.stopmotors();
                 Robot.glyphArm.zeroPosition(this);
                 Sleep(1000);
+                Start = Robot.holoDrive.NW.getCurrentPosition();
                 // not sure if its pi/8 or 5pi/4 because the robot is turning
                 Robot.holoDrive.pan(Math.PI/8, FasterSpeed);
                 while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
@@ -263,6 +266,7 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                 Robot.holoDrive.stopmotors();
                 Robot.glyphArm.grab(); // this is the opposite
                 // this backs up after the glyph is put down just in case the gylph arm gets stuck in the box
+                Start = Robot.holoDrive.NW.getCurrentPosition();
                 Robot.holoDrive.pan(2*Math.PI/3, FasterSpeed);
                 while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
                     idle();

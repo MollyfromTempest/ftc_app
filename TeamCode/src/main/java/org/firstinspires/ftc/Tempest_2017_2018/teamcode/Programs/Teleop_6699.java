@@ -168,20 +168,14 @@ public class Teleop_6699 extends LinearOpMode {
                  * -- Aaron
                  */
 
-                if (state == 0 && ((Math.abs(Robot.glyphArm.liftArm.getCurrentPosition() - Robot.glyphArm.LiftZeroPosition)) > Robot.glyphArm.WiggleRoom)){
-                    while (!gamepad1.b && !gamepad1.y && ((Math.abs(Robot.glyphArm.liftArm.getCurrentPosition() - Robot.glyphArm.LiftZeroPosition)) > Robot.glyphArm.WiggleRoom)) {
-                        Robot.glyphArm.zeroPosition(this);
-                    }
-                } else if (state == 0.5 &&((Math.abs(Robot.glyphArm.liftArm.getCurrentPosition() - Robot.glyphArm.LiftMidPosition)) > Robot.glyphArm.WiggleRoom)){
-                    while (!gamepad1.a && !gamepad1.y && ((Math.abs(Robot.glyphArm.liftArm.getCurrentPosition() - Robot.glyphArm.LiftMidPosition)) > Robot.glyphArm.WiggleRoom)) {
-                        Robot.glyphArm.midPosition(this);
-                    }
-                } else if (state == 1 && ((Math.abs(Robot.glyphArm.liftArm.getCurrentPosition() - Robot.glyphArm.LiftTopPosition)) > Robot.glyphArm.WiggleRoom)){
-                    while (!gamepad1.a && !gamepad1.b &&((Math.abs(Robot.glyphArm.liftArm.getCurrentPosition() - Robot.glyphArm.LiftTopPosition)) > Robot.glyphArm.WiggleRoom)) {
-                        Robot.glyphArm.topPosition(this);
-                    }
-                }else{
-                    Robot.glyphArm.stopLifting();
+                if (Robot.glyphArm.liftArm.getCurrentPosition()> Robot.glyphArm.liftArm.getTargetPosition()+Robot.glyphArm.WiggleRoom){
+                    Robot.glyphArm.lower();
+                }
+                else if (Robot.glyphArm.liftArm.getCurrentPosition()<Robot.glyphArm.liftArm.getTargetPosition()-Robot.glyphArm.WiggleRoom){
+                    Robot.glyphArm.lift();
+                }
+                else {
+                    Robot.glyphArm.liftArm.setPower(0);
                 }
             }
         }

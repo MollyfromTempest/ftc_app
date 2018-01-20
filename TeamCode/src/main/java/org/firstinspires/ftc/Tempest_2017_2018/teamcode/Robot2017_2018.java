@@ -34,7 +34,9 @@ public class Robot2017_2018 {
         glyphArm.init(HWMap);
 
         BlueSwitch = HWMap.digitalChannel.get("LEDBlueSwitch");
+        BlueSwitch.setMode(DigitalChannel.Mode.INPUT);
         LeftRightSwitch = HWMap.digitalChannel.get("LeftRightSwitch");
+        LeftRightSwitch.setMode(DigitalChannel.Mode.INPUT);
 
         holoDrive = new HolonomicDrive();
         holoDrive.init (HWMap);

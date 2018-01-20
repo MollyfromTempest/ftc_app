@@ -151,12 +151,35 @@ public class Teleop_6699 extends LinearOpMode {
                 Robot.glyphArm.incrementPosition(this);
             } else {
                 //Otherwise, maintains position
+
+                /**
+                 * Notice how you write a similar position check each if statement?
+                 * And how all the variables called are from the glyphArm object?
+                 * Consider writing a boolean function in Glyph_Arm that checks to see if it's "close" to a position.
+                 *
+                 * Also, be careful when calling the lift arm functions a lot.
+                 * Since this is a single thread, Sean cannot move the robot while you are calling zeroPosition, midPosition, or topPosition.
+                 * How can you write this same loop without giving control over to those functions?
+                 * You are able to access the actual lift motor object (Robot.glyphArm.liftArm),
+                 * so you can do a single call with the DC motor rather than use the larger position methods.
+                 *
+                 * But this code captures what you want to have happen, though it might be jittery when driving it as is.
+                 *
+                 * -- Aaron
+                 */
+
                 if (state == 0 && ((Math.abs(Robot.glyphArm.liftArm.getCurrentPosition() - Robot.glyphArm.LiftZeroPosition)) > Robot.glyphArm.WiggleRoom)){
-                    Robot.glyphArm.zeroPosition(this);
+                    while (!gamepad1.b && !gamepad1.y && ((Math.abs(Robot.glyphArm.liftArm.getCurrentPosition() - Robot.glyphArm.LiftZeroPosition)) > Robot.glyphArm.WiggleRoom)) {
+                        Robot.glyphArm.zeroPosition(this);
+                    }
                 } else if (state == 0.5 &&((Math.abs(Robot.glyphArm.liftArm.getCurrentPosition() - Robot.glyphArm.LiftMidPosition)) > Robot.glyphArm.WiggleRoom)){
-                    Robot.glyphArm.midPosition(this);
+                    while (!gamepad1.a && !gamepad1.y && ((Math.abs(Robot.glyphArm.liftArm.getCurrentPosition() - Robot.glyphArm.LiftMidPosition)) > Robot.glyphArm.WiggleRoom)) {
+                        Robot.glyphArm.midPosition(this);
+                    }
                 } else if (state == 1 && ((Math.abs(Robot.glyphArm.liftArm.getCurrentPosition() - Robot.glyphArm.LiftTopPosition)) > Robot.glyphArm.WiggleRoom)){
-                    Robot.glyphArm.topPosition(this);
+                    while (!gamepad1.a && !gamepad1.b &&((Math.abs(Robot.glyphArm.liftArm.getCurrentPosition() - Robot.glyphArm.LiftTopPosition)) > Robot.glyphArm.WiggleRoom)) {
+                        Robot.glyphArm.topPosition(this);
+                    }
                 }else{
                     Robot.glyphArm.stopLifting();
                 }

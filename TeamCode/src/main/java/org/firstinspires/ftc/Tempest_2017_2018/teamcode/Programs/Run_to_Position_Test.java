@@ -15,6 +15,7 @@ public class Run_to_Position_Test extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        Robot = new Robot2017_2018();
         Robot.init(hardwareMap);
         waitForStart();
 

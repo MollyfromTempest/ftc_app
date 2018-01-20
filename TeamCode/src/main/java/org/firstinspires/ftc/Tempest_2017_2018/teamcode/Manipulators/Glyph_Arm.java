@@ -78,11 +78,11 @@ public class Glyph_Arm
 
     public void zeroPosition (LinearOpMode master) {
         //Sends the arm to the bottom position
-        //int currentPosition = liftArm.getCurrentPosition();
+        int currentPosition = liftArm.getCurrentPosition();
 
         liftArm.setTargetPosition(LiftZeroPosition);
 
-        /*if (currentPosition > liftArm.getTargetPosition()) {
+        if (currentPosition > liftArm.getTargetPosition()) {
             lower();
         } else {
             lift();
@@ -94,16 +94,16 @@ public class Glyph_Arm
             master.idle();
         }
 
-        stopLifting();*/
+        stopLifting();
     }
 
     public void midPosition (LinearOpMode master) {
         //Sends the arm to the middle position
-        //int currentPosition = liftArm.getCurrentPosition();
+        int currentPosition = liftArm.getCurrentPosition();
 
         liftArm.setTargetPosition(LiftMidPosition);
 
-        /*if (currentPosition > liftArm.getTargetPosition()) {
+        if (currentPosition > liftArm.getTargetPosition()) {
             lower();
         } else {
             lift();
@@ -115,17 +115,17 @@ public class Glyph_Arm
             master.idle();
         }
 
-        stopLifting();*/
+        stopLifting();
 
     }
 
     public void topPosition (LinearOpMode master) {
         //Sends the arm to the top position
-        //int currentPosition = liftArm.getCurrentPosition();
+        int currentPosition = liftArm.getCurrentPosition();
 
         liftArm.setTargetPosition(LiftTopPosition);
 
-        /*if (currentPosition > liftArm.getTargetPosition()) {
+        if (currentPosition > liftArm.getTargetPosition()) {
             lower();
         } else {
             lift();
@@ -137,7 +137,7 @@ public class Glyph_Arm
             master.idle();
         }
 
-        stopLifting();*/
+        stopLifting();
     }
 
     public void incrementPosition (LinearOpMode master) {
@@ -146,7 +146,7 @@ public class Glyph_Arm
 
         liftArm.setTargetPosition(currentPosition + Increment);
 
-        /*if (currentPosition > liftArm.getTargetPosition()) {
+        if (currentPosition > liftArm.getTargetPosition()) {
             lower();
         } else {
             lift();
@@ -158,7 +158,7 @@ public class Glyph_Arm
             master.idle();
         }
 
-        stopLifting();*/
+        stopLifting();
     }
 
     public void leftGrab()

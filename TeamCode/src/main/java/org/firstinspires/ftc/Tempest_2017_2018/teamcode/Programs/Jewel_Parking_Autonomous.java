@@ -80,44 +80,44 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                     telemetry.addData("Color sensor", "Left blue, right red or unspecified");
                     //Robot.holoDrive.turnleftunlim(0.2);
                     Robot.holoDrive.panleft(Speed);
-                    Sleep(450);
+                    Sleep(500);
                     Robot.holoDrive.stopmotors();
                     Robot.jewelArm.jewelArmUp();
                     Robot.holoDrive.panright(Speed);
-                    Sleep(450);
+                    Sleep(500);
                     Robot.holoDrive.stopmotors();
                 } else if (leftRed && !rightRed) {
                     // Left red and right not specified (but not also red). Since we are red, we want to turn right.
                     telemetry.addData("Color sensor", "Left red, right blue or unspecified");
                     //Robot.holoDrive.turnrightunlim(0.2);
                     Robot.holoDrive.panright(Speed);
-                    Sleep(450);
+                    Sleep(500);
                     Robot.holoDrive.stopmotors();
                     Robot.jewelArm.jewelArmUp();
                     Robot.holoDrive.panleft(Speed);
-                    Sleep(450);
+                    Sleep(500);
                     Robot.holoDrive.stopmotors();
                 }else if(!leftBlue && rightBlue){
                     //Right blue and left not specified (but not also blue). Since we are red, we want to turn right.
                     telemetry.addData("Color sensor", "Left red or unspecified, right blue");
                     //Robot.holoDrive.turnrightunlim(0.2);
                     Robot.holoDrive.panleft(Speed);
-                    Sleep(450);
+                    Sleep(500);
                     Robot.holoDrive.stopmotors();
                     Robot.jewelArm.jewelArmUp();
                     Robot.holoDrive.panright(Speed);
-                    sleep(450);
+                    sleep(500);
                     Robot.holoDrive.stopmotors();
                 }else if (!leftRed && rightRed){
                     //Right red and left not specified (but not also red). Since we are red, we want to turn left.
                     telemetry.addData("Color sensor", "Left blue or unspecified, right red");
                     //Robot.holoDrive.turnleftunlim(0.2);
                     Robot.holoDrive.panleft(Speed);
-                    Sleep(450);
+                    Sleep(500);
                     Robot.holoDrive.stopmotors();
                     Robot.jewelArm.jewelArmUp();
                     Robot.holoDrive.panright(Speed);
-                    sleep(450);
+                    sleep(500);
                     Robot.holoDrive.stopmotors();
                 }else {
                     //No reading? Ambiguous reading? Either way, something is wrong and we don't want to risk turning.
@@ -147,44 +147,44 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                     telemetry.addData ("Color sensor", "Left blue, right red or unspecified");
                     //Robot.holoDrive.turnrightunlim(0.2);
                     Robot.holoDrive.panright(Speed);
-                    Sleep(450);
+                    Sleep(500);
                     Robot.holoDrive.stopmotors();
                     Robot.jewelArm.jewelArmUp();
                     Robot.holoDrive.panleft(Speed);
-                    sleep(450);
+                    sleep(500);
                     Robot.holoDrive.stopmotors();
                 } else if (leftRed && !rightRed){
                     // Left red and right unspecified (but not also red). Since we are blue, we want to turn left.
                     telemetry.addData ("Color sensor", "Left red, right blue or unspecified");
                     //Robot.holoDrive.turnleftunlim(0.2);
                     Robot.holoDrive.panleft(Speed);
-                    Sleep(450);
+                    Sleep(500);
                     Robot.holoDrive.stopmotors();
                     Robot.jewelArm.jewelArmUp();
                     Robot.holoDrive.panright(Speed);
-                    sleep(450);
+                    sleep(500);
                     Robot.holoDrive.stopmotors();
                 } else if (!leftBlue && rightBlue){
                     //Right blue and left unspecified (but not also blue). Since we are blue, we want to turn left.
                     telemetry.addData ("Color sensor", "Left red or unspecified, right blue");
                     //Robot.holoDrive.turnleftunlim(0.2);
                     Robot.holoDrive.panleft(Speed);
-                    Sleep(450);
+                    Sleep(500);
                     Robot.holoDrive.stopmotors();
                     Robot.jewelArm.jewelArmUp();
                     Robot.holoDrive.panright(Speed);
-                    sleep(450);
+                    sleep(500);
                     Robot.holoDrive.stopmotors();
                 }else if (!leftRed && rightRed){
                     //Right red and left unspecified (but not also red). Since we are blue, we want to turn right.
                     telemetry.addData ("Color sensor", "Left blue or unspecified, right red");
                     //Robot.holoDrive.turnrightunlim(0.2);
                     Robot.holoDrive.panright(Speed);
-                    Sleep(450);
+                    Sleep(500);
                     Robot.holoDrive.stopmotors();
                     Robot.jewelArm.jewelArmUp();
                     Robot.holoDrive.panleft(Speed);
-                    sleep(450);
+                    sleep(500);
                     Robot.holoDrive.stopmotors();
                 }else {
                     //No reading? Ambiguous reading? Either way, something is wrong and we don't want to risk turning.
@@ -201,56 +201,45 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
             // all positions NEED to be tested
             if (LeftSide && BlueTeam){
                 // havent tested this yet
-                Robot.holoDrive.pan(9*Math.PI/8, FasterSpeed);
-                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 2000) {
+                Robot.holoDrive.pan(11*Math.PI/8, FasterSpeed);
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
                     idle();
                 }
-                Robot.holoDrive.stopmotors();
-                Robot.glyphArm.grab(); //opposite, this releases
-                Robot.holoDrive.pan(9*Math.PI/8, FasterSpeed);
-                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
-                    idle();
-                }
-                Robot.holoDrive.pan(Math.PI/8, -Speed);
-                Sleep(1000);
-            }
-            else if (!LeftSide && BlueTeam){
-                Robot.holoDrive.pan(5*Math.PI/4, FasterSpeed);
-                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 2300) {
-                    idle();
-                }
-                Robot.holoDrive.stopmotors();
-                Robot.glyphArm.zeroPosition(this);
-                //its dropping to fast so this might help
-                Sleep(1000);
+                Start = Robot.holoDrive.NW.getCurrentPosition();
                 Robot.holoDrive.turnleftunlim(FasterSpeed);
-                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1000) {
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1400) {
                     idle();
                 }
-                Robot.holoDrive.pan(5*Math.PI/4, FasterSpeed);
+                Robot.holoDrive.stopmotors();
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                Robot.holoDrive.pan(3*Math.PI/8, FasterSpeed);
                 while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
                     idle();
                 }
                 Robot.holoDrive.stopmotors();
-                Robot.glyphArm.grab(); // releases
-                // drive backwards
+                Robot.glyphArm.zeroPosition(this);
+                Sleep(1000);
+                Robot.glyphArm.grab(); //opposite, this releases
+                Start = Robot.holoDrive.NW.getCurrentPosition();
                 Robot.holoDrive.pan(Math.PI/4, FasterSpeed);
-                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
                     idle();
                 }
+                Robot.holoDrive.pan(5*Math.PI/4, Speed);
+                Sleep(500);
                 Robot.holoDrive.stopmotors();
             }
-            else if (LeftSide && !BlueTeam){
+            else if (!LeftSide && BlueTeam) {
                 // this us into the parking zone, this has been tested
-                Robot.holoDrive.pan(Math.PI/8, FasterSpeed);
-                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 2300) {
+                Robot.holoDrive.pan(5*Math.PI / 4, FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1600) {
                     idle();
                 }
                 //Robot.holoDrive.stopmotors();
                 // this should turn us to the right 90 degrees, need to test this
                 Start = Robot.holoDrive.NW.getCurrentPosition();
                 Robot.holoDrive.turnrightunlim(FasterSpeed);
-                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1000) {
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
                     idle();
                 }
                 // this drives forward and lowers the arm, hopefully putting the glyph in the box
@@ -259,7 +248,39 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                 Sleep(1000);
                 Start = Robot.holoDrive.NW.getCurrentPosition();
                 // not sure if its pi/8 or 5pi/4 because the robot is turning
-                Robot.holoDrive.pan(Math.PI/8, FasterSpeed);
+                Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
+                Robot.glyphArm.grab(); // this is the opposite
+                // this backs up after the glyph is put down just in case the gylph arm gets stuck in the box
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                Robot.holoDrive.pan(5*Math.PI / 4, FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 200) {
+                    idle();
+                }
+            }
+            else if (LeftSide && !BlueTeam){
+                // this us into the parking zone, this has been tested
+                Robot.holoDrive.pan(Math.PI/4, FasterSpeed);
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1600) {
+                    idle();
+                }
+                //Robot.holoDrive.stopmotors();
+                // this should turn us to the right 90 degrees, need to test this
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                Robot.holoDrive.turnrightunlim(FasterSpeed);
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
+                    idle();
+                }
+                // this drives forward and lowers the arm, hopefully putting the glyph in the box
+                Robot.holoDrive.stopmotors();
+                Robot.glyphArm.zeroPosition(this);
+                Sleep(1000);
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                // not sure if its pi/8 or 5pi/4 because the robot is turning
+                Robot.holoDrive.pan(Math.PI/4, FasterSpeed);
                 while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
                     idle();
                 }
@@ -267,7 +288,7 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                 Robot.glyphArm.grab(); // this is the opposite
                 // this backs up after the glyph is put down just in case the gylph arm gets stuck in the box
                 Start = Robot.holoDrive.NW.getCurrentPosition();
-                Robot.holoDrive.pan(2*Math.PI/3, FasterSpeed);
+                Robot.holoDrive.pan(5*Math.PI/4, FasterSpeed);
                 while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
                     idle();
                 }
@@ -284,6 +305,7 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                 Sleep(1000);
                 Robot.glyphArm.grab(); // this releases, its backwards
                 Robot.holoDrive.pan(Math.PI/8, FasterSpeed);
+                Start = Robot.holoDrive.NW.getCurrentPosition();
                 while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
                     idle();
                 }

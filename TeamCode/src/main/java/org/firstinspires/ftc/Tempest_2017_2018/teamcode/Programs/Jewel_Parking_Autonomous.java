@@ -122,6 +122,7 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                 }else {
                     //No reading? Ambiguous reading? Either way, something is wrong and we don't want to risk turning.
                     telemetry.addData("Color sensor", "No reading");
+                    Robot.jewelArm.jewelArmUp();
                     //Sleep(30000);
                 }
             }
@@ -189,6 +190,7 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                 }else {
                     //No reading? Ambiguous reading? Either way, something is wrong and we don't want to risk turning.
                     telemetry.addData("Color sensor", "No reading");
+                    Robot.jewelArm.jewelArmUp();
                     //Sleep(30000);
                 }
             }

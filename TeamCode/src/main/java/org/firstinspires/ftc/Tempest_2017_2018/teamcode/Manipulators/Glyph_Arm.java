@@ -111,11 +111,11 @@ public class Glyph_Arm
         //Times out if it runs for more than 3 seconds. The same code exists for the other lifting functions.
         long startTime = System.currentTimeMillis();
 
-        while (liftArm.isBusy()&& (System.currentTimeMillis()- startTime < TimeOut)) {
+        /*while (liftArm.isBusy()&& (System.currentTimeMillis()- startTime < TimeOut)) {
             master.idle();
-        }
+        }*/
 
-        stopLifting();
+
 
     }
 
@@ -146,7 +146,7 @@ public class Glyph_Arm
 
         liftArm.setTargetPosition(currentPosition + Increment);
 
-        if (currentPosition > liftArm.getTargetPosition()) {
+        /*if (currentPosition > liftArm.getTargetPosition()) {
             lower();
         } else {
             lift();
@@ -158,7 +158,7 @@ public class Glyph_Arm
             master.idle();
         }
 
-        stopLifting();
+        stopLifting();*/
     }
 
     public void leftGrab()

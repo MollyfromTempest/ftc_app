@@ -40,31 +40,39 @@ public class Teleop_6699 extends LinearOpMode {
     1: top position
      */
         //Scaling factors for speed
-        double driveScale = 1;
-        double turnScale = 1;
+        double driveScale = 0.5;
+        double turnScale = 0.5;
 
         Robot.jewelArm.jewelArmUp();
         boolean JewelArmUp = true; //arm starts up after autonomous
         boolean open = true; //default is that the grabber moves open
 
+        double leftX;
+        double leftY;
+        double rightX;
+
         waitForStart();
         while (opModeIsActive()) {
+            leftX = (float)scaleInput(gamepad1.left_stick_x);
+            leftY = (float)scaleInput(gamepad1.left_stick_y);
+            rightX = (float)scaleInput(gamepad1.right_stick_x);
+
             //Define angle for pan function by using trigonometry to calculate it from joystick
-            theta = -Math.PI / 4 + Math.atan2(-gamepad1.left_stick_y, -gamepad1.left_stick_x);
+            theta = -Math.PI / 4 + Math.atan2(-leftY, -leftX);
             //Define power for pan function by using math to calculate the length of the hypotenuse between the x and y axes
-            power = Math.pow(Math.sqrt((gamepad1.left_stick_x) * (gamepad1.left_stick_x) + (gamepad1.left_stick_y) * (gamepad1.left_stick_y)), 3);
+            power = Math.pow(Math.sqrt((leftX) * (leftX) + (leftY) * (leftY)), 3);
             //Define power for turning, based solely on the x and y axes
-            pivotpower = -gamepad1.right_stick_x;
+            pivotpower = -rightX;
             if (gamepad1.dpad_up) {
                 //Toggles slow mode.
-                if (turnScale == 1) {
+                if (turnScale == 0.5) {
                     //If it's fast, make it slow
-                    driveScale = 0.4;
-                    turnScale = 0.4;
+                    driveScale = 0.3;
+                    turnScale = 0.3;
                 } else {
                     //If it's slow, make it fast
-                    driveScale = 1;
-                    turnScale = 1;
+                    driveScale = 0.5;
+                    turnScale = 0.5;
                 }
                 while (gamepad1.dpad_up) {
                     //Don't constantly change back and forth. One change per button press.
@@ -182,4 +190,33 @@ public class Teleop_6699 extends LinearOpMode {
             }
         }
     }
+    double scaleInput(double dVal)  {
+        double[] scaleArray = { 0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
+                0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00 };
+
+        // get the corresponding index for the scaleInput array.
+        int index = (int) (dVal * 16.0);
+
+        // index should be positive.
+        if (index < 0) {
+            index = -index;
+        }
+
+        // index cannot exceed size of array minus 1.
+        if (index > 16) {
+            index = 16;
+        }
+
+        // get value from the array.
+        double dScale = 0.0;
+        if (dVal < 0) {
+            dScale = -scaleArray[index];
+        } else {
+            dScale = scaleArray[index];
+        }
+
+        // return scaled value.
+        return dScale;
+    }
+
 }

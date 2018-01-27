@@ -12,7 +12,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Glyph_Arm
 {
-    DcMotor.RunMode encMode = DcMotor.RunMode.RUN_USING_ENCODER;
+    //DcMotor.RunMode encMode = DcMotor.RunMode.RUN_USING_ENCODER;
+    DcMotor.RunMode posMode = DcMotor.RunMode.RUN_TO_POSITION;
     public DcMotor liftArm; //Arm to lift the blocks
     public Servo grabArmLeft; //Left side of grabbing mechanism
     public Servo grabArmRight; //Right side of grabbing mechanism
@@ -21,8 +22,8 @@ public class Glyph_Arm
     double liftPower = 0.4; //Power used to lift the blocks
     double lowerPower = -0.4; //Power used to lower the blocks. It has its own variable in case we decide it should be different
 
-    public int LiftZeroPosition; //Starting position, on the ground
-    public int LiftMidPosition = 850; //Slightly more than 6 inches (so blocks can be stacked)
+    public int LiftZeroPosition; //Starting position, on the ground, could make static final
+    public int LiftMidPosition = 850; // Slightly more than 6 inches (so blocks can be stacked)
     public int LiftTopPosition = 1500; //Slightly more than 12 inches (so blocks can be stacked)
     public int Increment = 150; //Approximately 1 inch
     public int WiggleRoom = 20; //Small number of encoder ticks
@@ -35,6 +36,8 @@ public class Glyph_Arm
     public double rightClosed = 0.019;
     public double rightSlightlyOpen = 0.496;
 
+
+
     HardwareMap HWMap;
 
     public Glyph_Arm(){}
@@ -45,7 +48,7 @@ public class Glyph_Arm
 
         //We can reverse the motor directions if we need to in order to get the motor to run in the correct direction
         liftArm = HWMap.dcMotor.get("liftArm");
-        liftArm.setMode(encMode);
+        liftArm.setMode(DcMotor.RunMode.RUN_TO_POSITION); /* Pretty sure you don't want this: http://aaroncook.xyz/ftc_app/doc/javadoc/com/qualcomm/robotcore/hardware/DcMotor.RunMode.html#RUN_TO_POSITION -- Aaron */
         liftArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftArm.setDirection(DcMotorSimple.Direction.REVERSE);
         LiftZeroPosition = liftArm.getCurrentPosition(); //Must start arm in bottom position
@@ -56,7 +59,7 @@ public class Glyph_Arm
 
         grabArmLeft = HWMap.servo.get("grabArmLeft");
         grabArmRight = HWMap.servo.get("grabArmRight");
-        release();
+        grab();
         //grabArm.setMaxSpeed(speed);
     }
 
@@ -108,11 +111,12 @@ public class Glyph_Arm
         //Times out if it runs for more than 3 seconds. The same code exists for the other lifting functions.
         long startTime = System.currentTimeMillis();
 
-        while (liftArm.isBusy()&& (System.currentTimeMillis()- startTime < TimeOut)) {
+        /*while (liftArm.isBusy()&& (System.currentTimeMillis()- startTime < TimeOut)) {
             master.idle();
-        }
+        }*/
 
-        stopLifting();
+
+
     }
 
     public void topPosition (LinearOpMode master) {
@@ -142,7 +146,7 @@ public class Glyph_Arm
 
         liftArm.setTargetPosition(currentPosition + Increment);
 
-        if (currentPosition > liftArm.getTargetPosition()) {
+        /*if (currentPosition > liftArm.getTargetPosition()) {
             lower();
         } else {
             lift();
@@ -154,7 +158,7 @@ public class Glyph_Arm
             master.idle();
         }
 
-        stopLifting();
+        stopLifting();*/
     }
 
     public void leftGrab()

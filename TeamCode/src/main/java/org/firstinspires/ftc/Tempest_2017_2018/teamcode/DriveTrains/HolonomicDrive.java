@@ -36,25 +36,25 @@ public class    HolonomicDrive {
         HWMap = newHWMap;
 
         NW = HWMap.dcMotor.get("NW");
-        NW.setMode(dumbMode);
+        NW.setMode(encMode);
         NW.setDirection(DcMotor.Direction.FORWARD);
         NW.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //NW.setMaxSpeed(speed);
 
         NE = HWMap.dcMotor.get("NE");
-        NE.setMode(dumbMode);
+        NE.setMode(encMode);
         NE.setDirection(DcMotor.Direction.REVERSE);
         NE.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //NE.setMaxSpeed(speed);
 
         SW = HWMap.dcMotor.get("SW");
-        SW.setMode(dumbMode);
+        SW.setMode(encMode);
         SW.setDirection(DcMotor.Direction.FORWARD);
         SW.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //SW.setMaxSpeed(speed);
 
         SE = HWMap.dcMotor.get("SE");
-        SE.setMode(dumbMode);
+        SE.setMode(encMode);
         SE.setDirection(DcMotor.Direction.REVERSE);
         SE.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //SE.setMaxSpeed(speed);

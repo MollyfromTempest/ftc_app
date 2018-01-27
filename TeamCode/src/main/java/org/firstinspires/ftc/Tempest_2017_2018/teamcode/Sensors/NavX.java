@@ -3,9 +3,8 @@ package org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors;
 
 import android.util.Log;
 
-import com.kauailabs.navx.ftc.AHRS;
+/*import com.kauailabs.navx.ftc.AHRS;
 import com.kauailabs.navx.ftc.navXPIDController;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -140,12 +139,13 @@ public class NavX extends LinearOpMode {
         }
 =======
 public class NavX {
+/*public class NavX {
     public NavX(){}
     public AHRS navx_device;
     public void init(HardwareMap HWMap) {
-        navx_device = AHRS.getInstance(HWMap.deviceInterfaceModule.get("Device Interface Module 1"), 2, AHRS.DeviceDataType.kProcessedData);
+        //navx_device = AHRS.getInstance(HWMap.deviceInterfaceModule.get("Device Interface Module 1"), 2, AHRS.DeviceDataType.kProcessedData);
 
-        while (navx_device.isCalibrating()) ;
+        //while (navx_device.isCalibrating()) ;
         resetRotation();
     }
     public void resetRotation(){navx_device.zeroYaw();}
@@ -154,3 +154,4 @@ public class NavX {
 >>>>>>> 0c36f18bb8b71b390c020476e5c5360ac7c31f48
     }
 }
+*/

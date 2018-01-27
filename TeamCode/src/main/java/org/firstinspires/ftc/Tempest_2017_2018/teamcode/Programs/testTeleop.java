@@ -11,7 +11,7 @@ import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Robot2017_2018;
  * Created by Molly on 9/30/2017.
  */
 @TeleOp
-public class Teleop_6699 extends LinearOpMode {
+public class testTeleop extends LinearOpMode {
     // holonomic drive object instance
     Robot2017_2018 Robot;
 
@@ -48,6 +48,8 @@ public class Teleop_6699 extends LinearOpMode {
         boolean open = true; //default is that the grabber moves open
 
         waitForStart();
+        Robot.glyphArm.liftArm.setTargetPosition(Robot.glyphArm.LiftZeroPosition);
+        Robot.glyphArm.liftArm.setPower(0.4);
         while (opModeIsActive()) {
             //Define angle for pan function by using trigonometry to calculate it from joystick
             theta = -Math.PI / 4 + Math.atan2(-gamepad1.left_stick_y, -gamepad1.left_stick_x);
@@ -134,20 +136,20 @@ public class Teleop_6699 extends LinearOpMode {
             }
 
 
-            if (gamepad1.a && ((Math.abs(Robot.glyphArm.liftArm.getCurrentPosition() - Robot.glyphArm.LiftZeroPosition)) > Robot.glyphArm.WiggleRoom)) {
+            if (gamepad1.a) {
                 //Moves to the zero position. Extra math stuff is designed so that it won't move if it's there or almost there.
                 state = 0;
-                Robot.glyphArm.zeroPosition(this);
+                Robot.glyphArm.liftArm.setTargetPosition(Robot.glyphArm.LiftZeroPosition);
 
-            } else if (gamepad1.b && ((Math.abs(Robot.glyphArm.liftArm.getCurrentPosition() - Robot.glyphArm.LiftMidPosition)) > Robot.glyphArm.WiggleRoom)) {
+            } else if (gamepad1.b) {
                 //Moves to the middle position. Extra math stuff is designed so that it won't move if it's there or almost there.
                 state = 0.5;
-                Robot.glyphArm.midPosition(this);
+                Robot.glyphArm.liftArm.setTargetPosition(Robot.glyphArm.LiftMidPosition);
 
-            } else if (gamepad1.y && ((Math.abs(Robot.glyphArm.liftArm.getCurrentPosition() - Robot.glyphArm.LiftTopPosition)) > Robot.glyphArm.WiggleRoom)) {
+            } else if (gamepad1.y) {
                 //Moves to the zero position. Extra math stuff is designed so that it won't move if it's there or almost there.
                 state = 1;
-                Robot.glyphArm.topPosition(this);
+                Robot.glyphArm.liftArm.setTargetPosition(Robot.glyphArm.LiftTopPosition);
 
             } else if (gamepad1.x) {
                 Robot.glyphArm.incrementPosition(this);
@@ -170,7 +172,7 @@ public class Teleop_6699 extends LinearOpMode {
                  * -- Aaron
                  */
 
-                if (Robot.glyphArm.liftArm.getCurrentPosition()> Robot.glyphArm.liftArm.getTargetPosition()+Robot.glyphArm.WiggleRoom){
+                /*if (Robot.glyphArm.liftArm.getCurrentPosition()> Robot.glyphArm.liftArm.getTargetPosition()+Robot.glyphArm.WiggleRoom){
                     Robot.glyphArm.lower();
                 }
                 else if (Robot.glyphArm.liftArm.getCurrentPosition()<Robot.glyphArm.liftArm.getTargetPosition()-Robot.glyphArm.WiggleRoom){
@@ -178,7 +180,7 @@ public class Teleop_6699 extends LinearOpMode {
                 }
                 else {
                     Robot.glyphArm.liftArm.setPower(0);
-                }
+                }*/
             }
         }
     }

@@ -27,6 +27,7 @@ import java.text.DecimalFormat;
  * Note that for the best accuracy, a reasonably high update rate
  * for the navX-Model sensor should be used.
  */
+<<<<<<< HEAD
 @TeleOp(name = "Concept: navX Rotate to Angle PID - Linear", group = "Concept")
 // @Disabled Comment this in to remove this from the Driver Station OpMode List
 public class NavX extends LinearOpMode {
@@ -137,6 +138,7 @@ public class NavX extends LinearOpMode {
             navx_device.close();
             telemetry.addData("LinearOp", "Complete");
         }
+=======
 public class NavX {
     public NavX(){}
     public AHRS navx_device;
@@ -149,5 +151,6 @@ public class NavX {
     public void resetRotation(){navx_device.zeroYaw();}
     public double getRotation() {
         return navx_device.getYaw();
+>>>>>>> 0c36f18bb8b71b390c020476e5c5360ac7c31f48
     }
 }

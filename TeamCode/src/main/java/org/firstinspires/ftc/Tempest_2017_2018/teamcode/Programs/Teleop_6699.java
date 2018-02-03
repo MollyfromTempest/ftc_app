@@ -57,8 +57,8 @@ public class Teleop_6699 extends LinearOpMode {
         Robot.glyphArm.liftArm.setPower(0.6);
         while (opModeIsActive()) {
             leftX = (float)scaleInput(gamepad1.left_stick_x);
-            leftY = (float)scaleInput(-gamepad1.left_stick_y);
-            rightX = (float)scaleInput(-gamepad1.right_stick_x);
+            leftY = (float)scaleInput(gamepad1.left_stick_y);
+            rightX = (float)scaleInput(gamepad1.right_stick_x);
 
             //Define angle for pan function by using trigonometry to calculate it from joystick
             theta = -Math.PI / 4 + Math.atan2(-leftY, -leftX);

@@ -39,7 +39,7 @@ public class Vuforia_Driving_Test extends LinearOpMode {
     }
 
     @Override
-    public void runOpMode()throws InterruptedException{
+    public void runOpMode() throws InterruptedException {
         Robot = new Robot2017_2018();
         Robot.init(hardwareMap);
         //Turn on the color sensor LEDS
@@ -47,15 +47,15 @@ public class Vuforia_Driving_Test extends LinearOpMode {
         Robot.color.rightColor.enableLed(true);
         double Speed = 0.1;
         boolean BlueTeam = !Robot.BlueSwitch.getState();
-        if(BlueTeam){
+        if (BlueTeam) {
             telemetry.addData("Team Color", "Blue");
-        }else{
+        } else {
             telemetry.addData("Team Color", "Red");
         }
         boolean LeftSide = Robot.LeftRightSwitch.getState();
-        if(LeftSide){
+        if (LeftSide) {
             telemetry.addData("Team Side", "Left");
-        }else{
+        } else {
             telemetry.addData("Team Side", "Right");
         }
         telemetry.update();
@@ -120,7 +120,7 @@ public class Vuforia_Driving_Test extends LinearOpMode {
                 Robot.holoDrive.panleft(Speed);
                 Sleep(500);
                 Robot.holoDrive.stopmotors();
-            }else if(!leftBlue && rightBlue){
+            } else if (!leftBlue && rightBlue) {
                 //Right blue and left not specified (but not also blue). Since we are red, we want to turn right.
                 telemetry.addData("Color sensor", "Left red or unspecified, right blue");
                 //Robot.holoDrive.turnrightunlim(0.2);
@@ -131,7 +131,7 @@ public class Vuforia_Driving_Test extends LinearOpMode {
                 Robot.holoDrive.panright(Speed);
                 sleep(500);
                 Robot.holoDrive.stopmotors();
-            }else if (!leftRed && rightRed){
+            } else if (!leftRed && rightRed) {
                 //Right red and left not specified (but not also red). Since we are red, we want to turn left.
                 telemetry.addData("Color sensor", "Left blue or unspecified, right red");
                 //Robot.holoDrive.turnleftunlim(0.2);
@@ -142,14 +142,13 @@ public class Vuforia_Driving_Test extends LinearOpMode {
                 Robot.holoDrive.panright(Speed);
                 sleep(500);
                 Robot.holoDrive.stopmotors();
-            }else {
+            } else {
                 //No reading? Ambiguous reading? Either way, something is wrong and we don't want to risk turning.
                 telemetry.addData("Color sensor", "No reading");
                 Robot.jewelArm.jewelArmUp();
                 //Sleep(30000);
             }
-        }
-        else{
+        } else {
             //BLUE BLUE BLUE
             telemetry.addData("Right blue", rightBlue);
             telemetry.addData("Right red", rightRed);
@@ -157,18 +156,18 @@ public class Vuforia_Driving_Test extends LinearOpMode {
             telemetry.addData("Left red", leftRed);
 
 
-            if (leftBlue && rightBlue){
+            if (leftBlue && rightBlue) {
                 //Both blue -- something is wrong!
-                telemetry.addData ("Color sensor", "Both blue");
+                telemetry.addData("Color sensor", "Both blue");
 
                 //Sleep(30000);
-            } else if (leftRed && rightRed){
+            } else if (leftRed && rightRed) {
                 //Both red -- something is wrong!
-                telemetry.addData ("Color sensor", "Both red");
+                telemetry.addData("Color sensor", "Both red");
                 //Sleep(30000);
-            } else if (leftBlue && !rightBlue){
+            } else if (leftBlue && !rightBlue) {
                 // Left blue and right not specified (but not also blue). Since we are blue, we want to turn right.
-                telemetry.addData ("Color sensor", "Left blue, right red or unspecified");
+                telemetry.addData("Color sensor", "Left blue, right red or unspecified");
                 //Robot.holoDrive.turnrightunlim(0.2);
                 Robot.holoDrive.panright(Speed);
                 Sleep(500);
@@ -177,9 +176,9 @@ public class Vuforia_Driving_Test extends LinearOpMode {
                 Robot.holoDrive.panleft(Speed);
                 sleep(500);
                 Robot.holoDrive.stopmotors();
-            } else if (leftRed && !rightRed){
+            } else if (leftRed && !rightRed) {
                 // Left red and right unspecified (but not also red). Since we are blue, we want to turn left.
-                telemetry.addData ("Color sensor", "Left red, right blue or unspecified");
+                telemetry.addData("Color sensor", "Left red, right blue or unspecified");
                 //Robot.holoDrive.turnleftunlim(0.2);
                 Robot.holoDrive.panleft(Speed);
                 Sleep(500);
@@ -188,9 +187,9 @@ public class Vuforia_Driving_Test extends LinearOpMode {
                 Robot.holoDrive.panright(Speed);
                 sleep(500);
                 Robot.holoDrive.stopmotors();
-            } else if (!leftBlue && rightBlue){
+            } else if (!leftBlue && rightBlue) {
                 //Right blue and left unspecified (but not also blue). Since we are blue, we want to turn left.
-                telemetry.addData ("Color sensor", "Left red or unspecified, right blue");
+                telemetry.addData("Color sensor", "Left red or unspecified, right blue");
                 //Robot.holoDrive.turnleftunlim(0.2);
                 Robot.holoDrive.panleft(Speed);
                 Sleep(500);
@@ -199,9 +198,9 @@ public class Vuforia_Driving_Test extends LinearOpMode {
                 Robot.holoDrive.panright(Speed);
                 sleep(500);
                 Robot.holoDrive.stopmotors();
-            }else if (!leftRed && rightRed){
+            } else if (!leftRed && rightRed) {
                 //Right red and left unspecified (but not also red). Since we are blue, we want to turn right.
-                telemetry.addData ("Color sensor", "Left blue or unspecified, right red");
+                telemetry.addData("Color sensor", "Left blue or unspecified, right red");
                 //Robot.holoDrive.turnrightunlim(0.2);
                 Robot.holoDrive.panright(Speed);
                 Sleep(500);
@@ -210,7 +209,7 @@ public class Vuforia_Driving_Test extends LinearOpMode {
                 Robot.holoDrive.panleft(Speed);
                 sleep(500);
                 Robot.holoDrive.stopmotors();
-            }else {
+            } else {
                 //No reading? Ambiguous reading? Either way, something is wrong and we don't want to risk turning.
                 telemetry.addData("Color sensor", "No reading");
                 Robot.jewelArm.jewelArmUp();
@@ -224,10 +223,10 @@ public class Vuforia_Driving_Test extends LinearOpMode {
         double FasterSpeed = 0.2;
         // these are crude estimates for parking and putting the glyph in one of the boxes
         // all positions NEED to be tested
-        if (LeftSide && BlueTeam){
+        if (LeftSide && BlueTeam) {
             // havent tested this yet
-            Robot.holoDrive.pan(11*Math.PI/8, FasterSpeed);
-            while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
+            Robot.holoDrive.pan(11 * Math.PI / 8, FasterSpeed);
+            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
                 idle();
             }
             Start = Robot.holoDrive.NW.getCurrentPosition();
@@ -237,8 +236,8 @@ public class Vuforia_Driving_Test extends LinearOpMode {
             }
             Robot.holoDrive.stopmotors();
             Start = Robot.holoDrive.NW.getCurrentPosition();
-            Robot.holoDrive.pan(3*Math.PI/8, FasterSpeed);
-            while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
+            Robot.holoDrive.pan(3 * Math.PI / 8, FasterSpeed);
+            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
                 idle();
             }
             Robot.holoDrive.stopmotors();
@@ -246,18 +245,17 @@ public class Vuforia_Driving_Test extends LinearOpMode {
             Sleep(1000);
             Robot.glyphArm.grab(); //opposite, this releases
             Start = Robot.holoDrive.NW.getCurrentPosition();
-            Robot.holoDrive.pan(Math.PI/4, FasterSpeed);
-            while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
+            Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
+            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
                 idle();
             }
             Robot.holoDrive.stopmotors();
-            Robot.holoDrive.pan(5*Math.PI/4, FasterSpeed);
+            Robot.holoDrive.pan(5 * Math.PI / 4, FasterSpeed);
             Sleep(500);
             Robot.holoDrive.stopmotors();
-        }
-        else if (!LeftSide && BlueTeam) {
+        } else if (!LeftSide && BlueTeam) {
             // this us into the parking zone, this has been tested
-            Robot.holoDrive.pan(5*Math.PI / 4, FasterSpeed);
+            Robot.holoDrive.pan(5 * Math.PI / 4, FasterSpeed);
             while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1600) {
                 idle();
             }
@@ -282,21 +280,20 @@ public class Vuforia_Driving_Test extends LinearOpMode {
             Robot.glyphArm.grab(); // this is the opposite
             // this backs up after the glyph is put down just in case the gylph arm gets stuck in the box
             Start = Robot.holoDrive.NW.getCurrentPosition();
-            Robot.holoDrive.pan(5*Math.PI / 4, FasterSpeed);
+            Robot.holoDrive.pan(5 * Math.PI / 4, FasterSpeed);
             while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 200) {
                 idle();
             }
             Robot.holoDrive.stopmotors();
-        }
-        else if (LeftSide && !BlueTeam){
+        } else if (LeftSide && !BlueTeam) {
             // this us into the parking zone, this has been tested
-            Robot.holoDrive.pan(Math.PI/4, FasterSpeed);
-            while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 800) {
+            Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
+            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
                 idle();
             }
             Robot.holoDrive.stopmotors();
             double time = System.currentTimeMillis();
-            while (System.currentTimeMillis()<time + 5000){
+            while (System.currentTimeMillis() < time + 5000) {
                 RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
                 if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                /* Found an instance of the template. In the actual game, you will probably
@@ -306,7 +303,7 @@ public class Vuforia_Driving_Test extends LinearOpMode {
                /* For fun, we also exhibit the navigational pose. In the Relic Recovery game,
                 * it is perhaps unlikely that you will actually need to act on this pose information, but
                 * we illustrate it nevertheless, for completeness. */
-                    OpenGLMatrix pose = ((VuforiaTrackableDefaultListener)relicTemplate.getListener()).getPose();
+                    OpenGLMatrix pose = ((VuforiaTrackableDefaultListener) relicTemplate.getListener()).getPose();
                     //final Telemetry.Item pose1 = telemetry.addData("Pose", format(pose));
                /* We further illustrate how to decompose the pose into useful rotational and
                 * translational components */
@@ -322,22 +319,20 @@ public class Vuforia_Driving_Test extends LinearOpMode {
                         double rY = rot.secondAngle;
                         double rZ = rot.thirdAngle;
                     }
-                }
-                else {
+                } else {
                     telemetry.addData("VuMark", "not visible");
                 }
                 telemetry.update();
             }
-            Robot.holoDrive.pan(Math.PI/4, FasterSpeed);
-            while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 800) {
+            Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
+            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 800) {
                 idle();
             }
             Robot.holoDrive.stopmotors();
-            //Robot.holoDrive.stopmotors();
             // this should turn us to the right 90 degrees, need to test this
             Start = Robot.holoDrive.NW.getCurrentPosition();
             Robot.holoDrive.turnrightunlim(FasterSpeed);
-            while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
+            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
                 idle();
             }
             // this drives forward and lowers the arm, hopefully putting the glyph in the box
@@ -346,43 +341,67 @@ public class Vuforia_Driving_Test extends LinearOpMode {
             Sleep(1000);
             Start = Robot.holoDrive.NW.getCurrentPosition();
             // not sure if its pi/8 or 5pi/4 because the robot is turning
-            Robot.holoDrive.pan(Math.PI/4, FasterSpeed);
-            while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
+            Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
+            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
                 idle();
             }
             Robot.holoDrive.stopmotors();
             Robot.glyphArm.grab(); // this is the opposite
             // this backs up after the glyph is put down just in case the gylph arm gets stuck in the box
             Start = Robot.holoDrive.NW.getCurrentPosition();
-            Robot.holoDrive.pan(5*Math.PI/4, FasterSpeed);
-            while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
+            Robot.holoDrive.pan(5 * Math.PI / 4, FasterSpeed);
+            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
                 idle();
             }
             Robot.holoDrive.stopmotors();
             //Robot.holoDrive.pan(Math.PI/8, -Speed);
             //Sleep(100);
-        }
-        else if (!LeftSide && !BlueTeam){
-            Robot.holoDrive.pan(Math.PI/8, FasterSpeed);
+        } else if (!LeftSide && !BlueTeam) {
+            /*Robot.holoDrive.pan(Math.PI/8, FasterSpeed);
             while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 2000) {
                 idle();
             }
-            Robot.holoDrive.stopmotors();
-            Robot.glyphArm.zeroPosition(this);
-            Sleep(1000);
-            Robot.glyphArm.grab(); // this releases, its backwards
-            Robot.holoDrive.pan(Math.PI/8, FasterSpeed);
-            Start = Robot.holoDrive.NW.getCurrentPosition();
-            while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
+            Robot.holoDrive.stopmotors();*/
+            Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
+            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
                 idle();
             }
             Robot.holoDrive.stopmotors();
-            Robot.holoDrive.pan(9*Math.PI/8, FasterSpeed);
-            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition()-Start) < 300){
-                idle();
+            double time = System.currentTimeMillis();
+            while (System.currentTimeMillis() < time + 5000) {
+                RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+                if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
+                    telemetry.addData("VuMark", "%s visible", vuMark);
+                    OpenGLMatrix pose = ((VuforiaTrackableDefaultListener) relicTemplate.getListener()).getPose();
+                    if (pose != null) {
+                        VectorF trans = pose.getTranslation();
+                        Orientation rot = Orientation.getOrientation(pose, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
+                        // Extract the X, Y, and Z components of the offset of the target relative to the robot
+                        double tX = trans.get(0);
+                        double tY = trans.get(1);
+                        double tZ = trans.get(2);
+                        // Extract the rotational components of the target relative to the robot
+                        double rX = rot.firstAngle;
+                        double rY = rot.secondAngle;
+                        double rZ = rot.thirdAngle;
+                    }
+                }
+                Robot.glyphArm.zeroPosition(this);
+                Sleep(1000);
+                Robot.glyphArm.grab(); // this releases, its backwards
+                Robot.holoDrive.pan(Math.PI / 8, FasterSpeed);
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
+                Robot.holoDrive.pan(9 * Math.PI / 8, FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
+                //Sleep(1000);
             }
-            Robot.holoDrive.stopmotors();
-            //Sleep(1000);
         }
     }
 }

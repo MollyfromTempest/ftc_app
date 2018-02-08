@@ -26,16 +26,16 @@ import java.text.DecimalFormat;
  * Note that for the best accuracy, a reasonably high update rate
  * for the navX-Model sensor should be used.
  */
-<<<<<<< HEAD
+/*
 @TeleOp(name = "Concept: navX Rotate to Angle PID - Linear", group = "Concept")
 // @Disabled Comment this in to remove this from the Driver Station OpMode List
 public class NavX extends LinearOpMode {
     DcMotor leftMotor;
     DcMotor rightMotor;
 
-    /* This is the port on the Core Device Interface Module        */
-    /* in which the navX-Model Device is connected.  Modify this  */
-    /* depending upon which I2C port you are using.               */
+    /* This is the port on the Core Device Interface Module
+    /* in which the navX-Model Device is connected.  Modify this
+    /* depending upon which I2C port you are using.
     private final int NAVX_DIM_I2C_PORT = 0;
     private AHRS navx_device;
     private navXPIDController yawPIDController;
@@ -70,11 +70,11 @@ public class NavX extends LinearOpMode {
         //leftMotor.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         //rightMotor.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 
-        /* Create a PID Controller which uses the Yaw Angle as input. */
+        /* Create a PID Controller which uses the Yaw Angle as input.
         yawPIDController = new navXPIDController( navx_device,
                 navXPIDController.navXTimestampedDataSource.YAW);
 
-        /* Configure the PID controller */
+        /* Configure the PID controller
         yawPIDController.setSetpoint(TARGET_ANGLE_DEGREES);
         yawPIDController.setContinuous(true);
         yawPIDController.setOutputRange(MIN_MOTOR_OUTPUT_VALUE, MAX_MOTOR_OUTPUT_VALUE);
@@ -88,7 +88,7 @@ public class NavX extends LinearOpMode {
             powered on, as long as the device is still.  To handle the case where the
             navX-Micro has not been able to calibrate successfully, hold off using
             the navX-Micro Yaw value until calibration is complete.
-             */
+
             calibration_complete = !navx_device.isCalibrating();
             if (!calibration_complete) {
                 telemetry.addData("navX-Micro", "Startup Calibration in Progress");
@@ -101,7 +101,7 @@ public class NavX extends LinearOpMode {
 
         /* Wait for new Yaw PID output values, then update the motors
            with the new PID value with each new output value.
-         */
+
 
             final double TOTAL_RUN_TIME_SECONDS = 30.0;
             int DEVICE_TIMEOUT_MS = 500;
@@ -124,7 +124,7 @@ public class NavX extends LinearOpMode {
                                 df.format(-output));
                     }
                 } else {
-			    /* A timeout occurred */
+			    /* A timeout occurred
                     Log.w("navXRotateOp", "Yaw PID waitForNewUpdate() TIMEOUT.");
                 }
                 telemetry.addData("Yaw", df.format(navx_device.getYaw()));
@@ -139,7 +139,10 @@ public class NavX extends LinearOpMode {
         }
 =======
 public class NavX {
+=======
+*/
 /*public class NavX {
+>>>>>>> f77dfcdd63c634e3fe9c0f639ff58c323095b05f
     public NavX(){}
     public AHRS navx_device;
     public void init(HardwareMap HWMap) {

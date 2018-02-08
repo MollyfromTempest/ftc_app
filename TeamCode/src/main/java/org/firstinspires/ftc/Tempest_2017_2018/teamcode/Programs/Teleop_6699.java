@@ -40,8 +40,8 @@ public class Teleop_6699 extends LinearOpMode {
     1: top position
      */
         //Scaling factors for speed
-        double driveScale = 1;
-        double turnScale = 1;
+        double driveScale = 0.5;
+        double turnScale = 0.5;
 
         Robot.jewelArm.jewelArmUp();
         boolean JewelArmUp = true; //arm starts up after autonomous
@@ -57,14 +57,14 @@ public class Teleop_6699 extends LinearOpMode {
             pivotpower = -gamepad1.right_stick_x;
             if (gamepad1.dpad_up) {
                 //Toggles slow mode.
-                if (turnScale == 1) {
+                if (turnScale == 0.5) {
                     //If it's fast, make it slow
-                    driveScale = 0.4;
-                    turnScale = 0.4;
+                    driveScale = 0.3;
+                    turnScale = 0.3;
                 } else {
                     //If it's slow, make it fast
-                    driveScale = 1;
-                    turnScale = 1;
+                    driveScale = 0.5;
+                    turnScale = 0.5;
                 }
                 while (gamepad1.dpad_up) {
                     //Don't constantly change back and forth. One change per button press.

@@ -65,8 +65,7 @@ public class NavX extends LinearOpMode {
 
         rightMotor.setDirection(DcMotor.Direction.REVERSE);
 
-        /* If possible, use encoders when driving, as it results in more */
-        /* predictable drive system response.                           */
+        /* If possible, use encoders when driving, as it results in more  predictable drive system response.                           */
         //leftMotor.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         //rightMotor.setChannelMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
 

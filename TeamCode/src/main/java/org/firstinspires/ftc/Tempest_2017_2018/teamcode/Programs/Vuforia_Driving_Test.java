@@ -400,29 +400,29 @@ public class Vuforia_Driving_Test extends LinearOpMode {
                 idle();
             }
             Robot.holoDrive.stopmotors();*/
-            Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
+            /*Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
             while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
                 idle();
             }
             Robot.holoDrive.stopmotors();
-            //after Vuforia reading
             Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
             while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 800) {
                 idle();
             }
-            Robot.holoDrive.stopmotors();
+            Robot.holoDrive.stopmotors();*/
             //TODO make value 1 2 and 3 drive to the correct spot
             if (LeftMark) {
-                //LEFT LEFT LEFT
+                //LEFT
                 Robot.glyphArm.zeroPosition(this);
                 Sleep(1000);
                 Robot.glyphArm.grab(); // this releases, its backwards
                 Robot.holoDrive.pan(Math.PI /12, FasterSpeed);
                 Start = Robot.holoDrive.NW.getCurrentPosition();
-                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 800) {
                     idle();
                 }
                 Robot.holoDrive.stopmotors();
+                Start = Robot.holoDrive.NW.getCurrentPosition();
                 Robot.holoDrive.pan(9 * Math.PI / 8, FasterSpeed);
                 while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
                     idle();
@@ -435,10 +435,12 @@ public class Vuforia_Driving_Test extends LinearOpMode {
                 Robot.glyphArm.grab(); // this releases, its backwards
                 Robot.holoDrive.pan(Math.PI / 8, FasterSpeed);
                 Start = Robot.holoDrive.NW.getCurrentPosition();
-                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
                     idle();
                 }
                 Robot.holoDrive.stopmotors();
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                // is 9PI/8 correct?
                 Robot.holoDrive.pan(9 * Math.PI / 8, FasterSpeed);
                 while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
                     idle();
@@ -455,6 +457,7 @@ public class Vuforia_Driving_Test extends LinearOpMode {
                     idle();
                 }
                 Robot.holoDrive.stopmotors();
+                Start = Robot.holoDrive.NW.getCurrentPosition();
                 Robot.holoDrive.pan(9 * Math.PI / 8, FasterSpeed);
                 while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
                     idle();

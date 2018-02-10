@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.Tempest_2017_2018.teamcode.Programs;
 
+import android.drm.DrmStore;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -14,6 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.robotcore.external.navigation.VuMarkInstanceId;
+import android.support.annotation.Nullable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
@@ -30,6 +33,9 @@ public class Vuforia_Driving_Test extends LinearOpMode {
     OpenGLMatrix lastLocation = null;
     VuforiaLocalizer vuforia;
     Robot2017_2018 Robot;
+    //VuMarkInstanceIdWrite instanceId;
+    long value;
+    double time;
 
     public void Sleep(long ticks) throws InterruptedException {
         long timer = System.currentTimeMillis();
@@ -66,8 +72,57 @@ public class Vuforia_Driving_Test extends LinearOpMode {
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
         VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
         VuforiaTrackable relicTemplate = relicTrackables.get(0);
-        relicTemplate.setName("relicVuMarkTemplate");
+        relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
+        telemetry.addData(">", "Press Play to start");
+        telemetry.update();
         waitForStart();
+        relicTrackables.activate();
+        RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+
+        boolean LeftMark = false;
+        boolean RightMark = false;
+        boolean CenterMark = false;
+        boolean getout = false;
+        // this is backwards
+        Robot.glyphArm.release();
+        Sleep(1000);
+        Robot.glyphArm.midPosition(this);
+        time = System.currentTimeMillis();
+        //Vuforia code
+        while (System.currentTimeMillis() < time + 10000 && !getout) {
+            if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
+               /* Found an instance of the template. In the actual game, you will probably
+                * loop until this condition occurs, then move on to act accordingly depending
+                * on which VuMark was visible. */
+                telemetry.addData("VuMark", "%s visible", vuMark);
+               /* For fun, we also exhibit the navigational pose. In the Relic Recovery game,
+                * it is perhaps unlikely that you will actually need to act on this pose information, but
+                * we illustrate it nevertheless, for completeness. */
+               if (vuMark == RelicRecoveryVuMark.LEFT){
+                   LeftMark = true;
+                   telemetry.addData("LeftMark", vuMark);
+                   telemetry.update();
+                   getout = true;
+               }else if (vuMark == RelicRecoveryVuMark.RIGHT){
+                   RightMark = true;
+                   telemetry.addData("RightMark", vuMark);
+                   telemetry.update();
+                   getout = true;
+               }else if (vuMark == RelicRecoveryVuMark.CENTER){
+                   CenterMark = true;
+                   telemetry.addData("CenterMark", vuMark);
+                   telemetry.update();
+                   getout = true;
+               }
+            } else {
+                telemetry.addData("VuMark", "not visible");
+                telemetry.update();
+            }
+
+        }
+        /*String format(OpenGLMatrix transformationMatrix){
+            return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";
+        }*/
         //Lower the jewel arm -- necessary regardless of color
         Robot.jewelArm.jewelArmDown();
         //Wait for two seconds so that it has time to lower
@@ -77,10 +132,7 @@ public class Vuforia_Driving_Test extends LinearOpMode {
         boolean leftBlue = Robot.color.isBlue(Robot.color.leftColor); //left color sensor is blue
         boolean leftRed = Robot.color.isRed(Robot.color.leftColor); //left color sensor is red
 
-        // this is supposed to be backwards i think
-        Robot.glyphArm.release();
-        Sleep(1000);
-        Robot.glyphArm.midPosition(this);
+
         if (!BlueTeam) {
             //RED RED RED
             telemetry.addData("Right blue", rightBlue);
@@ -224,34 +276,99 @@ public class Vuforia_Driving_Test extends LinearOpMode {
         // these are crude estimates for parking and putting the glyph in one of the boxes
         // all positions NEED to be tested
         if (LeftSide && BlueTeam) {
-            Robot.holoDrive.pan(11 * Math.PI / 8, FasterSpeed);
-            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
-                idle();
+
+            if (LeftMark) {
+                //LEFT
+                //TODO change this
+                Robot.holoDrive.pan(11 * Math.PI / 8, FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
+                    idle();
+                }
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                Robot.holoDrive.turnleftunlim(FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1400) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                Robot.holoDrive.pan(3 * Math.PI / 8, FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
+                Robot.glyphArm.zeroPosition(this);
+                Sleep(1000);
+                Robot.glyphArm.grab(); //opposite, this releases
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
+                Robot.holoDrive.pan(5 * Math.PI / 4, FasterSpeed);
+                Sleep(500);
+                Robot.holoDrive.stopmotors();
+            }else if (CenterMark) {
+                Robot.holoDrive.pan(11 * Math.PI / 8, FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
+                    idle();
+                }
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                Robot.holoDrive.turnleftunlim(FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1400) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                Robot.holoDrive.pan(3 * Math.PI / 8, FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
+                Robot.glyphArm.zeroPosition(this);
+                Sleep(1000);
+                Robot.glyphArm.grab(); //opposite, this releases
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
+                Robot.holoDrive.pan(5 * Math.PI / 4, FasterSpeed);
+                Sleep(500);
+                Robot.holoDrive.stopmotors();
+            }else if (RightMark) {
+                //Right
+                //TODO change this
+                Robot.holoDrive.pan(11 * Math.PI / 8, FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
+                    idle();
+                }
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                Robot.holoDrive.turnleftunlim(FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1400) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                Robot.holoDrive.pan(3 * Math.PI / 8, FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
+                Robot.glyphArm.zeroPosition(this);
+                Sleep(1000);
+                Robot.glyphArm.grab(); //opposite, this releases
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
+                Robot.holoDrive.pan(5 * Math.PI / 4, FasterSpeed);
+                Sleep(500);
+                Robot.holoDrive.stopmotors();
             }
-            Start = Robot.holoDrive.NW.getCurrentPosition();
-            Robot.holoDrive.turnleftunlim(FasterSpeed);
-            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1400) {
-                idle();
-            }
-            Robot.holoDrive.stopmotors();
-            Start = Robot.holoDrive.NW.getCurrentPosition();
-            Robot.holoDrive.pan(3 * Math.PI / 8, FasterSpeed);
-            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
-                idle();
-            }
-            Robot.holoDrive.stopmotors();
-            Robot.glyphArm.zeroPosition(this);
-            Sleep(1000);
-            Robot.glyphArm.grab(); //opposite, this releases
-            Start = Robot.holoDrive.NW.getCurrentPosition();
-            Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
-            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
-                idle();
-            }
-            Robot.holoDrive.stopmotors();
-            Robot.holoDrive.pan(5 * Math.PI / 4, FasterSpeed);
-            Sleep(500);
-            Robot.holoDrive.stopmotors();
         } else if (!LeftSide && BlueTeam) {
             // this us into the parking zone, this has been tested
             Robot.holoDrive.pan(5 * Math.PI / 4, FasterSpeed);
@@ -291,38 +408,7 @@ public class Vuforia_Driving_Test extends LinearOpMode {
                 idle();
             }
             Robot.holoDrive.stopmotors();
-            double time = System.currentTimeMillis();
-            while (System.currentTimeMillis() < time + 5000) {
-                RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
-                if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
-               /* Found an instance of the template. In the actual game, you will probably
-                * loop until this condition occurs, then move on to act accordingly depending
-                * on which VuMark was visible. */
-                    telemetry.addData("VuMark", "%s visible", vuMark);
-               /* For fun, we also exhibit the navigational pose. In the Relic Recovery game,
-                * it is perhaps unlikely that you will actually need to act on this pose information, but
-                * we illustrate it nevertheless, for completeness. */
-                    OpenGLMatrix pose = ((VuforiaTrackableDefaultListener) relicTemplate.getListener()).getPose();
-                    //final Telemetry.Item pose1 = telemetry.addData("Pose", format(pose));
-               /* We further illustrate how to decompose the pose into useful rotational and
-                * translational components */
-                    if (pose != null) {
-                        VectorF trans = pose.getTranslation();
-                        Orientation rot = Orientation.getOrientation(pose, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
-                        // Extract the X, Y, and Z components of the offset of the target relative to the robot
-                        double tX = trans.get(0);
-                        double tY = trans.get(1);
-                        double tZ = trans.get(2);
-                        // Extract the rotational components of the target relative to the robot
-                        double rX = rot.firstAngle;
-                        double rY = rot.secondAngle;
-                        double rZ = rot.thirdAngle;
-                    }
-                } else {
-                    telemetry.addData("VuMark", "not visible");
-                }
-                telemetry.update();
-            }
+            //after VuMark reading
             Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
             while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 800) {
                 idle();
@@ -355,36 +441,10 @@ public class Vuforia_Driving_Test extends LinearOpMode {
             Robot.holoDrive.stopmotors();
             //Robot.holoDrive.pan(Math.PI/8, -Speed);
             //Sleep(100);
-        } else if (!LeftSide && !BlueTeam) {
-            /*Robot.holoDrive.pan(Math.PI/8, FasterSpeed);
-            while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 2000) {
-                idle();
-            }
-            Robot.holoDrive.stopmotors();*/
-            Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
-            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
-                idle();
-            }
-            Robot.holoDrive.stopmotors();
-            double time = System.currentTimeMillis();
-            while (System.currentTimeMillis() < time + 5000) {
-                RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
-                if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
-                    telemetry.addData("VuMark", "%s visible", vuMark);
-                    OpenGLMatrix pose = ((VuforiaTrackableDefaultListener) relicTemplate.getListener()).getPose();
-                    if (pose != null) {
-                        VectorF trans = pose.getTranslation();
-                        Orientation rot = Orientation.getOrientation(pose, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
-                        // Extract the X, Y, and Z components of the offset of the target relative to the robot
-                        double tX = trans.get(0);
-                        double tY = trans.get(1);
-                        double tZ = trans.get(2);
-                        // Extract the rotational components of the target relative to the robot
-                        double rX = rot.firstAngle;
-                        double rY = rot.secondAngle;
-                        double rZ = rot.thirdAngle;
-                    }
-                }
+            time = System.currentTimeMillis();
+            //Vuforia code
+            if (value == 1) {
+                //LEFT LEFT LEFT
                 Robot.glyphArm.zeroPosition(this);
                 Sleep(1000);
                 Robot.glyphArm.grab(); // this releases, its backwards
@@ -399,7 +459,76 @@ public class Vuforia_Driving_Test extends LinearOpMode {
                     idle();
                 }
                 Robot.holoDrive.stopmotors();
-                //Sleep(1000);
+            }
+        } else if (!LeftSide && !BlueTeam) {
+            /*Robot.holoDrive.pan(Math.PI/8, FasterSpeed);
+            while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 2000) {
+                idle();
+            }
+            Robot.holoDrive.stopmotors();*/
+            /*Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
+            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
+                idle();
+            }
+            Robot.holoDrive.stopmotors();
+            Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
+            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 800) {
+                idle();
+            }
+            Robot.holoDrive.stopmotors();*/
+            //TODO make value 1 2 and 3 drive to the correct spot
+            if (LeftMark) {
+                //LEFT
+                Robot.glyphArm.zeroPosition(this);
+                Sleep(1000);
+                Robot.glyphArm.grab(); // this releases, its backwards
+                Robot.holoDrive.pan(Math.PI /12, FasterSpeed);
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 800) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                Robot.holoDrive.pan(9 * Math.PI / 8, FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
+            }else if (CenterMark) {
+                //Center
+                Robot.glyphArm.zeroPosition(this);
+                Sleep(1000);
+                Robot.glyphArm.grab(); // this releases, its backwards
+                Robot.holoDrive.pan(Math.PI / 8, FasterSpeed);
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                // is 9PI/8 correct?
+                Robot.holoDrive.pan(9 * Math.PI / 8, FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
+            }else if (RightMark) {
+                //Right
+                Robot.glyphArm.zeroPosition(this);
+                Sleep(1000);
+                Robot.glyphArm.grab(); // this releases, its backwards
+                Robot.holoDrive.pan(Math.PI / 6, FasterSpeed);
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                Robot.holoDrive.pan(9 * Math.PI / 8, FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
             }
         }
     }

@@ -27,7 +27,6 @@ import java.text.DecimalFormat;
  * for the navX-Model sensor should be used.
  */
 /*
-<<<<<<< HEAD
 @TeleOp(name = "Concept: navX Rotate to Angle PID - Linear", group = "Concept")
 // @Disabled Comment this in to remove this from the Driver Station OpMode List
 public class NavX extends LinearOpMode {
@@ -139,7 +138,10 @@ public class NavX extends LinearOpMode {
         }
 =======
 public class NavX {
+=======
+*/
 /*public class NavX {
+>>>>>>> f77dfcdd63c634e3fe9c0f639ff58c323095b05f
     public NavX(){}
     public AHRS navx_device;
     public void init(HardwareMap HWMap) {

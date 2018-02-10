@@ -319,6 +319,7 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                     idle();
                 }
                 Robot.holoDrive.stopmotors();
+                Start = Robot.holoDrive.NW.getCurrentPosition();
                 Robot.holoDrive.pan(9*Math.PI/8, FasterSpeed);
                 while (Math.abs(Robot.holoDrive.NW.getCurrentPosition()-Start) < 300){
                     idle();

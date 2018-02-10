@@ -69,11 +69,13 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                 if (leftBlue && rightBlue) {
                     //Both blue -- something is wrong!
                     telemetry.addData("Color sensor", "Both blue");
+                    Robot.jewelArm.jewelArmUp();
 
                     //Sleep(30000);
                 } else if (leftRed && rightRed) {
                     //Both red -- something is wrong!
                     telemetry.addData("Color sensor", "Both red");
+                    Robot.jewelArm.jewelArmUp();
                     //Sleep(30000);
                 } else if (leftBlue && !rightBlue) {
                     // Left blue and right not specified (but not also blue). Since we are red, we want to turn left.
@@ -137,11 +139,12 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                 if (leftBlue && rightBlue){
                     //Both blue -- something is wrong!
                     telemetry.addData ("Color sensor", "Both blue");
-
+                    Robot.jewelArm.jewelArmUp();
                     //Sleep(30000);
                 } else if (leftRed && rightRed){
                     //Both red -- something is wrong!
                     telemetry.addData ("Color sensor", "Both red");
+                    Robot.jewelArm.jewelArmUp();
                     //Sleep(30000);
                 } else if (leftBlue && !rightBlue){
                     // Left blue and right not specified (but not also blue). Since we are blue, we want to turn right.
@@ -195,6 +198,7 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                 }
             }
             telemetry.update();
+            Sleep(500);
             //sleep(30000); //Don't do anything else until autonomous period ends
             //double Start = ((Robot.holoDrive.NW.getCurrentPosition() + Robot.holoDrive.NE.getCurrentPosition() + Robot.holoDrive.SW.getCurrentPosition()+Robot.holoDrive.SE.getCurrentPosition())/4.0);
             double Start = Robot.holoDrive.NW.getCurrentPosition();

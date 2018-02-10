@@ -77,7 +77,7 @@ public class Vuforia_Driving_Test extends LinearOpMode {
         boolean leftBlue = Robot.color.isBlue(Robot.color.leftColor); //left color sensor is blue
         boolean leftRed = Robot.color.isRed(Robot.color.leftColor); //left color sensor is red
 
-        // this is backwards
+        // this is supposed to be backwards i think
         Robot.glyphArm.release();
         Sleep(1000);
         Robot.glyphArm.midPosition(this);
@@ -224,7 +224,6 @@ public class Vuforia_Driving_Test extends LinearOpMode {
         // these are crude estimates for parking and putting the glyph in one of the boxes
         // all positions NEED to be tested
         if (LeftSide && BlueTeam) {
-            // havent tested this yet
             Robot.holoDrive.pan(11 * Math.PI / 8, FasterSpeed);
             while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
                 idle();

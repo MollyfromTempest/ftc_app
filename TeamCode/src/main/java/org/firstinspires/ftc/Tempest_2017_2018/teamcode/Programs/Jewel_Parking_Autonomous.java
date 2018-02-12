@@ -213,9 +213,10 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                 }
                 Start = Robot.holoDrive.NW.getCurrentPosition();
                 Robot.holoDrive.turnleftunlim(FasterSpeed);
-                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1400) {
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 900) {
                     idle();
                 }
+                Robot.glyphArm.zeroPosition(this);
                 Robot.holoDrive.stopmotors();
                 Start = Robot.holoDrive.NW.getCurrentPosition();
                 Robot.holoDrive.pan(3*Math.PI/8, FasterSpeed);
@@ -223,7 +224,6 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                     idle();
                 }
                 Robot.holoDrive.stopmotors();
-                Robot.glyphArm.zeroPosition(this);
                 Sleep(1000);
                 Robot.glyphArm.grab(); //opposite, this releases
                 Start = Robot.holoDrive.NW.getCurrentPosition();
@@ -232,8 +232,11 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
                     idle();
                 }
                 Robot.holoDrive.stopmotors();
+                Start = Robot.holoDrive.NW.getCurrentPosition();
                 Robot.holoDrive.pan(5*Math.PI/4, FasterSpeed);
-                Sleep(500);
+                while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
+                    idle();
+                }
                 Robot.holoDrive.stopmotors();
             }
             else if (!LeftSide && BlueTeam) {

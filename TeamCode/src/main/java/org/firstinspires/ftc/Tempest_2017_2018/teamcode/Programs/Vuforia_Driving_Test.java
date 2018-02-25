@@ -74,8 +74,28 @@ public class Vuforia_Driving_Test extends LinearOpMode {
         relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
         telemetry.addData(">", "Press Play to start");
         telemetry.update();
+
+        /**
+         * There is a lot of code dedicated for setting up the Vuforia.
+         * If you ever make another program using Vuforia, you will reuse this code.
+         * How could you embed this into the Robot class?
+         * You already have a Robot.init() function,
+         * isn't Vuforia part of initialization?
+         *
+         * -- Aaron
+         */
+
         waitForStart();
         relicTrackables.activate();
+
+        /**
+         * These three booleans (Left/Right/CenterMark) are mutually exclusive.
+         * Could you use an int? or an enum? and merge those three variables into one?
+         *
+         * Ah, looks like you've already noticed this based off of later comments :)
+         *
+         * -- Aaron
+         */
 
         boolean LeftMark = false;
         boolean RightMark = false;
@@ -85,8 +105,10 @@ public class Vuforia_Driving_Test extends LinearOpMode {
 
         /**
          * If there is a known issue in the code, add a TODO comment
+         *
          * -- Aaron
          */
+
         // this is backwards
         Robot.glyphArm.release();
         Sleep(1000);
@@ -131,6 +153,14 @@ public class Vuforia_Driving_Test extends LinearOpMode {
             }
 
         }
+
+        /**
+         * Telemetry is good!
+         * _thumbs up_
+         *
+         * -- Aaron
+         */
+
         if (LeftMark){
             telemetry.addData("LeftMark", vuMark);
             telemetry.update();
@@ -236,6 +266,14 @@ public class Vuforia_Driving_Test extends LinearOpMode {
             telemetry.addData("Left red", leftRed);
 
 
+            /**
+             * Some of your conditions have identical code in them.
+             * I'm assuming it still works so it's not a big issue,
+             * but rewriting code should (and can) be avoided
+             *
+             * -- Aaron
+             */
+
             if (leftBlue && rightBlue) {
                 //Both blue -- something is wrong!
                 telemetry.addData("Color sensor", "Both blue");
@@ -302,6 +340,26 @@ public class Vuforia_Driving_Test extends LinearOpMode {
         //double Start = ((Robot.holoDrive.NW.getCurrentPosition() + Robot.holoDrive.NE.getCurrentPosition() + Robot.holoDrive.SW.getCurrentPosition()+Robot.holoDrive.SE.getCurrentPosition())/4.0);
         double Start = Robot.holoDrive.NW.getCurrentPosition();
         double FasterSpeed = 0.2;
+
+
+        /**
+         * It looks like you are trying to handle every possible position individually
+         * This will be very hard to test, especially with the limited time
+         *
+         * All of the crypto boxes are the same,
+         * so placing a block could be handled by one routine for every position.
+         * e.g:
+         * Robot.PlaceBlock(LeftMark);
+         * Robot.PlaceBlock(RightMark);
+         * etc.
+         *
+         * The only differences between the positions is how you get to the crypto box.
+         * How can you approach this issue so you can optimize your time for testing?
+         *
+         * -- Aaron
+         */
+
+
         // these are crude estimates for parking and putting the glyph in one of the boxes
         // all positions NEED to be tested
         if (LeftSide && BlueTeam) {
@@ -311,7 +369,7 @@ public class Vuforia_Driving_Test extends LinearOpMode {
                 /**
                  * You have the near identical while loop like 100 times
                  * What can you do to make this cleaner?
-                 * Also, add new lines for readability...
+                 * Also, add line breaks for readability...
                  * -- Aaron
                  */
 
@@ -572,8 +630,9 @@ public class Vuforia_Driving_Test extends LinearOpMode {
 }
 
 /**
- * This program is over 500 lines long, it's hard to know what it does
+ * This program is over 500 lines long, it can be hard to follow
  * Try to find things that you repeat a lot and can functionalize
  * Readability is important for debugging, not just looking pretty
+ * 
  * -- Aaron
  */

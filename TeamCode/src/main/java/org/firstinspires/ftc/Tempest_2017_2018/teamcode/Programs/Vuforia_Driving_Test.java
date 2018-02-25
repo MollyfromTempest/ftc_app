@@ -44,6 +44,12 @@ public class Vuforia_Driving_Test extends LinearOpMode {
         }
     }
 
+    // Enum example (from Oracle):
+    public enum Day {
+        SUNDAY, MONDAY, TUESDAY, WEDNESDAY,
+        THURSDAY, FRIDAY, SATURDAY
+    }
+
     @Override
     public void runOpMode() throws InterruptedException {
         Robot = new Robot2017_2018();
@@ -91,11 +97,13 @@ public class Vuforia_Driving_Test extends LinearOpMode {
         /**
          * These three booleans (Left/Right/CenterMark) are mutually exclusive.
          * Could you use an int? or an enum? and merge those three variables into one?
+         * Refer to the Day enum example I placed above this function.
          *
          * Ah, looks like you've already noticed this based off of later comments :)
          *
          * -- Aaron
          */
+
 
         boolean LeftMark = false;
         boolean RightMark = false;
@@ -633,6 +641,6 @@ public class Vuforia_Driving_Test extends LinearOpMode {
  * This program is over 500 lines long, it can be hard to follow
  * Try to find things that you repeat a lot and can functionalize
  * Readability is important for debugging, not just looking pretty
- * 
+ *
  * -- Aaron
  */

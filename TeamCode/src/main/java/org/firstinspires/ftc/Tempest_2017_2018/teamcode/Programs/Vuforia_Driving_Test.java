@@ -82,6 +82,11 @@ public class Vuforia_Driving_Test extends LinearOpMode {
         boolean CenterMark = false;
         boolean getout = false;
         boolean Unknown= true;
+
+        /**
+         * If there is a known issue in the code, add a TODO comment
+         * -- Aaron
+         */
         // this is backwards
         Robot.glyphArm.release();
         Sleep(1000);
@@ -95,11 +100,12 @@ public class Vuforia_Driving_Test extends LinearOpMode {
             if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                /* Found an instance of the template. In the actual game, you will probably
                 * loop until this condition occurs, then move on to act accordingly depending
-                * on which VuMark was visible. */
-                //telemetry.addData("VuMark", "%s visible", vuMark);
+                * onMark", which VuMark was visible. */
+                //telemetry.addData("Vu "%s visible", vuMark);
                /* For fun, we also exhibit the navigational pose. In the Relic Recovery game,
                 * it is perhaps unlikely that you will actually need to act on this pose information, but
                 * we illustrate it nevertheless, for completeness. */
+
                 if (vuMark == RelicRecoveryVuMark.LEFT){
                     LeftMark = true;
                     Unknown = false;
@@ -301,6 +307,14 @@ public class Vuforia_Driving_Test extends LinearOpMode {
         if (LeftSide && BlueTeam) {
 
             if (LeftMark) {
+
+                /**
+                 * You have the near identical while loop like 100 times
+                 * What can you do to make this cleaner?
+                 * Also, add new lines for readability...
+                 * -- Aaron
+                 */
+
                 //LEFT
                 //TODO change this
                 Robot.holoDrive.pan(11 * Math.PI / 8, FasterSpeed);
@@ -556,3 +570,10 @@ public class Vuforia_Driving_Test extends LinearOpMode {
         }
     }
 }
+
+/**
+ * This program is over 500 lines long, it's hard to know what it does
+ * Try to find things that you repeat a lot and can functionalize
+ * Readability is important for debugging, not just looking pretty
+ * -- Aaron
+ */

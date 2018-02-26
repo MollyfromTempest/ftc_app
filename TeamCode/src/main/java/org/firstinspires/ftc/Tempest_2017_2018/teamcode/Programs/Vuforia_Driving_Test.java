@@ -35,13 +35,19 @@ public class Vuforia_Driving_Test extends LinearOpMode {
     Robot2017_2018 Robot;
     //VuMarkInstanceIdWrite instanceId;
     long value;
-    double time;
+    double ttime;
 
     public void Sleep(long ticks) throws InterruptedException {
         long timer = System.currentTimeMillis();
         while (System.currentTimeMillis() - timer < ticks) {
             idle();
         }
+    }
+
+    // Enum example (from Oracle):
+    public enum Day {
+        SUNDAY, MONDAY, TUESDAY, WEDNESDAY,
+        THURSDAY, FRIDAY, SATURDAY
     }
 
     @Override
@@ -64,7 +70,6 @@ public class Vuforia_Driving_Test extends LinearOpMode {
         } else {
             telemetry.addData("Team Side", "Right");
         }
-        telemetry.update();
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
         parameters.vuforiaLicenseKey = "AdWgUmr/////AAAAmdti1qKm9EedjDMUSL69hX+HJOhoZN/4cP0fCM8xi1/R0wjPyqh42r8h3X/xU4ONO+d0z+Of5xBeLnjXGG/UAmVWo7idgTEklCIYYQbNXGu4RWYoh2jsg9tpMSBvbhaTVkDJizAQa+XeSYDVb5N3S41xBjCiMB0zj8ECwGBp7cEHxZSjfTbm++fm3rBPMy0zMKd1vj1Gy7plv1YqDhPJYqXGK1sEOyMaUgtvbtf9lzKfz6pGv7ky3iD6U1QcPOHJ2FFEZhVrYynupvTy3T+kYVdKjuiv6eNuBTFZZAlnsq5pTUgyoZDfn7c4kKsEbbF0kmXwzpHWhhPSvcPRrAY2Z4UJz31/fJ0P835eibOQFjeU";
@@ -75,50 +80,110 @@ public class Vuforia_Driving_Test extends LinearOpMode {
         relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
         telemetry.addData(">", "Press Play to start");
         telemetry.update();
+
+        /**
+         * There is a lot of code dedicated for setting up the Vuforia.
+         * If you ever make another program using Vuforia, you will reuse this code.
+         * How could you embed this into the Robot class?
+         * You already have a Robot.init() function,
+         * isn't Vuforia part of initialization?
+         *
+         * -- Aaron
+         */
+
         waitForStart();
         relicTrackables.activate();
-        RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+
+        /**
+         * These three booleans (Left/Right/CenterMark) are mutually exclusive.
+         * Could you use an int? or an enum? and merge those three variables into one?
+         * Refer to the Day enum example I placed above this function.
+         *
+         * Ah, looks like you've already noticed this based off of later comments :)
+         *
+         * -- Aaron
+         */
+
 
         boolean LeftMark = false;
         boolean RightMark = false;
         boolean CenterMark = false;
         boolean getout = false;
+        boolean Unknown= true;
+
+        /**
+         * If there is a known issue in the code, add a TODO comment
+         *
+         * -- Aaron
+         */
+
         // this is backwards
         Robot.glyphArm.release();
         Sleep(1000);
         Robot.glyphArm.midPosition(this);
-        time = System.currentTimeMillis();
+        ttime = System.currentTimeMillis();
         //Vuforia code
-        while (System.currentTimeMillis() < time + 10000 && !getout) {
-            if (vuMark == RelicRecoveryVuMark.UNKNOWN) {
+        RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+
+        while ((System.currentTimeMillis() < ttime + 10000) && !getout) {
+            vuMark = RelicRecoveryVuMark.from(relicTemplate);
+            if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                /* Found an instance of the template. In the actual game, you will probably
                 * loop until this condition occurs, then move on to act accordingly depending
-                * on which VuMark was visible. */
-                telemetry.addData("VuMark", "%s visible", vuMark);
+                * onMark", which VuMark was visible. */
+                //telemetry.addData("Vu "%s visible", vuMark);
                /* For fun, we also exhibit the navigational pose. In the Relic Recovery game,
                 * it is perhaps unlikely that you will actually need to act on this pose information, but
                 * we illustrate it nevertheless, for completeness. */
-               if (vuMark == RelicRecoveryVuMark.LEFT){
-                   LeftMark = true;
-                   telemetry.addData("LeftMark", vuMark);
-                   telemetry.update();
-                   getout = true;
-               }else if (vuMark == RelicRecoveryVuMark.RIGHT){
-                   RightMark = true;
-                   telemetry.addData("RightMark", vuMark);
-                   telemetry.update();
-                   getout = true;
-               }else if (vuMark == RelicRecoveryVuMark.CENTER){
-                   CenterMark = true;
-                   telemetry.addData("CenterMark", vuMark);
-                   telemetry.update();
-                   getout = true;
-               }
+
+                if (vuMark == RelicRecoveryVuMark.LEFT){
+                    LeftMark = true;
+                    Unknown = false;
+                    //telemetry.addData("LeftMark", vuMark);
+                    //telemetry.update();
+                    getout = true;
+                }else if (vuMark == RelicRecoveryVuMark.RIGHT){
+                    RightMark = true;
+                    Unknown = false;
+                    //telemetry.addData("RightMark", vuMark);
+                    //telemetry.update();
+                    getout = true;
+                }else if (vuMark == RelicRecoveryVuMark.CENTER){
+                    CenterMark = true;
+                    Unknown = false;
+                    //telemetry.addData("CenterMark", vuMark);
+                    //telemetry.update();
+                    getout = true;
+                }
             } else {
-                telemetry.addData("VuMark", "not visible");
-                telemetry.update();
+                //telemetry.addData("VuMark", "not visible");
+                //telemetry.update();
             }
 
+        }
+
+        /**
+         * Telemetry is good!
+         * _thumbs up_
+         *
+         * -- Aaron
+         */
+
+        if (LeftMark){
+            telemetry.addData("LeftMark", vuMark);
+            telemetry.update();
+        }else if (RightMark){
+            telemetry.addData("RightMark", vuMark);
+            telemetry.update();
+        }else if (CenterMark){
+            telemetry.addData("CenterMark", vuMark);
+            telemetry.update();
+        }else if (Unknown){
+            telemetry.addData("Unknown", vuMark);
+            telemetry.update();
+        }else{
+            telemetry.addData("ThisMakesNoSense", vuMark);
+            telemetry.update();
         }
         /*String format(OpenGLMatrix transformationMatrix){
             return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";
@@ -144,11 +209,12 @@ public class Vuforia_Driving_Test extends LinearOpMode {
             if (leftBlue && rightBlue) {
                 //Both blue -- something is wrong!
                 telemetry.addData("Color sensor", "Both blue");
-
+                Robot.jewelArm.jewelArmUp();
                 //Sleep(30000);
             } else if (leftRed && rightRed) {
                 //Both red -- something is wrong!
                 telemetry.addData("Color sensor", "Both red");
+                Robot.jewelArm.jewelArmUp();
                 //Sleep(30000);
             } else if (leftBlue && !rightBlue) {
                 // Left blue and right not specified (but not also blue). Since we are red, we want to turn left.
@@ -208,14 +274,23 @@ public class Vuforia_Driving_Test extends LinearOpMode {
             telemetry.addData("Left red", leftRed);
 
 
+            /**
+             * Some of your conditions have identical code in them.
+             * I'm assuming it still works so it's not a big issue,
+             * but rewriting code should (and can) be avoided
+             *
+             * -- Aaron
+             */
+
             if (leftBlue && rightBlue) {
                 //Both blue -- something is wrong!
                 telemetry.addData("Color sensor", "Both blue");
-
+                Robot.jewelArm.jewelArmUp();
                 //Sleep(30000);
             } else if (leftRed && rightRed) {
                 //Both red -- something is wrong!
                 telemetry.addData("Color sensor", "Both red");
+                Robot.jewelArm.jewelArmUp();
                 //Sleep(30000);
             } else if (leftBlue && !rightBlue) {
                 // Left blue and right not specified (but not also blue). Since we are blue, we want to turn right.
@@ -273,11 +348,39 @@ public class Vuforia_Driving_Test extends LinearOpMode {
         //double Start = ((Robot.holoDrive.NW.getCurrentPosition() + Robot.holoDrive.NE.getCurrentPosition() + Robot.holoDrive.SW.getCurrentPosition()+Robot.holoDrive.SE.getCurrentPosition())/4.0);
         double Start = Robot.holoDrive.NW.getCurrentPosition();
         double FasterSpeed = 0.2;
+
+
+        /**
+         * It looks like you are trying to handle every possible position individually
+         * This will be very hard to test, especially with the limited time
+         *
+         * All of the crypto boxes are the same,
+         * so placing a block could be handled by one routine for every position.
+         * e.g:
+         * Robot.PlaceBlock(LeftMark);
+         * Robot.PlaceBlock(RightMark);
+         * etc.
+         *
+         * The only differences between the positions is how you get to the crypto box.
+         * How can you approach this issue so you can optimize your time for testing?
+         *
+         * -- Aaron
+         */
+
+
         // these are crude estimates for parking and putting the glyph in one of the boxes
         // all positions NEED to be tested
         if (LeftSide && BlueTeam) {
 
             if (LeftMark) {
+
+                /**
+                 * You have the near identical while loop like 100 times
+                 * What can you do to make this cleaner?
+                 * Also, add line breaks for readability...
+                 * -- Aaron
+                 */
+
                 //LEFT
                 //TODO change this
                 Robot.holoDrive.pan(11 * Math.PI / 8, FasterSpeed);
@@ -308,7 +411,7 @@ public class Vuforia_Driving_Test extends LinearOpMode {
                 Robot.holoDrive.pan(5 * Math.PI / 4, FasterSpeed);
                 Sleep(500);
                 Robot.holoDrive.stopmotors();
-            }else if (CenterMark) {
+            }else if (CenterMark || Unknown) {
                 Robot.holoDrive.pan(11 * Math.PI / 8, FasterSpeed);
                 while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
                     idle();
@@ -441,14 +544,14 @@ public class Vuforia_Driving_Test extends LinearOpMode {
             Robot.holoDrive.stopmotors();
             //Robot.holoDrive.pan(Math.PI/8, -Speed);
             //Sleep(100);
-            time = System.currentTimeMillis();
+            ttime = System.currentTimeMillis();
             //Vuforia code
             if (value == 1) {
                 //LEFT LEFT LEFT
-                Robot.glyphArm.zeroPosition(this);
-                Sleep(1000);
                 Robot.glyphArm.grab(); // this releases, its backwards
                 Robot.holoDrive.pan(Math.PI / 8, FasterSpeed);
+                Robot.glyphArm.zeroPosition(this);
+                Sleep(1000);
                 Start = Robot.holoDrive.NW.getCurrentPosition();
                 while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
                     idle();
@@ -479,32 +582,32 @@ public class Vuforia_Driving_Test extends LinearOpMode {
             //TODO make value 1 2 and 3 drive to the correct spot
             if (LeftMark) {
                 //LEFT
+                Robot.holoDrive.pan(Math.PI /12, FasterSpeed);
                 Robot.glyphArm.zeroPosition(this);
                 Sleep(1000);
-                Robot.glyphArm.grab(); // this releases, its backwards
-                Robot.holoDrive.pan(Math.PI /12, FasterSpeed);
                 Start = Robot.holoDrive.NW.getCurrentPosition();
                 while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 800) {
                     idle();
                 }
                 Robot.holoDrive.stopmotors();
+                Robot.glyphArm.grab(); // this releases, its backwards
                 Start = Robot.holoDrive.NW.getCurrentPosition();
                 Robot.holoDrive.pan(9 * Math.PI / 8, FasterSpeed);
                 while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
                     idle();
                 }
                 Robot.holoDrive.stopmotors();
-            }else if (CenterMark) {
+            }else if (CenterMark || Unknown) {
                 //Center
+                Robot.holoDrive.pan(Math.PI / 8, FasterSpeed);
                 Robot.glyphArm.zeroPosition(this);
                 Sleep(1000);
-                Robot.glyphArm.grab(); // this releases, its backwards
-                Robot.holoDrive.pan(Math.PI / 8, FasterSpeed);
                 Start = Robot.holoDrive.NW.getCurrentPosition();
                 while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
                     idle();
                 }
                 Robot.holoDrive.stopmotors();
+                Robot.glyphArm.grab(); // this releases, its backwards
                 Start = Robot.holoDrive.NW.getCurrentPosition();
                 // is 9PI/8 correct?
                 Robot.holoDrive.pan(9 * Math.PI / 8, FasterSpeed);
@@ -514,15 +617,15 @@ public class Vuforia_Driving_Test extends LinearOpMode {
                 Robot.holoDrive.stopmotors();
             }else if (RightMark) {
                 //Right
+                Robot.holoDrive.pan(Math.PI / 6, FasterSpeed);
                 Robot.glyphArm.zeroPosition(this);
                 Sleep(1000);
-                Robot.glyphArm.grab(); // this releases, its backwards
-                Robot.holoDrive.pan(Math.PI / 6, FasterSpeed);
                 Start = Robot.holoDrive.NW.getCurrentPosition();
                 while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
                     idle();
                 }
                 Robot.holoDrive.stopmotors();
+                Robot.glyphArm.grab(); // this releases, its backwards
                 Start = Robot.holoDrive.NW.getCurrentPosition();
                 Robot.holoDrive.pan(9 * Math.PI / 8, FasterSpeed);
                 while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
@@ -533,3 +636,11 @@ public class Vuforia_Driving_Test extends LinearOpMode {
         }
     }
 }
+
+/**
+ * This program is over 500 lines long, it can be hard to follow
+ * Try to find things that you repeat a lot and can functionalize
+ * Readability is important for debugging, not just looking pretty
+ *
+ * -- Aaron
+ */

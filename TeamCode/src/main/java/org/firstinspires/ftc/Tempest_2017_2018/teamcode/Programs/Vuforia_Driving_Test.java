@@ -36,12 +36,42 @@ public class Vuforia_Driving_Test extends LinearOpMode {
     //VuMarkInstanceIdWrite instanceId;
     long value;
     double ttime;
+    boolean leftturn;
 
     public void Sleep(long ticks) throws InterruptedException {
         long timer = System.currentTimeMillis();
         while (System.currentTimeMillis() - timer < ticks) {
             idle();
         }
+    }
+
+    public void panturnpan(double angle1, double dist1, double turndeg, double angle2, double dist2) {
+        double currdist = Robot.holoDrive.NW.getCurrentPosition();
+        Robot.holoDrive.pan(angle1, 0.5);
+        while ((Math.abs(Robot.holoDrive.NW.getCurrentPosition() - currdist)) <= dist1) {
+            idle();
+        }
+        Robot.holoDrive.stopmotors();
+        if (leftturn) {
+            currdist = Robot.holoDrive.NW.getCurrentPosition();
+            Robot.holoDrive.turnleftunlim(0.3);
+            while ((Math.abs(Robot.holoDrive.NW.getCurrentPosition() - currdist)) <= turndeg * 200/36) {
+                idle();
+            }
+        } else if (!leftturn) {
+            currdist = Robot.holoDrive.NW.getCurrentPosition();
+            Robot.holoDrive.turnrightunlim(0.3);
+            while ((Math.abs(Robot.holoDrive.NW.getCurrentPosition() - currdist)) <= turndeg *200/36) {
+                idle();
+            }
+        }
+        Robot.holoDrive.stopmotors();
+        currdist = Robot.holoDrive.NW.getCurrentPosition();
+        Robot.holoDrive.pan(angle2, 0.5);
+        while ((Math.abs(Robot.holoDrive.NW.getCurrentPosition() - currdist)) <= dist2) {
+            idle();
+        }
+        Robot.holoDrive.stopmotors();
     }
 
     // Enum example (from Oracle):
@@ -109,7 +139,7 @@ public class Vuforia_Driving_Test extends LinearOpMode {
         boolean RightMark = false;
         boolean CenterMark = false;
         boolean getout = false;
-        boolean Unknown= true;
+        boolean Unknown = true;
 
         /**
          * If there is a known issue in the code, add a TODO comment
@@ -136,19 +166,19 @@ public class Vuforia_Driving_Test extends LinearOpMode {
                 * it is perhaps unlikely that you will actually need to act on this pose information, but
                 * we illustrate it nevertheless, for completeness. */
 
-                if (vuMark == RelicRecoveryVuMark.LEFT){
+                if (vuMark == RelicRecoveryVuMark.LEFT) {
                     LeftMark = true;
                     Unknown = false;
                     //telemetry.addData("LeftMark", vuMark);
                     //telemetry.update();
                     getout = true;
-                }else if (vuMark == RelicRecoveryVuMark.RIGHT){
+                } else if (vuMark == RelicRecoveryVuMark.RIGHT) {
                     RightMark = true;
                     Unknown = false;
                     //telemetry.addData("RightMark", vuMark);
                     //telemetry.update();
                     getout = true;
-                }else if (vuMark == RelicRecoveryVuMark.CENTER){
+                } else if (vuMark == RelicRecoveryVuMark.CENTER) {
                     CenterMark = true;
                     Unknown = false;
                     //telemetry.addData("CenterMark", vuMark);
@@ -169,19 +199,19 @@ public class Vuforia_Driving_Test extends LinearOpMode {
          * -- Aaron
          */
 
-        if (LeftMark){
+        if (LeftMark) {
             telemetry.addData("LeftMark", vuMark);
             telemetry.update();
-        }else if (RightMark){
+        } else if (RightMark) {
             telemetry.addData("RightMark", vuMark);
             telemetry.update();
-        }else if (CenterMark){
+        } else if (CenterMark) {
             telemetry.addData("CenterMark", vuMark);
             telemetry.update();
-        }else if (Unknown){
+        } else if (Unknown) {
             telemetry.addData("Unknown", vuMark);
             telemetry.update();
-        }else{
+        } else {
             telemetry.addData("ThisMakesNoSense", vuMark);
             telemetry.update();
         }
@@ -383,7 +413,7 @@ public class Vuforia_Driving_Test extends LinearOpMode {
 
                 //LEFT
                 //TODO change this
-                Robot.holoDrive.pan(11 * Math.PI / 8, FasterSpeed);
+                /*Robot.holoDrive.pan(11 * Math.PI / 8, FasterSpeed);
                 while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
                     idle();
                 }
@@ -410,160 +440,133 @@ public class Vuforia_Driving_Test extends LinearOpMode {
                 Robot.holoDrive.stopmotors();
                 Robot.holoDrive.pan(5 * Math.PI / 4, FasterSpeed);
                 Sleep(500);
-                Robot.holoDrive.stopmotors();
-            }else if (CenterMark || Unknown) {
-                Robot.holoDrive.pan(11 * Math.PI / 8, FasterSpeed);
-                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
-                    idle();
-                }
-                Start = Robot.holoDrive.NW.getCurrentPosition();
-                Robot.holoDrive.turnleftunlim(FasterSpeed);
-                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1400) {
-                    idle();
-                }
-                Robot.holoDrive.stopmotors();
-                Start = Robot.holoDrive.NW.getCurrentPosition();
-                Robot.holoDrive.pan(3 * Math.PI / 8, FasterSpeed);
-                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
-                    idle();
-                }
-                Robot.holoDrive.stopmotors();
-                Robot.glyphArm.zeroPosition(this);
-                Sleep(1000);
-                Robot.glyphArm.grab(); //opposite, this releases
-                Start = Robot.holoDrive.NW.getCurrentPosition();
-                Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
-                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
-                    idle();
-                }
-                Robot.holoDrive.stopmotors();
-                Robot.holoDrive.pan(5 * Math.PI / 4, FasterSpeed);
+                Robot.holoDrive.stopmotors();*/
+                leftturn = false;
+                panturnpan(Math.PI*17/12, 2730, 160, Math.PI/4, 1080);
+                Robot.glyphArm.grab();
                 Sleep(500);
+                Robot.holoDrive.pan(Math.PI*5/4, 0.4);
+                Sleep(750);
                 Robot.holoDrive.stopmotors();
-            }else if (RightMark) {
+            } else if (CenterMark || Unknown) {
+                leftturn = true;
+                panturnpan(Math.PI*17/12, 2730, 180, Math.PI/4, 915);
+                Robot.glyphArm.grab();
+                Sleep(500);
+                Robot.holoDrive.pan(Math.PI*5/4, 0.4);
+                Sleep(750);
+                Robot.holoDrive.stopmotors();
+            } else if (RightMark) {
                 //Right
-                //TODO change this
-                Robot.holoDrive.pan(11 * Math.PI / 8, FasterSpeed);
+                leftturn = true;
+                panturnpan(Math.PI*17/12, 2730, 150, Math.PI/4, 1080);
+                Robot.glyphArm.grab();
+                Sleep(500);
+                Robot.holoDrive.pan(Math.PI*5/4, 0.4);
+                Sleep(750);
+                Robot.holoDrive.stopmotors();
+            } else if (!LeftSide && BlueTeam) {
+                if(LeftMark){
+                    leftturn = false;
+                    panturnpan(5*Math.PI/4, 1500, 90, .32, 785);
+                    Robot.glyphArm.grab();
+                    Sleep(500);
+                    Robot.holoDrive.pan(Math.PI*5/4, 0.4);
+                    Sleep(750);
+                    Robot.holoDrive.stopmotors();
+                }else if (CenterMark || Unknown){
+                    leftturn = false;
+                    panturnpan(5*Math.PI/4, 1500, 90, Math.PI/4, 830);
+                    Robot.glyphArm.grab();
+                    Sleep(500);
+                    Robot.holoDrive.pan(Math.PI*5/4, 0.4);
+                    Sleep(750);
+                    Robot.holoDrive.stopmotors();
+                }else if (RightMark){
+                    leftturn = false;
+                    panturnpan(5*Math.PI/4, 1500, 135, Math.PI/4, 1080);
+                    Robot.glyphArm.grab();
+                    Sleep(500);
+                    Robot.holoDrive.pan(Math.PI*5/4, 0.4);
+                    Sleep(750);
+                    Robot.holoDrive.stopmotors();
+                }
+                // this us into the parking zone, this has been tested
+                /*Robot.holoDrive.pan(5 * Math.PI / 4, FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1600) {
+                    idle();
+                }
+                //Robot.holoDrive.stopmotors();
+                // this should turn us to the right 90 degrees, need to test this
+                Start = Robot.holoDrive.NW.getCurrentPosition();
+                Robot.holoDrive.turnrightunlim(FasterSpeed);
                 while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
                     idle();
                 }
-                Start = Robot.holoDrive.NW.getCurrentPosition();
-                Robot.holoDrive.turnleftunlim(FasterSpeed);
-                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1400) {
-                    idle();
-                }
+                // this drives forward and lowers the arm, hopefully putting the glyph in the box
                 Robot.holoDrive.stopmotors();
+                Robot.glyphArm.zeroPosition(this);
+                Sleep(1000);
                 Start = Robot.holoDrive.NW.getCurrentPosition();
-                Robot.holoDrive.pan(3 * Math.PI / 8, FasterSpeed);
+                // not sure if its pi/8 or 5pi/4 because the robot is turning
+                Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
                 while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
                     idle();
                 }
                 Robot.holoDrive.stopmotors();
-                Robot.glyphArm.zeroPosition(this);
-                Sleep(1000);
-                Robot.glyphArm.grab(); //opposite, this releases
+                Robot.glyphArm.grab(); // this is the opposite
+                // this backs up after the glyph is put down just in case the gylph arm gets stuck in the box
                 Start = Robot.holoDrive.NW.getCurrentPosition();
-                Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
-                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
-                    idle();
-                }
-                Robot.holoDrive.stopmotors();
                 Robot.holoDrive.pan(5 * Math.PI / 4, FasterSpeed);
-                Sleep(500);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 200) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();*/
+            } else if (LeftSide && !BlueTeam) {
+                if(LeftMark){
+                    leftturn = false;
+                    panturnpan(Math.PI/4, 1500, 60, Math.PI/4, 1000);
+                    Robot.glyphArm.grab();
+                    Sleep(500);
+                    Robot.holoDrive.pan(Math.PI*5/4, 0.4);
+                    Sleep(750);
+                    Robot.holoDrive.stopmotors();
+                }else if (CenterMark || Unknown){
+                    leftturn = false;
+                    panturnpan(Math.PI/4, 1500, 90, Math.PI/4, 900);
+                    Robot.glyphArm.grab();
+                    Sleep(500);
+                    Robot.holoDrive.pan(Math.PI*5/4, 0.4);
+                    Sleep(750);
+                    Robot.holoDrive.stopmotors();
+                }else if (RightMark){
+                    leftturn = false;
+                    panturnpan(Math.PI/4, 1500, 110, Math.PI/4, 1100);
+                    Robot.glyphArm.grab();
+                    Sleep(500);
+                    Robot.holoDrive.pan(Math.PI*5/4, 0.4);
+                    Sleep(750);
+                    Robot.holoDrive.stopmotors();
+                }
+                // this us into the parking zone, this has been tested
+                /*Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
+                    idle();
+                }
                 Robot.holoDrive.stopmotors();
-            }
-        } else if (!LeftSide && BlueTeam) {
-            // this us into the parking zone, this has been tested
-            Robot.holoDrive.pan(5 * Math.PI / 4, FasterSpeed);
-            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 1600) {
-                idle();
-            }
-            //Robot.holoDrive.stopmotors();
-            // this should turn us to the right 90 degrees, need to test this
-            Start = Robot.holoDrive.NW.getCurrentPosition();
-            Robot.holoDrive.turnrightunlim(FasterSpeed);
-            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
-                idle();
-            }
-            // this drives forward and lowers the arm, hopefully putting the glyph in the box
-            Robot.holoDrive.stopmotors();
-            Robot.glyphArm.zeroPosition(this);
-            Sleep(1000);
-            Start = Robot.holoDrive.NW.getCurrentPosition();
-            // not sure if its pi/8 or 5pi/4 because the robot is turning
-            Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
-            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
-                idle();
-            }
-            Robot.holoDrive.stopmotors();
-            Robot.glyphArm.grab(); // this is the opposite
-            // this backs up after the glyph is put down just in case the gylph arm gets stuck in the box
-            Start = Robot.holoDrive.NW.getCurrentPosition();
-            Robot.holoDrive.pan(5 * Math.PI / 4, FasterSpeed);
-            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 200) {
-                idle();
-            }
-            Robot.holoDrive.stopmotors();
-        } else if (LeftSide && !BlueTeam) {
-            // this us into the parking zone, this has been tested
-            Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
-            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
-                idle();
-            }
-            Robot.holoDrive.stopmotors();
-            //after VuMark reading
-            Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
-            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 800) {
-                idle();
-            }
-            Robot.holoDrive.stopmotors();
-            // this should turn us to the right 90 degrees, need to test this
-            Start = Robot.holoDrive.NW.getCurrentPosition();
-            Robot.holoDrive.turnrightunlim(FasterSpeed);
-            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
-                idle();
-            }
-            // this drives forward and lowers the arm, hopefully putting the glyph in the box
-            Robot.holoDrive.stopmotors();
-            Robot.glyphArm.zeroPosition(this);
-            Sleep(1000);
-            Start = Robot.holoDrive.NW.getCurrentPosition();
-            // not sure if its pi/8 or 5pi/4 because the robot is turning
-            Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
-            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
-                idle();
-            }
-            Robot.holoDrive.stopmotors();
-            Robot.glyphArm.grab(); // this is the opposite
-            // this backs up after the glyph is put down just in case the gylph arm gets stuck in the box
-            Start = Robot.holoDrive.NW.getCurrentPosition();
-            Robot.holoDrive.pan(5 * Math.PI / 4, FasterSpeed);
-            while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
-                idle();
-            }
-            Robot.holoDrive.stopmotors();
-            //Robot.holoDrive.pan(Math.PI/8, -Speed);
-            //Sleep(100);
-            ttime = System.currentTimeMillis();
-            //Vuforia code
-            if (value == 1) {
-                //LEFT LEFT LEFT
-                Robot.glyphArm.grab(); // this releases, its backwards
-                Robot.holoDrive.pan(Math.PI / 8, FasterSpeed);
-                Robot.glyphArm.zeroPosition(this);
-                Sleep(1000);
+                //after VuMark reading
+                Robot.holoDrive.pan(Math.PI / 4, FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 800) {
+                    idle();
+                }
+                Robot.holoDrive.stopmotors();
+                // this should turn us to the right 90 degrees, need to test this
                 Start = Robot.holoDrive.NW.getCurrentPosition();
-                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
+                Robot.holoDrive.turnrightunlim(FasterSpeed);
+                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 500) {
                     idle();
-                }
-                Robot.holoDrive.stopmotors();
-                Robot.holoDrive.pan(9 * Math.PI / 8, FasterSpeed);
-                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
-                    idle();
-                }
-                Robot.holoDrive.stopmotors();
-            }
-        } else if (!LeftSide && !BlueTeam) {
+                }*/
+            } else if (!LeftSide && !BlueTeam) {
             /*Robot.holoDrive.pan(Math.PI/8, FasterSpeed);
             while(Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 2000) {
                 idle();
@@ -579,59 +582,35 @@ public class Vuforia_Driving_Test extends LinearOpMode {
                 idle();
             }
             Robot.holoDrive.stopmotors();*/
-            //TODO make value 1 2 and 3 drive to the correct spot
-            if (LeftMark) {
-                //LEFT
-                Robot.holoDrive.pan(Math.PI /12, FasterSpeed);
-                Robot.glyphArm.zeroPosition(this);
-                Sleep(1000);
-                Start = Robot.holoDrive.NW.getCurrentPosition();
-                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 800) {
-                    idle();
+                //TODO make value 1 2 and 3 drive to the correct spot
+                if (LeftMark) {
+                    //LEFT
+                    leftturn = true;
+                    panturnpan(.61, 765, 18, Math.PI/4, 1000);
+                    Robot.glyphArm.grab();
+                    Sleep(500);
+                    Robot.holoDrive.pan(Math.PI*5/4, 0.4);
+                    Sleep(750);
+                    Robot.holoDrive.stopmotors();
+                } else if (CenterMark || Unknown) {
+                    //Center
+                    leftturn = false;
+                    panturnpan(.54, 765, 0, Math.PI/4, 900);
+                    Robot.glyphArm.grab();
+                    Sleep(500);
+                    Robot.holoDrive.pan(Math.PI*5/4, 0.4);
+                    Sleep(750);
+                    Robot.holoDrive.stopmotors();
+                } else if (RightMark) {
+                   //Right
+                    leftturn = false;
+                    panturnpan(.54, 765, 18, Math.PI/4, 1000);
+                    Robot.glyphArm.grab();
+                    Sleep(500);
+                    Robot.holoDrive.pan(Math.PI*5/4, 0.4);
+                    Sleep(750);
+                    Robot.holoDrive.stopmotors();
                 }
-                Robot.holoDrive.stopmotors();
-                Robot.glyphArm.grab(); // this releases, its backwards
-                Start = Robot.holoDrive.NW.getCurrentPosition();
-                Robot.holoDrive.pan(9 * Math.PI / 8, FasterSpeed);
-                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
-                    idle();
-                }
-                Robot.holoDrive.stopmotors();
-            }else if (CenterMark || Unknown) {
-                //Center
-                Robot.holoDrive.pan(Math.PI / 8, FasterSpeed);
-                Robot.glyphArm.zeroPosition(this);
-                Sleep(1000);
-                Start = Robot.holoDrive.NW.getCurrentPosition();
-                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 600) {
-                    idle();
-                }
-                Robot.holoDrive.stopmotors();
-                Robot.glyphArm.grab(); // this releases, its backwards
-                Start = Robot.holoDrive.NW.getCurrentPosition();
-                // is 9PI/8 correct?
-                Robot.holoDrive.pan(9 * Math.PI / 8, FasterSpeed);
-                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
-                    idle();
-                }
-                Robot.holoDrive.stopmotors();
-            }else if (RightMark) {
-                //Right
-                Robot.holoDrive.pan(Math.PI / 6, FasterSpeed);
-                Robot.glyphArm.zeroPosition(this);
-                Sleep(1000);
-                Start = Robot.holoDrive.NW.getCurrentPosition();
-                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 400) {
-                    idle();
-                }
-                Robot.holoDrive.stopmotors();
-                Robot.glyphArm.grab(); // this releases, its backwards
-                Start = Robot.holoDrive.NW.getCurrentPosition();
-                Robot.holoDrive.pan(9 * Math.PI / 8, FasterSpeed);
-                while (Math.abs(Robot.holoDrive.NW.getCurrentPosition() - Start) < 300) {
-                    idle();
-                }
-                Robot.holoDrive.stopmotors();
             }
         }
     }

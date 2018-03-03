@@ -4,9 +4,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.robot.Robot;
+import com.qualcomm.robotcore.robot.Robot.*;
 
 import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Manipulators.Glyph_Arm;
 import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Manipulators.Jewel_Arm;
+import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Robot2017_2018;
 import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors.ColorSensorClass;
 import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors.GyroScope;
 
@@ -14,7 +17,7 @@ import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors.GyroScope;
 /**
  * Created by Aaron on 4/25/2017.
  */
-public class    HolonomicDrive {
+public class HolonomicDrive {
     DcMotor.RunMode encMode = DcMotor.RunMode.RUN_USING_ENCODER;
     DcMotor.RunMode dumbMode = DcMotor.RunMode.RUN_WITHOUT_ENCODER;
     //Define the four drive motors (labelled on robot)
@@ -134,20 +137,30 @@ public class    HolonomicDrive {
         SW.setPower(turnspeedright);
     }
     // builders wanted to have the robot pan instead of turning
-    public void panright(double turnspeedright) {
-        //Turns right (until it is told to stop)
-        NE.setPower(turnspeedright);
-        SE.setPower(turnspeedright);
-        NW.setPower(turnspeedright);
-        SW.setPower(turnspeedright);
+
+    /**
+     * This drives the robot forward
+     * @param speed speed to drive forwards
+     */
+    public void panright(double speed) {
+        NE.setPower(speed);
+        SE.setPower(speed);
+        NW.setPower(speed);
+        SW.setPower(speed);
     }
-    public void panleft(double turnspeedright) {
-        //Turns right (until it is told to stop)
-        NE.setPower(-turnspeedright);
-        SE.setPower(-turnspeedright);
-        NW.setPower(-turnspeedright);
-        SW.setPower(-turnspeedright);
+
+    /**
+     * This drives the robot backwards
+     * @param speed speed to drive backwards
+     */
+    public void panleft(double speed) {
+        NE.setPower(-speed);
+        SE.setPower(-speed);
+        NW.setPower(-speed);
+        SW.setPower(-speed);
     }
+
+
 }
 
 

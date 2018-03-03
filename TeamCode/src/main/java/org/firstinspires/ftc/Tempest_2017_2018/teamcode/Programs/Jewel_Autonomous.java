@@ -25,6 +25,7 @@ public class Jewel_Autonomous extends LinearOpMode{
     public void runOpMode()throws InterruptedException{
         Robot = new Robot2017_2018();
         Robot.init(hardwareMap);
+        double speed = 0.1;
         waitForStart();
         //Turn on the color sensor LEDS
         Robot.color.leftColor.enableLed(true);
@@ -37,7 +38,6 @@ public class Jewel_Autonomous extends LinearOpMode{
         boolean rightRed = Robot.color.isRed(Robot.color.rightColor); //right color sensor is red
         boolean leftBlue = Robot.color.isBlue(Robot.color.leftColor); //left color sensor is blue
         boolean leftRed = Robot.color.isRed(Robot.color.leftColor); //left color sensor is red
-
 
         if (Robot.BlueSwitch.getState()) {
             //RED RED RED
@@ -59,34 +59,22 @@ public class Jewel_Autonomous extends LinearOpMode{
             } else if (leftBlue && !rightBlue) {
                 // Left blue and right not specified (but not also blue). Since we are red, we want to turn left.
                 telemetry.addData("Color sensor", "Left blue, right red or unspecified");
-                //Robot.holoDrive.turnleftunlim(0.2);
-                Robot.holoDrive.panleft(0.2);
-                Sleep(500);
-                Robot.holoDrive.stopmotors();
+                knockLeft(speed);
                 Robot.jewelArm.jewelArmUp();
             } else if (leftRed && !rightRed) {
                 // Left red and right not specified (but not also red). Since we are red, we want to turn right.
                 telemetry.addData("Color sensor", "Left red, right blue or unspecified");
-                //Robot.holoDrive.turnrightunlim(0.2);
-                Robot.holoDrive.panright(0.2);
-                Sleep(500);
-                Robot.holoDrive.stopmotors();
+                knockRight(speed);
                 Robot.jewelArm.jewelArmUp();
             }else if(!leftBlue && rightBlue){
                 //Right blue and left not specified (but not also blue). Since we are red, we want to turn right.
                 telemetry.addData("Color sensor", "Left red or unspecified, right blue");
-                //Robot.holoDrive.turnrightunlim(0.2);
-                Robot.holoDrive.panleft(0.2);
-                Sleep(500);
-                Robot.holoDrive.stopmotors();
+                knockRight(speed);
                 Robot.jewelArm.jewelArmUp();
             }else if (!leftRed && rightRed){
                 //Right red and left not specified (but not also red). Since we are red, we want to turn left.
                 telemetry.addData("Color sensor", "Left blue or unspecified, right red");
-                //Robot.holoDrive.turnleftunlim(0.2);
-                Robot.holoDrive.panleft(0.2);
-                Sleep(500);
-                Robot.holoDrive.stopmotors();
+                knockLeft(speed);
                 Robot.jewelArm.jewelArmUp();
             }else {
                 //No reading? Ambiguous reading? Either way, something is wrong and we don't want to risk turning.
@@ -114,34 +102,22 @@ public class Jewel_Autonomous extends LinearOpMode{
             } else if (leftBlue && !rightBlue){
                 // Left blue and right not specified (but not also blue). Since we are blue, we want to turn right.
                 telemetry.addData ("Color sensor", "Left blue, right red or unspecified");
-                //Robot.holoDrive.turnrightunlim(0.2);
-                Robot.holoDrive.panright(0.2);
-                Sleep(500);
-                Robot.holoDrive.stopmotors();
+                knockRight(speed);
                 Robot.jewelArm.jewelArmUp();
             } else if (leftRed && !rightRed){
                 // Left red and right unspecified (but not also red). Since we are blue, we want to turn left.
                 telemetry.addData ("Color sensor", "Left red, right blue or unspecified");
-                //Robot.holoDrive.turnleftunlim(0.2);
-                Robot.holoDrive.panleft(0.2);
-                Sleep(500);
-                Robot.holoDrive.stopmotors();
+                knockLeft(speed);
                 Robot.jewelArm.jewelArmUp();
             } else if (!leftBlue && rightBlue){
                 //Right blue and left unspecified (but not also blue). Since we are blue, we want to turn left.
                 telemetry.addData ("Color sensor", "Left red or unspecified, right blue");
-                //Robot.holoDrive.turnleftunlim(0.2);
-                Robot.holoDrive.panleft(0.2);
-                Sleep(500);
-                Robot.holoDrive.stopmotors();
+                knockLeft(speed);
                 Robot.jewelArm.jewelArmUp();
             }else if (!leftRed && rightRed){
                 //Right red and left unspecified (but not also red). Since we are blue, we want to turn right.
                 telemetry.addData ("Color sensor", "Left blue or unspecified, right red");
-                //Robot.holoDrive.turnrightunlim(0.2);
-                Robot.holoDrive.panright(0.2);
-                Sleep(500);
-                Robot.holoDrive.stopmotors();
+                knockRight(speed);
                 Robot.jewelArm.jewelArmUp();
             }else {
                 //No reading? Ambiguous reading? Either way, something is wrong and we don't want to risk turning.
@@ -151,5 +127,42 @@ public class Jewel_Autonomous extends LinearOpMode{
         }
         telemetry.update();
         sleep(30000); //Don't do anything else until autonomous period ends
+    }
+
+    /**
+     * Turns the robot enough to hit the left ball
+     * @param turnspeed speed to turn left
+     */
+    public void knockLeft(double turnspeed){
+        double currdist = Robot.holoDrive.NW.getCurrentPosition();
+        while ((Math.abs(Robot.holoDrive.NW.getCurrentPosition() - currdist)) <= 100) {
+            Robot.holoDrive.turnleftunlim(turnspeed);
+        }
+        Robot.holoDrive.stopmotors();
+        Robot.jewelArm.jewelArmUp();
+        currdist = Robot.holoDrive.NW.getCurrentPosition();
+        while ((Math.abs(Robot.holoDrive.NW.getCurrentPosition() - currdist)) <= 100) {
+            Robot.holoDrive.turnrightunlim(turnspeed);
+        }
+        Robot.holoDrive.stopmotors();
+
+    }
+
+    /**
+     * Turns the robot enough to hit the right ball
+     * @param turnspeed speed to turn
+     */
+    public void knockRight(double turnspeed){
+        double currdist = Robot.holoDrive.NW.getCurrentPosition();
+        while ((Math.abs(Robot.holoDrive.NW.getCurrentPosition() - currdist)) <= 100) {
+            Robot.holoDrive.turnrightunlim(turnspeed);
+        }
+        Robot.holoDrive.stopmotors();
+        Robot.jewelArm.jewelArmUp();
+        currdist = Robot.holoDrive.NW.getCurrentPosition();
+        while ((Math.abs(Robot.holoDrive.NW.getCurrentPosition() - currdist)) <= 100) {
+            Robot.holoDrive.turnleftunlim(turnspeed);
+        }
+        Robot.holoDrive.stopmotors();
     }
 }

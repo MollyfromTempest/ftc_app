@@ -10,7 +10,7 @@ public class Jewel_Arm {
     //This defines the arm for hitting the jewels in autonomous mode
     Servo jewelArm;
     double up = 0.54; // Value for when the arm IS NOT in hitting position (starts here in autonomous)
-    double down = 0.0; //Value for when the arm IS in hitting position (moves here when autonomous starts)
+    double down = 0.09; //Value for when the arm IS in hitting position (moves here when autonomous starts)
 
     HardwareMap HWMap;
 
@@ -22,16 +22,25 @@ public class Jewel_Arm {
         jewelArmUp();
     }
 
+    /**
+     * This allows for greater flexibility if we decide we need more positions
+     * @param pos position of arm
+     */
     public void jewelArmPosition(double pos){
-        //This allows for greater flexibility if we decide we need more positions
         jewelArm.setPosition(pos);
     }
+
+    /**
+     * Moves the arm up
+     */
     public void jewelArmUp(){
-        //Moves the arm up
         jewelArmPosition(up);
     }
+
+    /**
+     * Moves the arm down
+     */
     public void jewelArmDown(){
-        //Moves the arm down
         jewelArmPosition(down);
     }
 }

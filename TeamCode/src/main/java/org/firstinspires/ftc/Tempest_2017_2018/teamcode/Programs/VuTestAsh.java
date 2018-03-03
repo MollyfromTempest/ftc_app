@@ -162,6 +162,9 @@ public class VuTestAsh extends LinearOpMode {
                     Robot.holoDrive.pan((Math.PI * 7)/ 4, 0.1);
                     sleep(5000);
                 }
+                else {
+                    sleep(5000);
+                }
 
                 telemetry.update();
             }

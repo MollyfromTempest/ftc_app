@@ -513,9 +513,15 @@ public class Vuforia_Driving_Test extends LinearOpMode {
 }
 
 /**
- * This program is over 500 lines long, it can be hard to follow
- * Try to find things that you repeat a lot and can functionalize
- * Readability is important for debugging, not just looking pretty
- * <p>
+ * While it's good that you have identified a series of repeated lines,
+ * it's best to try and remove a lot of the logic for core tasks from the program.
+ *
+ * Hitting the correct jewel based off of your color is a task that multiple programs could use,
+ * so is identifying the picture and placing the block.
+ *
+ * These tasks can reside in the Robot class, imagine calling  robot.hitJewel() or
+ * robot.placeBlock(position). Removing the giant if else statements and having class
+ * functions in robot handle them makes the code much more portable and readable.
+ *
  * -- Aaron
  */

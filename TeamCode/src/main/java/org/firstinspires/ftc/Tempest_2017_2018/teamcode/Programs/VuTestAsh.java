@@ -56,7 +56,7 @@ public class VuTestAsh extends LinearOpMode {
         VuforiaLocalizer vuforia;
 
         @Override public void runOpMode() throws InterruptedException {
-            Robot = new Robot2017_2018();
+            Robot = new Robot2017_2018(this);
             Robot.init(hardwareMap);
 
         /*

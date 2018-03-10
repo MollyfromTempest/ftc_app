@@ -22,7 +22,7 @@ public class HowManyDegreesIs200TicksNW extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Robot = new Robot2017_2018();
+        Robot = new Robot2017_2018(this);
         Robot.init(hardwareMap);
         startticks = Math.abs(Robot.holoDrive.NW.getCurrentPosition());
         waitForStart();

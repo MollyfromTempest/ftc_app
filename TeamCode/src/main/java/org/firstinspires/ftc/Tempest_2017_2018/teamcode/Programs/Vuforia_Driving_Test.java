@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Robot2017_2018;
+import org.firstinspires.ftc.Tempest_2017_2018.teamcode.Sensors.Vuforia;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
@@ -38,51 +39,7 @@ public class Vuforia_Driving_Test extends LinearOpMode {
     //VuMarkInstanceIdWrite instanceId;
     long value;
     double ttime;
-    boolean leftturn;
-
-    public void Sleep(long ticks) throws InterruptedException {
-        long timer = System.currentTimeMillis();
-        while (System.currentTimeMillis() - timer < ticks) {
-            idle();
-        }
-    }
-
-    /**
-     *
-     * @param angle1 vector angle for initial movement
-     * @param dist1 distance for initial movement
-     * @param turndeg angle of degrees for putting the glyph in the correct spot
-     * @param angle2 vector angle for driving(should always be forward)
-     * @param dist2 distance for driving into the box
-     */
-    public void panturnpan(double angle1, double dist1, double turndeg, double angle2, double dist2) {
-        double currdist = Robot.holoDrive.NW.getCurrentPosition();
-        Robot.holoDrive.pan(angle1, 0.5);
-        while ((Math.abs(Robot.holoDrive.NW.getCurrentPosition() - currdist)) <= dist1) {
-            idle();
-        }
-        Robot.holoDrive.stopmotors();
-        if (leftturn) {
-            currdist = Robot.holoDrive.NW.getCurrentPosition();
-            Robot.holoDrive.turnleftunlim(0.3);
-            while ((Math.abs(Robot.holoDrive.NW.getCurrentPosition() - currdist)) <= turndeg * 200 / 36) {
-                idle();
-            }
-        } else if (!leftturn) {
-            currdist = Robot.holoDrive.NW.getCurrentPosition();
-            Robot.holoDrive.turnrightunlim(0.3);
-            while ((Math.abs(Robot.holoDrive.NW.getCurrentPosition() - currdist)) <= turndeg * 200 / 36) {
-                idle();
-            }
-        }
-        Robot.holoDrive.stopmotors();
-        currdist = Robot.holoDrive.NW.getCurrentPosition();
-        Robot.holoDrive.pan(angle2, 0.5);
-        while ((Math.abs(Robot.holoDrive.NW.getCurrentPosition() - currdist)) <= dist2) {
-            idle();
-        }
-        Robot.holoDrive.stopmotors();
-    }
+    //boolean leftturn;
 
     // Enum example (from Oracle):
     public enum Day {
@@ -92,7 +49,7 @@ public class Vuforia_Driving_Test extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Robot = new Robot2017_2018();
+        Robot = new Robot2017_2018(this);
         Robot.init(hardwareMap);
         //Turn on the color sensor LEDS
         Robot.color.leftColor.enableLed(true);
@@ -159,7 +116,7 @@ public class Vuforia_Driving_Test extends LinearOpMode {
 
         // this is backwards
         Robot.glyphArm.release();
-        Sleep(1000);
+        Robot.Sleep(1000);
         Robot.glyphArm.midPosition(this);
         ttime = System.currentTimeMillis();
         //Vuforia code
@@ -231,7 +188,7 @@ public class Vuforia_Driving_Test extends LinearOpMode {
         //Lower the jewel arm -- necessary regardless of color
         Robot.jewelArm.jewelArmDown();
         //Wait for two seconds so that it has time to lower
-        Sleep(2000);
+        Robot.Sleep(2000);
         boolean rightBlue = Robot.color.isBlue(Robot.color.rightColor); //right color sensor is blue
         boolean rightRed = Robot.color.isRed(Robot.color.rightColor); //right color sensor is red
         boolean leftBlue = Robot.color.isBlue(Robot.color.leftColor); //left color sensor is blue
@@ -365,113 +322,68 @@ public class Vuforia_Driving_Test extends LinearOpMode {
                  * Also, add line breaks for readability...
                  * -- Aaron
                  */
-                leftturn = false;
-                panturnpan(Math.PI * 17 / 12, 2730, 160, Math.PI / 4, 1080);
-                Robot.glyphArm.grab();
-                Sleep(500);
-                Robot.holoDrive.pan(Math.PI * 5 / 4, 0.4);
-                Sleep(750);
-                Robot.holoDrive.stopmotors();
+                Robot2017_2018.leftturn = true;
+                Robot.panturnpan(Math.PI * 17 / 12, 450, 295, Math.PI / 4, 580);
+                Robot.backUp();
             } else if (CenterMark || Unknown) {
-                leftturn = true;
-                panturnpan(Math.PI * 17 / 12, 2730, 180, Math.PI / 4, 915);
-                Robot.glyphArm.grab();
-                Sleep(500);
-                Robot.holoDrive.pan(Math.PI * 5 / 4, 0.4);
-                Sleep(750);
-                Robot.holoDrive.stopmotors();
+                Robot2017_2018.leftturn = true;
+                Robot.panturnpan(Math.PI * 17 / 12, 450, 255, Math.PI / 4, 515); //205
+                Robot.backUp();
             } else if (RightMark) {
                 //Right
-                leftturn = true;
-                panturnpan(Math.PI * 17 / 12, 2730, 150, Math.PI / 4, 1080);
-                Robot.glyphArm.grab();
-                Sleep(500);
-                Robot.holoDrive.pan(Math.PI * 5 / 4, 0.4);
-                Sleep(750);
-                Robot.holoDrive.stopmotors();
+                Robot2017_2018.leftturn = true;
+                Robot.panturnpan(Math.PI * 17 / 12, 450, 215, Math.PI / 4, 580); //180
+                Robot.backUp();
             }
         } else if (!LeftSide && BlueTeam) {
             if (LeftMark) {
-                leftturn = false;
-                panturnpan(5 * Math.PI / 4, 1500, 90, .32, 785);
-                Robot.glyphArm.grab();
-                Sleep(500);
-                Robot.holoDrive.pan(Math.PI * 5 / 4, 0.4);
-                Sleep(750);
-                Robot.holoDrive.stopmotors();
+                Robot2017_2018.leftturn = false;
+                Robot.panturnpan(5 * Math.PI / 4, 1400, 80, Math.PI /4, 485);
+                Robot.backUp();
             } else if (CenterMark || Unknown) {
-                leftturn = false;
-                panturnpan(5 * Math.PI / 4, 1500, 90, Math.PI / 4, 830);
-                Robot.glyphArm.grab();
-                Sleep(500);
-                Robot.holoDrive.pan(Math.PI * 5 / 4, 0.4);
-                Sleep(750);
-                Robot.holoDrive.stopmotors();
+                Robot2017_2018.leftturn = false;
+                Robot.panturnpan(5 * Math.PI / 4, 1600, 100, Math.PI / 4, 530);
+                Robot.backUpMore();
             } else if (RightMark) {
-                leftturn = false;
-                panturnpan(5 * Math.PI / 4, 1500, 135, Math.PI / 4, 1080);
-                Robot.glyphArm.grab();
-                Sleep(500);
-                Robot.holoDrive.pan(Math.PI * 5 / 4, 0.4);
-                Sleep(750);
-                Robot.holoDrive.stopmotors();
+                Robot2017_2018.leftturn = false;
+                Robot.panturnpan(5 * Math.PI / 4, 1500, 145, Math.PI / 4, 530);
+                Robot.backUp();
             }
         } else if (LeftSide && !BlueTeam) {
             if (LeftMark) {
-                leftturn = false;
-                panturnpan(Math.PI / 4, 1500, 90, Math.PI / 4, 1000);
-                Robot.glyphArm.grab(); // releases glyph arm
-                Sleep(500);
-                Robot.holoDrive.pan(Math.PI * 5 / 4, 0.4);
-                Sleep(750);
-                Robot.holoDrive.stopmotors();
+                Robot2017_2018.leftturn = false;
+                Robot.panturnpan(Math.PI / 4, 1500, 90, Math.PI / 4, 1000);
+                Robot.backUp();
             } else if (CenterMark || Unknown) {
-                leftturn = false;
-                panturnpan(Math.PI / 5.14, 1500, 115, Math.PI / 4, 900);
-                Robot.glyphArm.grab();
-                Sleep(500);
-                Robot.holoDrive.pan(Math.PI * 5 / 4, 0.4);
-                Sleep(750);
-                Robot.holoDrive.stopmotors();
-            } else if (RightMark) {
-                leftturn = false;
-                panturnpan(Math.PI / 5.14, 1500, 140, Math.PI / 4, 1100);
-                Robot.glyphArm.grab();
-                Sleep(500);
-                Robot.holoDrive.pan(Math.PI * 5 / 4, 0.4);
-                Sleep(750);
-                Robot.holoDrive.stopmotors();
+                Robot2017_2018.leftturn = false;
+                Robot.panturnpan(Math.PI / 5.14, 1500, 105, Math.PI / 4, 900);
+                Robot.backUp();
+            }else if (RightMark){
+                Robot2017_2018.leftturn = false;
+                Robot.panturnpan(Math.PI / 5.14, 1500, 140, Math.PI / 4, 900);
+                Robot.backUp();
             }
         } else if (!LeftSide && !BlueTeam) {
             //TODO currently runs into the corner
             if (LeftMark) {
                 //LEFT
-                leftturn = true;
-                panturnpan(.61, 765, 18, Math.PI / 4, 1000);
-                Robot.glyphArm.grab();
-                Sleep(500);
-                Robot.holoDrive.pan(Math.PI * 5 / 4, 0.4);
-                Sleep(750);
-                Robot.holoDrive.stopmotors();
+                Robot2017_2018.leftturn = true;
+                Robot.panturnpan(.61, 765, 35, Math.PI / 4, 1000);
+                Robot.backUpMore();
             } else if (CenterMark || Unknown) {
                 //Center
-                leftturn = false;
-                panturnpan(.54, 765, 0, Math.PI / 4, 900);
-                Robot.glyphArm.grab();
-                Sleep(500);
-                Robot.holoDrive.pan(Math.PI * 5 / 4, 0.4);
-                Sleep(750);
-                Robot.holoDrive.stopmotors();
+                Robot2017_2018.leftturn = true;
+                Robot.panturnpan(.61, 765, 18, Math.PI / 4, 1000);
+                Robot.backUpMore();
             } else if (RightMark) {
                 //Right
-                leftturn = false;
-                panturnpan(.54, 765, 18, Math.PI / 4, 1000);
-                Robot.glyphArm.grab();
-                Sleep(500);
-                Robot.holoDrive.pan(Math.PI * 5 / 4, 0.4);
-                Sleep(750);
-                Robot.holoDrive.stopmotors();
+                Robot2017_2018.leftturn = false;
+                Robot.panturnpan(.54, 765, 0, Math.PI / 4, 900);
+                Robot.backUp();
             }
+        }
+        while(opModeIsActive()){
+            idle();
         }
     }
     /**

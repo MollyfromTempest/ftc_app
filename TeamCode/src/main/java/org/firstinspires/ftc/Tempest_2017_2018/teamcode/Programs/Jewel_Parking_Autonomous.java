@@ -24,7 +24,7 @@ public class Jewel_Parking_Autonomous extends LinearOpMode {
 
         @Override
         public void runOpMode()throws InterruptedException{
-            Robot = new Robot2017_2018();
+            Robot = new Robot2017_2018(this);
             Robot.init(hardwareMap);
             //Turn on the color sensor LEDS
             Robot.color.leftColor.enableLed(true);

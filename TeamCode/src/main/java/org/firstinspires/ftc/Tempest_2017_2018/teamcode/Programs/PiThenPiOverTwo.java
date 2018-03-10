@@ -22,7 +22,7 @@ public class PiThenPiOverTwo extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Robot = new Robot2017_2018();
+        Robot = new Robot2017_2018(this);
         Robot.init(hardwareMap);
         Robot.holoDrive.pan(Math.PI, 0.3);
         Sleep(2000);

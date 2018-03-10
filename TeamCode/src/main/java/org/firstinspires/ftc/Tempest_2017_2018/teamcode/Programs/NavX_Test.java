@@ -17,7 +17,7 @@ public class NavX_Test extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Robot = new Robot2017_2018();
+        Robot = new Robot2017_2018(this);
 
         telemetry.addData("Debug:", "Init Start");
         telemetry.update();

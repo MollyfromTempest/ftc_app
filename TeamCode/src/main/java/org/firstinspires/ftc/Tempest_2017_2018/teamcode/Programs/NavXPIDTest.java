@@ -17,7 +17,7 @@ public class NavXPIDTest extends LinearOpMode {
     //navXPIDController yawPIDController;
     @Override
     public void runOpMode() throws InterruptedException {
-        NavXBot = new Robot2017_2018();
+        NavXBot = new Robot2017_2018(this);
         NavXBot.init(hardwareMap);
         waitForStart();
     }
